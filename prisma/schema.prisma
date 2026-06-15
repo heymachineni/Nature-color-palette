@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Bird {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  name           String
+  scientificName String   @map("scientific_name")
+  description    String
+  habitat        String?
+  region         String
+  imageUrl       String   @map("image_url")
+  thumbUrl       String?  @map("thumb_url")
+  imageCredit    String?  @map("image_credit")
+  imageLicense   String?  @map("image_license")
+  sourceUrl      String?  @map("source_url")
+  colorTags      String[] @map("color_tags")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  paletteColors        PaletteColor[]
+  paletteVariations    PaletteVariation[]
+  accessibilityResults AccessibilityResult[]
+  similarTo            SimilarBird[] @relation("BirdSimilarities")
+  similarFrom          SimilarBird[] @relation("SimilarBirdRefs")
+
+  @@index([name])
+  @@index([scientificName])
+  @@map("birds")
+}
+
+model PaletteColor {
+  id           String @id @default(cuid())
+  birdId       String @map("bird_id")
+  hex          String
+  rgb          String
+  dominancePct Float  @map("dominance_pct")
+  colorName    String @map("color_name")
+  sortOrder    Int    @map("sort_order")
+
+  bird Bird @relation(fields: [birdId], references: [id], onDelete: Cascade)
+
+  @@index([birdId])
+  @@map("palette_colors")
+}
+
+model PaletteVariation {
+  id            String @id @default(cuid())
+  birdId        String @map("bird_id")
+  name          String
+  rank          Int
+  primaryHex    String @map("primary_hex")
+  secondaryHex  String @map("secondary_hex")
+  accentHex     String @map("accent_hex")
+  backgroundHex String @map("background_hex")
+  foregroundHex String @map("foreground_hex")
+
+  bird Bird @relation(fields: [birdId], references: [id], onDelete: Cascade)
+
+  @@index([birdId])
+  @@map("palette_variations")
+}
+
+model AccessibilityResult {
+  id            String  @id @default(cuid())
+  birdId        String  @map("bird_id")
+  foreground    String
+  background    String
+  contrastRatio Float   @map("contrast_ratio")
+  levelAA       Boolean @map("level_aa")
+  levelAAA      Boolean @map("level_aaa")
+  sortOrder     Int     @map("sort_order")
+
+  bird Bird @relation(fields: [birdId], references: [id], onDelete: Cascade)
+
+  @@index([birdId])
+  @@map("accessibility_results")
+}
+
+model SimilarBird {
+  id              String @id @default(cuid())
+  birdId          String @map("bird_id")
+  similarBirdId   String @map("similar_bird_id")
+  similarityScore Float  @map("similarity_score")
+  rank            Int
+
+  bird        Bird @relation("BirdSimilarities", fields: [birdId], references: [id], onDelete: Cascade)
+  similarBird Bird @relation("SimilarBirdRefs", fields: [similarBirdId], references: [id], onDelete: Cascade)
+
+  @@unique([birdId, similarBirdId])
+  @@index([birdId])
+  @@map("similar_birds")
+}

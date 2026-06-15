@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Museum chrome: warm paper white, soft ink, quiet neutrals. */
+    --background: 40 33% 98%;
+    --foreground: 24 14% 12%;
+
+    --card: 40 33% 98%;
+    --card-foreground: 24 14% 12%;
+
+    --primary: 24 14% 14%;
+    --primary-foreground: 40 33% 98%;
+
+    --secondary: 36 16% 94%;
+    --secondary-foreground: 24 14% 16%;
+
+    --accent: 36 16% 94%;
+    --accent-foreground: 24 14% 16%;
+
+    --muted: 36 14% 93%;
+    --muted-foreground: 28 8% 44%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 32 14% 88%;
+    --input: 32 14% 86%;
+    --ring: 24 14% 20%;
+
+    --radius: 0.75rem;
+
+    --popover: 40 33% 98%;
+    --popover-foreground: 24 14% 12%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "ss01", "cv01";
+  }
+  ::selection {
+    @apply bg-foreground/10;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}

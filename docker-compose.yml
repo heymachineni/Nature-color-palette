@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: nature-palette-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nature
+      POSTGRES_PASSWORD: nature
+      POSTGRES_DB: nature_palette
+    ports:
+      - "5432:5432"
+    volumes:
+      - nature-palette-data:/var/lib/postgresql/data
+
+volumes:
+  nature-palette-data:
