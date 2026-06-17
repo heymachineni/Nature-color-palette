@@ -1,194 +1,255 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
-import { buildDesignerModes } from "@/lib/color/modes";
-import { inferCharacter } from "@/lib/color/character";
-import { generateTokenPairings } from "@/lib/color/token-pairings";
-import { hydrateTokens } from "@/lib/color/tokens";
-import { strategyForMode } from "@/lib/color/strategy";
-import type { CuratedPalette } from "@/lib/color/interpret";
+import {
+  buildThemeFromPlumage,
+  colorFamiliesFrom,
+  filterPlumageColors,
+  passesWcagAA,
+} from "@/lib/color/plumage";
+import { nameColor } from "@/lib/color/naming";
 import type { ExtractedColor } from "@/lib/color/extract";
 import type {
   BirdDetail,
   BirdSummary,
-  DesignerModeData,
+  BirdIndexEntry,
   SimilarBirdData,
+  ThemeTokensData,
+  PlumageColorData,
 } from "@/types/bird";
 
-export type RawBirdLike = {
+export type RawBirdRecord = {
   slug: string;
   name: string;
   scientificName: string;
-  description: string;
-  habitat: string | null;
   region: string;
   imageUrl: string;
-  thumbUrl: string | null;
-  imageCredit: string | null;
-  imageLicense: string | null;
-  sourceUrl: string | null;
-  colorTags: string[];
-  characterTags?: string[];
-  paletteColors: {
-    hex: string;
-    rgb: string;
-    dominancePct: number;
-    colorName: string;
-    sortOrder: number;
-  }[];
-  designerModes?: DesignerModeData[];
-  paletteVariations?: {
-    name: string;
-    rank: number;
-    primaryHex: string;
-    secondaryHex: string;
-    accentHex: string;
-    backgroundHex: string;
-    foregroundHex: string;
-  }[];
-  accessibilityResults: {
-    foreground: string;
-    background: string;
-    contrastRatio: number;
-    levelAA: boolean;
-    levelAAA: boolean;
-    sortOrder: number;
-    label?: string;
-  }[];
-  similar: { slug: string; similarityScore: number; rank: number }[];
+  colors: PlumageColorData[];
+  colorFamilies: string[];
+  theme: ThemeTokensData;
+  wcagAA: boolean;
+  similar: { slug: string; rank: number }[];
 };
 
-let cache: RawBirdLike[] | null = null;
+/** v1 Firestore / dataset shape (pre-redesign). */
+type LegacyBirdRecord = {
+  slug: string;
+  name: string;
+  scientificName: string;
+  region?: string;
+  imageUrl: string;
+  colors?: PlumageColorData[];
+  colorFamilies?: string[];
+  colorTags?: string[];
+  theme?: ThemeTokensData;
+  wcagAA?: boolean;
+  similar?: { slug: string; rank: number; similarityScore?: number }[];
+  paletteColors?: {
+    hex: string;
+    rgb?: string;
+    dominancePct: number;
+    colorName?: string;
+  }[];
+  designerModes?: {
+    tokens?: ThemeTokensData & {
+      primary?: string;
+      accent?: string;
+      background?: string;
+      surface?: string;
+      textPrimary?: string;
+      textSecondary?: string;
+      border?: string;
+    };
+    curated?: {
+      hero: { uiHex?: string; natureHex: string; label?: string };
+      support: { uiHex?: string; natureHex: string; label?: string };
+      accent: { uiHex?: string; natureHex: string; label?: string };
+      neutral?: { uiHex?: string; natureHex: string; label?: string };
+    };
+  }[];
+};
 
-function load(): RawBirdLike[] {
+let cache: RawBirdRecord[] | null = null;
+
+function toExtracted(
+  palette: NonNullable<LegacyBirdRecord["paletteColors"]>,
+): ExtractedColor[] {
+  return palette.map((c) => ({
+    hex: c.hex,
+    rgb: c.rgb ?? "",
+    rgbValues: { r: 0, g: 0, b: 0 },
+    dominancePct: c.dominancePct,
+    colorName: c.colorName ?? nameColor(c.hex),
+  }));
+}
+
+function themeFromLegacyTokens(
+  tokens: NonNullable<LegacyBirdRecord["designerModes"]>[0]["tokens"],
+): ThemeTokensData | null {
+  if (!tokens?.primary) return null;
+  return {
+    primary: tokens.primary,
+    accent: tokens.accent ?? tokens.primary,
+    background: tokens.background ?? "#F7F8FA",
+    surface: tokens.surface ?? "#FFFFFF",
+    text: tokens.textPrimary ?? "#1A1A1A",
+    textMuted: tokens.textSecondary ?? "#6B7280",
+    border: tokens.border ?? "#E5E7EB",
+  };
+}
+
+function colorsFromLegacyCurated(
+  curated: NonNullable<
+    NonNullable<LegacyBirdRecord["designerModes"]>[0]["curated"]
+  >,
+): PlumageColorData[] {
+  const roles = [
+    { key: "hero" as const, label: "Signature" },
+    { key: "support" as const, label: "Body" },
+    { key: "accent" as const, label: "Accent" },
+  ];
+  const out: PlumageColorData[] = [];
+  for (const { key } of roles) {
+    const c = curated[key];
+    if (!c) continue;
+    const hex = c.uiHex ?? c.natureHex;
+    const family = nameColor(c.natureHex);
+    if (family === "gray" || family === "white") continue;
+    if (out.some((x) => x.family === family)) continue;
+    out.push({ hex, family, share: key === "support" ? 40 : 25 });
+  }
+  return out;
+}
+
+/** Accept v2 or legacy v1 documents (e.g. stale Firestore). */
+export function normalizeBirdRecord(raw: LegacyBirdRecord): RawBirdRecord {
+  if (Array.isArray(raw.colors) && raw.colors.length > 0 && raw.theme) {
+    return {
+      slug: raw.slug,
+      name: raw.name,
+      scientificName: raw.scientificName,
+      region: raw.region ?? "",
+      imageUrl: raw.imageUrl,
+      colors: raw.colors,
+      colorFamilies: raw.colorFamilies ?? colorFamiliesFrom(raw.colors),
+      theme: raw.theme,
+      wcagAA: raw.wcagAA ?? passesWcagAA(raw.theme),
+      similar: (raw.similar ?? []).map((s) => ({
+        slug: s.slug,
+        rank: s.rank,
+      })),
+    };
+  }
+
+  let colors: PlumageColorData[] = [];
+
+  if (raw.paletteColors?.length) {
+    colors = filterPlumageColors(toExtracted(raw.paletteColors));
+  } else if (raw.designerModes?.[0]?.curated) {
+    colors = colorsFromLegacyCurated(raw.designerModes[0].curated);
+  }
+
+  const theme =
+    raw.theme ??
+    themeFromLegacyTokens(raw.designerModes?.[0]?.tokens) ??
+    buildThemeFromPlumage(colors);
+
+  const colorFamilies =
+    raw.colorFamilies ??
+    (colors.length ? colorFamiliesFrom(colors) : (raw.colorTags ?? []));
+
+  return {
+    slug: raw.slug,
+    name: raw.name,
+    scientificName: raw.scientificName,
+    region: raw.region ?? "",
+    imageUrl: raw.imageUrl,
+    colors,
+    colorFamilies,
+    theme,
+    wcagAA: raw.wcagAA ?? passesWcagAA(theme),
+    similar: (raw.similar ?? []).map((s) => ({
+      slug: s.slug,
+      rank: s.rank,
+    })),
+  };
+}
+
+function load(): RawBirdRecord[] {
   if (process.env.NODE_ENV === "production" && cache) return cache;
   const file = path.join(process.cwd(), "prisma", "seed", "dataset.json");
   const parsed = JSON.parse(readFileSync(file, "utf-8")) as {
-    birds: RawBirdLike[];
+    birds: LegacyBirdRecord[];
   };
+  const birds = parsed.birds.map(normalizeBirdRecord);
   if (process.env.NODE_ENV === "production") {
-    cache = parsed.birds;
+    cache = birds;
   }
-  return parsed.birds;
+  return birds;
 }
 
-function toExtracted(raw: RawBirdLike["paletteColors"]): ExtractedColor[] {
-  return raw.map((c) => ({
-    hex: c.hex,
-    rgb: c.rgb,
-    rgbValues: { r: 0, g: 0, b: 0 },
-    dominancePct: c.dominancePct,
-    colorName: c.colorName,
-  }));
-}
-
-function hydrateMode(mode: DesignerModeData): DesignerModeData {
-  const strategy = mode.strategy ?? {
-    id: strategyForMode(mode.id).id,
-    name: strategyForMode(mode.id).name,
-    description: strategyForMode(mode.id).description,
-    personality: strategyForMode(mode.id).personality,
-  };
-  const tokens = hydrateTokens(mode.curated as CuratedPalette, mode.id);
-  return { ...mode, strategy, tokens };
-}
-
-function resolveDesignerModes(b: RawBirdLike): DesignerModeData[] {
-  if (b.designerModes?.length) {
-    return b.designerModes.map(hydrateMode);
-  }
-  return mapModes(buildDesignerModes(toExtracted(b.paletteColors)));
-}
-
-function mapModes(
-  modes: ReturnType<typeof buildDesignerModes>,
-): DesignerModeData[] {
-  return modes.map((m) => ({
-    id: m.id,
-    name: m.name,
-    description: m.description,
-    rank: m.rank,
-    strategy: {
-      id: m.strategy.id,
-      name: m.strategy.name,
-      description: m.strategy.description,
-      personality: m.strategy.personality,
-    },
-    curated: m.curated,
-    tokens: m.tokens,
-    insight: m.insight,
-  }));
-}
-
-function resolveCharacterTags(b: RawBirdLike, modes: DesignerModeData[]): string[] {
-  if (b.characterTags?.length) return b.characterTags;
-  return inferCharacter(modes[0].curated);
-}
-
-function previewFromModes(modes: DesignerModeData[]): string[] {
-  const t = modes[0].tokens;
-  return [t.primary, t.accent, t.surface, t.border];
-}
-
-export function getDatasetBirds(): RawBirdLike[] {
+export function getDatasetBirds(): RawBirdRecord[] {
   return load();
 }
 
-export function toSummary(b: RawBirdLike): BirdSummary {
-  const modes = resolveDesignerModes(b);
+export function toSummary(b: RawBirdRecord): BirdSummary {
+  const colors = b.colors ?? [];
+  const preview = colors.slice(0, 4).map((c) => c.hex);
   return {
     id: b.slug,
     slug: b.slug,
     name: b.name,
     scientificName: b.scientificName,
-    thumbUrl: b.thumbUrl,
+    region: b.region,
     imageUrl: b.imageUrl,
-    colorTags: b.colorTags,
-    characterTags: resolveCharacterTags(b, modes),
-    palettePreview: previewFromModes(modes),
+    colorFamilies: b.colorFamilies ?? [],
+    preview: preview.length ? preview : ["#64748B"],
   };
 }
 
-export function toDetail(b: RawBirdLike, all: RawBirdLike[]): BirdDetail {
+export function toDetail(b: RawBirdRecord, all: RawBirdRecord[]): BirdDetail {
   const bySlug = new Map(all.map((x) => [x.slug, x]));
-  const similar: SimilarBirdData[] = b.similar
+  const similar: SimilarBirdData[] = (b.similar ?? [])
     .map((s) => {
       const ref = bySlug.get(s.slug);
       if (!ref) return null;
       return {
         slug: ref.slug,
         name: ref.name,
-        thumbUrl: ref.thumbUrl,
         imageUrl: ref.imageUrl,
+        preview: toSummary(ref).preview,
       };
     })
     .filter((x): x is SimilarBirdData => x !== null)
-    .slice(0, 6);
+    .slice(0, 4);
 
-  const designerModes = resolveDesignerModes(b);
-  const accessibilityResults = generateTokenPairings(
-    designerModes[0].tokens,
-  ).map((p, i) => ({ ...p, sortOrder: i }));
+  const theme =
+    b.theme ??
+    buildThemeFromPlumage(b.colors ?? []);
 
   return {
-    id: b.slug,
-    slug: b.slug,
-    name: b.name,
-    scientificName: b.scientificName,
-    description: b.description,
-    habitat: b.habitat,
-    region: b.region,
-    imageUrl: b.imageUrl,
-    thumbUrl: b.thumbUrl,
-    imageCredit: b.imageCredit,
-    imageLicense: b.imageLicense,
-    sourceUrl: b.sourceUrl,
-    colorTags: b.colorTags,
-    characterTags: resolveCharacterTags(b, designerModes),
-    paletteColors: [...b.paletteColors].sort(
-      (x, y) => x.sortOrder - y.sortOrder,
-    ),
-    designerModes: [...designerModes].sort((x, y) => x.rank - y.rank),
-    accessibilityResults,
+    ...toSummary(b),
+    colors: b.colors ?? [],
+    theme,
+    wcagAA: b.wcagAA ?? passesWcagAA(theme),
     similar,
   };
+}
+
+/** Client search index (also generated at ingest). */
+export function loadSearchIndex(): BirdSummary[] {
+  const file = path.join(process.cwd(), "public", "data", "index.json");
+  if (!existsSync(file)) {
+    return getDatasetBirds().map(toSummary);
+  }
+  const entries = JSON.parse(readFileSync(file, "utf-8")) as BirdIndexEntry[];
+  return entries.map((e) => ({
+    id: e.slug,
+    slug: e.slug,
+    name: e.name,
+    scientificName: e.scientificName,
+    region: e.region ?? "",
+    imageUrl: e.imageUrl ?? `/birds/${e.slug}.webp`,
+    colorFamilies: e.colorFamilies,
+    preview: e.preview?.length ? e.preview : ["#64748B"],
+  }));
 }

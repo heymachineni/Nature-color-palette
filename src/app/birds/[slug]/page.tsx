@@ -2,15 +2,21 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
-import { getBirdBySlug } from "@/lib/data/birds";
-import { getDatasetBirds } from "@/lib/data/dataset";
-import { BirdHero } from "@/components/bird/bird-hero";
-import { BirdIntro, BirdAbout } from "@/components/bird/bird-metadata";
-import { BirdStudio } from "@/components/bird/bird-studio";
+import { getBirdBySlug, getBirdSlugs } from "@/lib/data/birds";
+import { BirdPhoto } from "@/components/bird/bird-photo";
+import { ColorCombination } from "@/components/bird/color-combination";
+import { UiPreview } from "@/components/bird/ui-preview";
+import { SimilarBirdsSection } from "@/components/bird/similar-birds-section";
+import { Badge } from "@/components/ui/badge";
 
 export function generateStaticParams() {
-  return getDatasetBirds().map((bird) => ({ slug: bird.slug }));
+  if (process.env.STATIC_EXPORT !== "true") {
+    return [];
+  }
+  return getBirdSlugs().map((slug) => ({ slug }));
 }
+
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,
@@ -20,12 +26,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const bird = await getBirdBySlug(slug);
   if (!bird) return { title: "Not found" };
+  const families = bird.colorFamilies.join(", ");
   return {
     title: bird.name,
-    description: bird.description.slice(0, 160),
+    description: `${bird.name} color combination — ${families}. Copy-ready plumage palette for design.`,
     openGraph: {
       title: `${bird.name} — Nature Palette`,
-      description: bird.description.slice(0, 160),
+      description: `Plumage colors: ${families}`,
       images: [bird.imageUrl],
     },
   };
@@ -50,21 +57,64 @@ export default async function BirdPage({
         All birds
       </Link>
 
-      <article className="mx-auto mt-5 max-w-6xl sm:mt-8">
-        <div className="flex flex-col gap-5 sm:gap-6 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start lg:gap-x-12 lg:gap-y-4">
-          <div className="order-2 lg:order-1 lg:sticky lg:top-6">
-            <BirdHero bird={bird} />
-          </div>
+      <article className="mx-auto mt-5 max-w-4xl space-y-10 sm:mt-8 sm:space-y-12">
+        <div className="flex flex-col gap-6 sm:gap-8 lg:grid lg:grid-cols-2 lg:items-start lg:gap-10">
+          <BirdPhoto
+            src={bird.imageUrl}
+            alt={bird.name}
+            variant="hero"
+            ambientColor={bird.colors[0]?.hex}
+          />
 
-          <div className="order-1 space-y-4 lg:order-2 lg:pt-1">
-            <BirdIntro bird={bird} />
-            <BirdAbout bird={bird} />
+          <div className="space-y-5">
+            <header>
+              <h1 className="font-serif text-[1.75rem] leading-[1.08] tracking-tight text-foreground sm:text-4xl">
+                {bird.name}
+              </h1>
+              <p className="mt-2 text-sm text-muted-foreground sm:text-[15px]">
+                <span className="italic">{bird.scientificName}</span>
+                <span className="px-2 text-border">·</span>
+                {bird.region}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {bird.colorFamilies.map((family) => (
+                  <Badge
+                    key={family}
+                    variant="secondary"
+                    className="font-normal capitalize"
+                  >
+                    {family}
+                  </Badge>
+                ))}
+              </div>
+            </header>
+
+            <section>
+              <h2 className="mb-3 text-sm font-medium text-foreground">
+                Color combination
+              </h2>
+              <ColorCombination colors={bird.colors} />
+            </section>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-border pt-10 sm:mt-12 sm:pt-12">
-          <BirdStudio bird={bird} />
-        </div>
+        <section className="space-y-3">
+          <div className="flex items-center justify-between gap-2">
+            <h2 className="text-sm font-medium text-foreground">In UI</h2>
+            {bird.wcagAA ? (
+              <Badge variant="secondary" className="font-normal text-xs">
+                Passes WCAG AA
+              </Badge>
+            ) : (
+              <Badge variant="secondary" className="font-normal text-xs">
+                Check contrast before use
+              </Badge>
+            )}
+          </div>
+          <UiPreview theme={bird.theme} />
+        </section>
+
+        <SimilarBirdsSection similar={bird.similar} />
       </article>
     </div>
   );

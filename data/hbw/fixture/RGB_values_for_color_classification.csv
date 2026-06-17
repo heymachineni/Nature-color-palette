@@ -1,0 +1,25 @@
+Color classification,R,G,B,Colors
+1,255,255,255,white
+2,40,40,40,black
+3,128,128,128,gray
+4,139,90,43,brown
+5,210,180,140,tan
+6,220,20,60,red
+7,255,140,0,orange
+8,255,215,0,yellow
+9,34,139,34,green
+10,0,128,128,teal
+11,30,144,255,blue
+12,128,0,128,purple
+13,255,105,180,pink
+14,165,42,42,rust
+15,244,164,96,salmon
+16,255,228,196,cream
+17,107,142,35,olive
+18,0,100,0,dark green
+19,70,130,180,slate blue
+20,255,69,0,vermillion
+21,218,165,32,golden
+22,75,0,130,indigo
+23,240,230,140,khaki
+24,160,82,45,saddle brown

@@ -5,9 +5,11 @@ import { Search, X } from "lucide-react";
 export function SearchInput({
   value,
   onChange,
+  placeholder = "Search birds…",
 }: {
   value: string;
   onChange: (value: string) => void;
+  placeholder?: string;
 }) {
   return (
     <div className="group relative">
@@ -16,7 +18,7 @@ export function SearchInput({
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Search birds…"
+        placeholder={placeholder}
         autoComplete="off"
         spellCheck={false}
         aria-label="Search birds by name or color"

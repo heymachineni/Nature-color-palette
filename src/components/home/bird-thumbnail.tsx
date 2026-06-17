@@ -16,7 +16,7 @@ export function BirdThumbnail({
         alt={bird.name}
         variant="card"
         priority={priority}
-        ambientColor={bird.palettePreview[0]}
+        ambientColor={bird.preview[0]}
       />
 
       <div className="mt-3 flex items-start justify-between gap-3 sm:mt-3.5">
@@ -32,7 +32,7 @@ export function BirdThumbnail({
           className="mt-0.5 flex shrink-0 overflow-hidden rounded-full ring-1 ring-inset ring-border/70 sm:mt-1"
           aria-hidden
         >
-          {bird.palettePreview.slice(0, 5).map((hex, i) => (
+          {bird.preview.slice(0, 5).map((hex, i) => (
             <span
               key={hex + i}
               className="size-3 sm:size-3.5"

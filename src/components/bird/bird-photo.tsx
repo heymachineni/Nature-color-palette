@@ -5,6 +5,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type BirdPhotoVariant = "hero" | "card" | "mini";
+type PhotoOrientation = "landscape" | "portrait" | null;
 
 const VARIANTS: Record<
   BirdPhotoVariant,
@@ -12,7 +13,8 @@ const VARIANTS: Record<
     wrapper: string;
     backdrop: string;
     scrim: string;
-    img: string;
+    imgPortrait: string;
+    imgLandscape: string;
     sizes: string;
   }
 > = {
@@ -25,7 +27,8 @@ const VARIANTS: Record<
     backdrop:
       "object-cover object-center scale-[1.18] blur-2xl brightness-[0.88] saturate-[1.2]",
     scrim: "bg-background/35",
-    img: "object-contain object-center p-1 sm:p-1.5",
+    imgPortrait: "object-contain object-center p-1 sm:p-1.5",
+    imgLandscape: "object-cover object-center",
     sizes: "(max-width: 1024px) 100vw, 480px",
   },
   /** Home grid — whole bird visible; ambient fill behind. */
@@ -35,7 +38,10 @@ const VARIANTS: Record<
     backdrop:
       "object-cover object-center scale-[1.2] blur-xl brightness-[0.9] saturate-[1.15]",
     scrim: "bg-background/30",
-    img: "object-contain object-center p-2 transition-transform duration-700 ease-out group-hover:scale-[1.02] sm:p-3",
+    imgPortrait:
+      "object-contain object-center p-2 transition-transform duration-700 ease-out group-hover:scale-[1.02] sm:p-3",
+    imgLandscape:
+      "object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]",
     sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
   },
   /** Similar birds row. */
@@ -45,17 +51,23 @@ const VARIANTS: Record<
     backdrop:
       "object-cover object-center scale-[1.15] blur-lg brightness-[0.92] saturate-[1.1]",
     scrim: "bg-background/28",
-    img: "object-contain object-center p-1.5 transition-transform duration-500 ease-out group-hover:scale-[1.02] sm:p-2",
+    imgPortrait:
+      "object-contain object-center p-1.5 transition-transform duration-500 ease-out group-hover:scale-[1.02] sm:p-2",
+    imgLandscape:
+      "object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.02]",
     sizes: "(max-width: 640px) 50vw, 25vw",
   },
 };
 
+function detectOrientation(width: number, height: number): "landscape" | "portrait" {
+  return width > height * 1.05 ? "landscape" : "portrait";
+}
+
 /**
  * Displays the original bird photograph with an ambient backdrop.
  *
- * Foreground: object-contain so the full bird stays visible.
- * Background: same image, cover + blur (Apple Music / Photos pattern) so
- * letterbox space feels intentional, not empty.
+ * Portrait: object-contain — full bird visible with soft letterbox fill.
+ * Landscape: object-cover — fills the container edge-to-edge.
  */
 export function BirdPhoto({
   src,
@@ -75,6 +87,15 @@ export function BirdPhoto({
 }) {
   const v = VARIANTS[variant];
   const [failed, setFailed] = useState(false);
+  const [orientation, setOrientation] = useState<PhotoOrientation>(null);
+
+  const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    setOrientation(detectOrientation(img.naturalWidth, img.naturalHeight));
+  };
+
+  const foregroundClass =
+    orientation === "landscape" ? v.imgLandscape : v.imgPortrait;
 
   if (failed) {
     return (
@@ -123,7 +144,8 @@ export function BirdPhoto({
         fill
         priority={priority}
         sizes={v.sizes}
-        className={cn(v.img, "absolute inset-0 z-[3]")}
+        className={cn(foregroundClass, "absolute inset-0 z-[3]")}
+        onLoad={onImageLoad}
         onError={() => setFailed(true)}
       />
     </div>

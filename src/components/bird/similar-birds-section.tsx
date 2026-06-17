@@ -1,5 +1,6 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import type { SimilarBirdData } from "@/types/bird";
 import { BirdPhoto } from "./bird-photo";
 
@@ -9,20 +10,39 @@ export function SimilarBirdsSection({
   similar: SimilarBirdData[];
 }) {
   if (similar.length === 0) return null;
+
   return (
-    <section>
-      <h2 className="text-sm font-medium text-foreground">Similar palettes</h2>
-      <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-4">
-        {similar.slice(0, 4).map((bird) => (
+    <section className="space-y-4">
+      <h2 className="text-sm font-medium text-foreground">
+        Similar combinations
+      </h2>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+        {similar.map((bird) => (
           <Link
             key={bird.slug}
             href={`/birds/${bird.slug}`}
-            className="group block"
+            className="group block overflow-hidden rounded-xl border border-border/70 bg-card transition-colors hover:border-border"
           >
-            <BirdPhoto src={bird.imageUrl} alt={bird.name} variant="mini" />
-            <p className="mt-2 truncate text-sm text-foreground group-hover:underline">
-              {bird.name}
-            </p>
+            <BirdPhoto
+              src={bird.imageUrl}
+              alt={bird.name}
+              variant="mini"
+              className="rounded-none"
+            />
+            <div className="space-y-2 p-3">
+              <p className="truncate text-sm font-medium text-foreground group-hover:underline">
+                {bird.name}
+              </p>
+              <div className="flex gap-1">
+                {bird.preview.map((hex) => (
+                  <span
+                    key={hex}
+                    className="size-3 rounded-full ring-1 ring-inset ring-black/[0.08]"
+                    style={{ backgroundColor: hex }}
+                  />
+                ))}
+              </div>
+            </div>
           </Link>
         ))}
       </div>

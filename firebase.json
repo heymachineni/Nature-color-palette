@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "nature-colorpalette",
     "public": "out",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "headers": [

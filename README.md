@@ -1,17 +1,14 @@
 # Nature Palette
 
-A visual discovery tool for exploring color systems perfected by nature. Every bird becomes a living design system — raw palettes, curated roles, design tokens, and accessibility pairings.
+Copy real bird color combinations into your designs. Search by color or browse birds — see plumage palettes and preview them on UI components.
 
 **Live:** [nature-colorpalette.web.app](https://nature-colorpalette.web.app)
-
-Deploys automatically on every push to `main` → Firebase Hosting. See [docs/DEPLOY.md](docs/DEPLOY.md) for one-time GitHub secret setup.
 
 ## Stack
 
 - Next.js 15 (static export) · TypeScript · Tailwind · shadcn/ui
-- Firestore (bird data) · images in `public/birds/`
-- GitHub Actions → Firebase Hosting on push to `main`
-- Color pipeline: extract → interpret → tokens → designer modes
+- `dataset.json` + `public/data/index.json` (production) · Firestore (optional catalog DB)
+- Images in `public/birds/` · GitHub Actions → Firebase Hosting
 
 ## Local development
 
@@ -20,7 +17,7 @@ npm install
 npm run dev
 ```
 
-Uses Firestore when `.env` is configured. Force local JSON:
+Production data path (same as hosting):
 
 ```bash
 USE_JSON_DATA=true npm run dev
@@ -31,25 +28,39 @@ USE_JSON_DATA=true npm run dev
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Start dev server |
-| `npm run build` | Production build |
-| `npm run ingest` | Fetch birds from Wikipedia + extract colors |
-| `npm run refresh-colors` | Re-extract colors from cached cutouts |
-| `npm run audit-colors` | QA palette quality across all birds |
 | `npm run build:hosting` | Static export for Firebase Hosting |
-| `npm run deploy:hosting` | Build + deploy locally via Firebase CLI |
+| `npm run deploy:hosting` | Build + deploy locally |
+| `npm run ingest` | Kaggle or cached images → plumage colors → dataset |
+| `npm run refresh-colors` | Re-extract plumage from existing cutouts |
+| `npm run audit-colors` | QA expected color families |
 | `npm run seed:firestore` | Upload `dataset.json` → Firestore |
+
+### Kaggle images (optional)
+
+Download [Birds 525 Species](https://www.kaggle.com/datasets/gpiosenka/100-bird-species), then:
+
+```bash
+KAGGLE_DATA_DIR="/path/to/100-bird-species" npm run ingest
+```
+
+Without `KAGGLE_DATA_DIR`, ingest uses existing `public/birds/*.webp`.
 
 ## Environment
 
-Copy `.env.example` → `.env`. Add your Firebase service account JSON path (gitignored):
+Copy `.env.example` → `.env`:
 
 ```
 FIREBASE_SERVICE_ACCOUNT_PATH="your-firebase-adminsdk.json"
 NEXT_PUBLIC_APP_URL="https://nature-colorpalette.web.app"
 ```
 
-Never commit `.env` or `*-firebase-adminsdk-*.json`.
+## Data model (v2)
 
-## Firestore structure
+Each bird in `prisma/seed/dataset.json`:
 
-Collection: `birds` — one document per bird (slug as document ID), same shape as `prisma/seed/dataset.json`.
+- `colors[]` — plumage only (hex, family, share %)
+- `colorFamilies[]` — for search
+- `theme` — UI neutrals + primary/accent (not shown as bird colors)
+- `similar[]` — palette-matched birds
+
+Firestore collection `birds` uses the same document shape.

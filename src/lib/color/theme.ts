@@ -1,6 +1,6 @@
 import { hexToRgb, mix, rgbToHsl } from "./convert";
 import { bestTextOn } from "./accessibility";
-import type { DesignTokens } from "./tokens";
+import type { ThemeTokens } from "./plumage";
 
 /** shadcn expects CSS variables as space-separated "H S% L%" triples. */
 export function hexToHslString(hex: string): string {
@@ -8,59 +8,30 @@ export function hexToHslString(hex: string): string {
   return `${Math.round(h)} ${Math.round(s)}% ${Math.round(l)}%`;
 }
 
-/**
- * Maps product design tokens onto shadcn/ui variables.
- * Surfaces and text stay neutral; brand color appears on primary + focus only.
- */
+/** Maps plumage theme tokens onto shadcn/ui CSS variables. */
 export function buildThemeVarsFromTokens(
-  tokens: DesignTokens,
+  tokens: ThemeTokens,
 ): Record<string, string> {
   const onPrimary = bestTextOn(tokens.primary);
 
   return {
     "--background": hexToHslString(tokens.background),
-    "--foreground": hexToHslString(tokens.textPrimary),
+    "--foreground": hexToHslString(tokens.text),
     "--card": hexToHslString(tokens.surface),
-    "--card-foreground": hexToHslString(tokens.textPrimary),
+    "--card-foreground": hexToHslString(tokens.text),
     "--primary": hexToHslString(tokens.primary),
     "--primary-foreground": hexToHslString(onPrimary),
-    "--secondary": hexToHslString(tokens.secondary),
-    "--secondary-foreground": hexToHslString(tokens.textPrimary),
+    "--secondary": hexToHslString(mix(tokens.background, tokens.text, 0.06)),
+    "--secondary-foreground": hexToHslString(tokens.text),
     "--accent": hexToHslString(mix(tokens.surface, tokens.primary, 0.05)),
-    "--accent-foreground": hexToHslString(tokens.textPrimary),
-    "--muted": hexToHslString(tokens.surfaceSecondary),
-    "--muted-foreground": hexToHslString(tokens.textSecondary),
+    "--accent-foreground": hexToHslString(tokens.text),
+    "--muted": hexToHslString(mix(tokens.background, tokens.text, 0.04)),
+    "--muted-foreground": hexToHslString(tokens.textMuted),
     "--border": hexToHslString(tokens.border),
     "--input": hexToHslString(tokens.border),
-    "--ring": hexToHslString(tokens.focusRing),
+    "--ring": hexToHslString(tokens.primary),
     "--destructive": "0 72% 51%",
     "--destructive-foreground": "0 0% 100%",
     "--radius": "0.5rem",
   };
-}
-
-/** @deprecated Use buildThemeVarsFromTokens. */
-export type ThemeVariation = {
-  primaryHex: string;
-  secondaryHex: string;
-  accentHex: string;
-  backgroundHex: string;
-  foregroundHex: string;
-};
-
-export function buildThemeVars(v: ThemeVariation): Record<string, string> {
-  return buildThemeVarsFromTokens({
-    primary: v.primaryHex,
-    primaryHover: v.primaryHex,
-    secondary: mix(v.backgroundHex, v.foregroundHex, 0.06),
-    secondaryHover: mix(v.backgroundHex, v.foregroundHex, 0.1),
-    accent: v.accentHex,
-    background: v.backgroundHex,
-    surface: "#FFFFFF",
-    surfaceSecondary: mix(v.backgroundHex, v.foregroundHex, 0.04),
-    border: mix(v.backgroundHex, v.foregroundHex, 0.12),
-    textPrimary: v.foregroundHex,
-    textSecondary: mix(v.foregroundHex, v.backgroundHex, 0.45),
-    focusRing: v.primaryHex,
-  });
 }

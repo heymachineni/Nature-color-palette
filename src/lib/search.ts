@@ -2,8 +2,7 @@ import type { BirdSummary } from "@/types/bird";
 import { normalizeColorQuery } from "@/lib/color/naming";
 
 /**
- * Filters birds by name, scientific name, or color family. Color search is
- * synonym-aware, so "crimson" matches red birds and "navy" matches blue ones.
+ * Filter birds by name, scientific name, or plumage color family.
  */
 export function filterBirds(
   birds: BirdSummary[],
@@ -16,8 +15,24 @@ export function filterBirds(
   return birds.filter((bird) => {
     if (bird.name.toLowerCase().includes(q)) return true;
     if (bird.scientificName.toLowerCase().includes(q)) return true;
-    return bird.colorTags.some(
-      (tag) => tag.includes(color) || color.includes(tag) || tag.includes(q),
-    ) || bird.characterTags.some((tag) => tag.includes(q));
+    return bird.colorFamilies.some(
+      (family) =>
+        family.includes(color) ||
+        color.includes(family) ||
+        family.includes(q),
+    );
   });
+}
+
+export function filterBirdsByColorFamily(
+  birds: BirdSummary[],
+  family: string | null,
+): BirdSummary[] {
+  if (!family) return birds;
+  const c = normalizeColorQuery(family);
+  return birds.filter((bird) =>
+    bird.colorFamilies.some(
+      (f) => f === c || f.includes(c) || c.includes(f),
+    ),
+  );
 }

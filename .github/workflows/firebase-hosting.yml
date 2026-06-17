@@ -9,6 +9,9 @@ on:
 permissions:
   contents: read
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -28,15 +31,24 @@ jobs:
       - name: Build static site
         run: npm run build:hosting
         env:
+          USE_JSON_DATA: "true"
           NEXT_PUBLIC_APP_URL: https://nature-colorpalette.web.app
           NEXT_PUBLIC_FIREBASE_PROJECT_ID: nature-colorpalette
           NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: nature-colorpalette.firebaseapp.com
           NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: nature-colorpalette.firebasestorage.app
 
+      - name: Verify build output
+        run: |
+          test -f out/index.html
+          echo "Static files:" && find out -maxdepth 2 -type f | head -20
+          echo "Total files:" && find out -type f | wc -l
+
       - name: Deploy to Firebase Hosting
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NATURE_COLORPALETTE }}
         run: |
-          printf '%s\n' "$FIREBASE_SERVICE_ACCOUNT" > "${RUNNER_TEMP}/firebase-sa.json"
-          export GOOGLE_APPLICATION_CREDENTIALS="${RUNNER_TEMP}/firebase-sa.json"
-          npx firebase-tools@13.29.1 deploy --only hosting --project nature-colorpalette --non-interactive
+          SA_FILE="${RUNNER_TEMP}/firebase-sa.json"
+          node -e "require('fs').writeFileSync(process.argv[1], process.env.FIREBASE_SERVICE_ACCOUNT)" "$SA_FILE"
+          node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$SA_FILE"
+          export GOOGLE_APPLICATION_CREDENTIALS="$SA_FILE"
+          npx firebase deploy --only hosting --project nature-colorpalette --non-interactive

@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "prisma generate && next build",
-    "build:hosting": "USE_JSON_DATA=true prisma generate && next build",
+    "dev": "USE_JSON_DATA=true next dev",
+    "build": "next build",
+    "build:hosting": "STATIC_EXPORT=true USE_JSON_DATA=true next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
@@ -13,11 +13,13 @@
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
     "db:seed": "tsx scripts/seed.ts",
-    "ingest": "tsx scripts/ingest.ts",
-    "refresh-colors": "tsx scripts/refresh-colors.ts",
-    "audit-colors": "tsx scripts/audit-colors.ts",
+    "build:hbw": "tsx scripts/build-from-hbw.ts",
+    "refresh-colors:hbw": "tsx scripts/refresh-hbw-colors.ts",
+    "refresh-photos:hbw": "tsx scripts/refresh-hbw-photos.ts",
+    "download:hbw": "bash scripts/download-hbw.sh",
+    "download:birdnet": "curl -sL 'https://birdnet.cornell.edu/taxonomy/api/download/csv' -o data/hbw/birdnet-taxonomy.csv",
     "seed:firestore": "tsx scripts/seed-firestore.ts",
-    "deploy:hosting": "npm run build:hosting && firebase deploy --only hosting"
+    "deploy:hosting": "bash scripts/deploy-hosting.sh"
   },
   "prisma": {
     "seed": "tsx scripts/seed.ts"
@@ -52,6 +54,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^9.17.0",
     "eslint-config-next": "^15.1.3",
+    "firebase-tools": "^13.29.1",
     "postcss": "^8.4.49",
     "prisma": "^6.1.0",
     "sharp": "^0.33.5",
