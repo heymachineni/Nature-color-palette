@@ -16,8 +16,6 @@ export function generateStaticParams() {
   return getBirdSlugs().map((slug) => ({ slug }));
 }
 
-export const dynamicParams = true;
-
 export async function generateMetadata({
   params,
 }: {
