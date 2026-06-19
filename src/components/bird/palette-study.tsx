@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Check, Copy } from "lucide-react";
 import { toast } from "sonner";
 import type { PlumageColorData } from "@/types/bird";
@@ -11,9 +11,29 @@ function formatShare(share: number) {
   return share >= 1 ? Math.round(share) : Math.round(share * 10) / 10;
 }
 
+/** Short pulse on Android; no-op on iOS Safari (no Vibration API). */
+function paletteHaptic(kind: "tick" | "copy" = "tick") {
+  try {
+    navigator.vibrate?.(kind === "copy" ? [12] : [6]);
+  } catch {
+    /* unsupported */
+  }
+}
+
+type DragState = {
+  pointerId: number;
+  startX: number;
+  startScroll: number;
+  moved: boolean;
+  lastIndex: number | null;
+};
+
 export function PaletteStudy({ colors }: { colors: PlumageColorData[] }) {
   const [copied, setCopied] = useState<string | null>(null);
   const [hovered, setHovered] = useState<number | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<DragState | null>(null);
 
   if (colors.length === 0) return null;
 
@@ -34,14 +54,85 @@ export function PaletteStudy({ colors }: { colors: PlumageColorData[] }) {
     }
   };
 
-
   const copyCss = () => {
     const lines = sorted.map((c, i) => {
-      const name = c.family.replace(/[^a-z0-9]+/gi, "-").toLowerCase() || `color-${i + 1}`;
+      const name =
+        c.family.replace(/[^a-z0-9]+/gi, "-").toLowerCase() || `color-${i + 1}`;
       return `  --${name}: ${c.hex.toUpperCase()}; /* ${formatShare(c.share)}% */`;
     });
     const css = `:root {\n${lines.join("\n")}\n}`;
     copy(css, "Copied as CSS variables");
+  };
+
+  const swatchIndexAt = (clientX: number): number | null => {
+    const root = scrollRef.current;
+    if (!root) return null;
+    const segments = root.querySelectorAll<HTMLElement>("[data-swatch]");
+    for (let i = 0; i < segments.length; i++) {
+      const rect = segments[i].getBoundingClientRect();
+      if (clientX >= rect.left && clientX <= rect.right) return i;
+    }
+    return null;
+  };
+
+  const highlightSwatch = (index: number | null, withHaptic = false) => {
+    setHovered((prev) => {
+      if (withHaptic && index !== null && prev !== index) paletteHaptic("tick");
+      return index;
+    });
+  };
+
+  const onBarPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!scrollRef.current) return;
+    dragRef.current = {
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startScroll: scrollRef.current.scrollLeft,
+      moved: false,
+      lastIndex: swatchIndexAt(e.clientX),
+    };
+    scrollRef.current.setPointerCapture(e.pointerId);
+    highlightSwatch(dragRef.current.lastIndex);
+  };
+
+  const onBarPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== e.pointerId || !scrollRef.current) return;
+
+    const dx = e.clientX - drag.startX;
+    if (Math.abs(dx) > 4) {
+      if (!drag.moved) {
+        drag.moved = true;
+        setDragging(true);
+      }
+      scrollRef.current.scrollLeft = drag.startScroll - dx;
+    }
+
+    const index = swatchIndexAt(e.clientX);
+    if (index !== null && index !== drag.lastIndex) {
+      drag.lastIndex = index;
+      highlightSwatch(index, true);
+    } else if (index !== null) {
+      highlightSwatch(index);
+    }
+  };
+
+  const endBarDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== e.pointerId) return;
+
+    scrollRef.current?.releasePointerCapture(e.pointerId);
+
+    if (!drag.moved) {
+      const index = swatchIndexAt(e.clientX);
+      if (index !== null) {
+        copy(sorted[index].hex, `Copied ${sorted[index].hex.toUpperCase()}`);
+        paletteHaptic("copy");
+      }
+    }
+
+    dragRef.current = null;
+    setDragging(false);
   };
 
   return (
@@ -52,7 +143,12 @@ export function PaletteStudy({ colors }: { colors: PlumageColorData[] }) {
             Palette
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            {colors.length} colors · tap any to copy hex
+            <span className="lg:hidden">
+              {colors.length} colors · drag to explore · tap to copy
+            </span>
+            <span className="hidden lg:inline">
+              {colors.length} colors · hover or drag · click to copy hex
+            </span>
           </p>
         </div>
         <button
@@ -64,27 +160,46 @@ export function PaletteStudy({ colors }: { colors: PlumageColorData[] }) {
         </button>
       </div>
 
-      {/* Proportional combination — the overall feel of the bird.
-          Min 12px per color; on small screens it overflows and can be dragged. */}
       <div
-        className="no-scrollbar flex h-14 w-full cursor-grab overflow-x-auto overscroll-x-contain rounded-2xl ring-1 ring-inset ring-black/[0.06] active:cursor-grabbing sm:h-16"
+        ref={scrollRef}
+        className={cn(
+          "no-scrollbar flex h-14 w-full select-none overflow-x-auto overscroll-x-contain rounded-2xl ring-1 ring-inset ring-black/[0.06] sm:h-16",
+          "touch-none cursor-grab active:cursor-grabbing",
+          dragging && "cursor-grabbing",
+        )}
         role="group"
-        aria-label="Plumage color proportions"
-        onMouseLeave={() => setHovered(null)}
+        aria-label="Plumage color proportions. Drag to browse, tap to copy hex."
+        onPointerDown={onBarPointerDown}
+        onPointerMove={onBarPointerMove}
+        onPointerUp={endBarDrag}
+        onPointerCancel={endBarDrag}
+        onMouseLeave={() => {
+          if (!dragRef.current) setHovered(null);
+        }}
       >
         {sorted.map((c, i) => {
           const isActive = hovered === i;
           const dimmed = hovered !== null && !isActive;
           return (
-            <button
+            <div
               key={`bar-${c.hex}-${i}`}
-              type="button"
-              onMouseEnter={() => setHovered(i)}
-              onFocus={() => setHovered(i)}
-              onClick={() => copy(c.hex, `Copied ${c.hex.toUpperCase()}`)}
-              title={`Copy ${c.hex.toUpperCase()} · ${formatShare(c.share)}%`}
+              data-swatch
+              role="button"
+              tabIndex={0}
+              onMouseEnter={() => {
+                if (!dragRef.current) highlightSwatch(i);
+              }}
+              onFocus={() => highlightSwatch(i)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  copy(c.hex, `Copied ${c.hex.toUpperCase()}`);
+                  paletteHaptic("copy");
+                }
+              }}
+              title={`${c.hex.toUpperCase()} · ${formatShare(c.share)}%`}
               aria-label={`${c.family}, ${c.hex.toUpperCase()}, ${formatShare(c.share)} percent`}
-              className="relative flex items-end justify-center overflow-hidden outline-none transition-[flex-grow,opacity] duration-300 ease-out"
+              className="relative flex shrink-0 items-end justify-center overflow-hidden outline-none transition-[flex-grow,opacity] duration-300 ease-out focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foreground/40"
               style={{
                 flexGrow: isActive ? c.share + total * 0.6 : c.share,
                 flexBasis: 0,
@@ -95,19 +210,18 @@ export function PaletteStudy({ colors }: { colors: PlumageColorData[] }) {
             >
               <span
                 className={cn(
-                  "mb-2.5 font-mono text-[10px] uppercase tracking-wide transition-opacity duration-200",
+                  "pointer-events-none mb-2.5 font-mono text-[10px] uppercase tracking-wide transition-opacity duration-200",
                   isActive ? "opacity-100" : "opacity-0",
                 )}
                 style={{ color: bestTextOn(c.hex) }}
               >
                 {c.hex}
               </span>
-            </button>
+            </div>
           );
         })}
       </div>
 
-      {/* Each color, named and copyable. */}
       <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
         {sorted.map((c, i) => {
           const isCopied = copied === c.hex;
