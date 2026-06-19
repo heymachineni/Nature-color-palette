@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: "%s — Bird Palette",
   },
   description:
-    "Real bird color combinations for inspiration.",
+    "Bird color combinations for inspiration.",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
