@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { InfoBackLink } from "@/components/layout/info-back-link";
 import { InfoEmailLink, InfoExternalLink } from "@/components/layout/info-links";
 import { InfoPageFooter } from "@/components/layout/info-page-footer";
+import { ScrollToTop } from "@/components/layout/scroll-to-top";
 
 export const metadata: Metadata = {
   title: "perch",
@@ -31,6 +32,7 @@ const SOURCES = [
 export default function PerchPage() {
   return (
     <div className="container pb-24 pt-3 sm:pt-5">
+      <ScrollToTop />
       <article className="mx-auto max-w-xl pt-2 sm:pt-4">
         <InfoBackLink />
 
@@ -51,6 +53,30 @@ export default function PerchPage() {
             carries and how they come together.
           </p>
         </section>
+
+        <aside className="mt-8 overflow-hidden rounded-2xl border border-border/70 bg-[#f3f0ea]">
+          <div className="flex">
+            <div
+              className="w-1 shrink-0 self-stretch"
+              aria-hidden
+              style={{
+                background:
+                  "linear-gradient(to bottom, #b8c9b8 0%, #c9c4b8 45%, #b8c4cf 100%)",
+              }}
+            />
+            <div className="px-5 py-5 sm:px-6">
+              <h2 className="font-serif text-lg tracking-tight text-foreground">
+                A note on color
+              </h2>
+              <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+                Palettes are built from ornithological plumage data. Photos are
+                from the field. Birds change with season, sex, and age, so what
+                you see in the image may not line up with every swatch. That is
+                expected, not an error.
+              </p>
+            </div>
+          </div>
+        </aside>
 
         <section className="mt-12">
           <h2 className="font-serif text-2xl tracking-tight text-foreground">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { InfoBackLink } from "@/components/layout/info-back-link";
 import { InfoEmailLink } from "@/components/layout/info-links";
 import { InfoPageFooter } from "@/components/layout/info-page-footer";
+import { ScrollToTop } from "@/components/layout/scroll-to-top";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <div className="container pb-24 pt-3 sm:pt-5">
+      <ScrollToTop />
       <article className="mx-auto max-w-xl pt-2 sm:pt-4">
         <InfoBackLink />
 
