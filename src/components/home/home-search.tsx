@@ -28,10 +28,14 @@ export function HomeSearch({
 
   return (
     <>
-      {/* Fade scrim — content dissolves into the background behind the bar. */}
+      {/* Full-width bottom scrim — fade height unchanged; gradient spans the viewport. */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-x-0 bottom-0 z-40 h-40 bg-gradient-to-t from-background via-background/70 to-transparent"
+        className="pointer-events-none fixed bottom-0 left-0 z-40 h-40 w-screen max-w-[100vw]"
+        style={{
+          background:
+            "linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background) / 0.82) 42%, transparent 100%)",
+        }}
       />
 
       <div className="fixed inset-x-0 bottom-5 z-50 flex justify-center px-4">
