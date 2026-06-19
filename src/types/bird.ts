@@ -14,6 +14,11 @@ export type ThemeTokensData = {
   border: string;
 };
 
+export type PaletteSwatch = {
+  hex: string;
+  share: number;
+};
+
 export type BirdSummary = {
   id: string;
   slug: string;
@@ -24,20 +29,17 @@ export type BirdSummary = {
   colorFamilies: string[];
   /** Up to 4 hex swatches for grid cards. */
   preview: string[];
-};
-
-export type SimilarBirdData = {
-  slug: string;
-  name: string;
-  imageUrl: string;
-  preview: string[];
+  /** Every plumage color with its proportion — for the full-width gallery swatch. */
+  palette: PaletteSwatch[];
+  /** Full named plumage colors — powers the detail modal. */
+  colors: PlumageColorData[];
+  /** Slugs of similar birds — resolved client-side for related palettes. */
+  similar: string[];
 };
 
 export type BirdDetail = BirdSummary & {
-  colors: PlumageColorData[];
   theme: ThemeTokensData;
   wcagAA: boolean;
-  similar: SimilarBirdData[];
 };
 
 /** Slim index entry for client-side search (public/data/index.json). */
@@ -49,4 +51,7 @@ export type BirdIndexEntry = {
   imageUrl: string;
   colorFamilies: string[];
   preview: string[];
+  palette: PaletteSwatch[];
+  colors: PlumageColorData[];
+  similar: string[];
 };

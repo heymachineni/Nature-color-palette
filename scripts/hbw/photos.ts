@@ -1,12 +1,15 @@
+import { createHash } from "node:crypto";
 import { readFile, writeFile, mkdir, access } from "node:fs/promises";
 import path from "node:path";
 import { birdNetImageUrl, loadBirdNetImages } from "./birdnet";
+import {
+  isBirdNetImageUrl,
+  isBirdNetPlaceholderBytes,
+  BIRDNET_PLACEHOLDER_MAX_BYTES,
+} from "../../src/lib/photos/birdnet-placeholder";
+import { isBirdPlaceholderUrl } from "../../src/lib/photos/placeholder";
 
 const CACHE = path.join(process.cwd(), "data", "hbw", "photo-cache.json");
-const PLACEHOLDER = "/images/bird-placeholder.svg";
-
-/** BirdNET returns this generic silhouette when no Macaulay/iNat photo exists. */
-const BIRDNET_PLACEHOLDER_BYTES = 1646;
 
 type PhotoCache = Record<string, string>;
 
@@ -26,16 +29,44 @@ async function saveCache(cache: PhotoCache) {
   await writeFile(CACHE, JSON.stringify(cache, null, 2));
 }
 
+function hashBytes(buf: Buffer): string {
+  return createHash("sha256").update(buf).digest("hex");
+}
+
+/** fetch with an abort timeout so a single hung connection can't stall the run. */
+async function fetchWithTimeout(
+  input: string | URL,
+  init: RequestInit = {},
+  timeoutMs = 15000,
+): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(input, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 /** True when BirdNET serves the generic default silhouette, not a real species photo. */
 export async function isBirdNetPlaceholder(url: string): Promise<boolean> {
-  if (!url.includes("birdnet.cornell.edu/taxonomy/api/image")) {
+  if (!isBirdNetImageUrl(url)) {
     return false;
   }
   try {
-    const resp = await fetch(url, { method: "HEAD" });
+    const resp = await fetchWithTimeout(url);
     if (!resp.ok) return true;
-    const len = Number(resp.headers.get("content-length") ?? 0);
-    return len > 0 && len <= BIRDNET_PLACEHOLDER_BYTES;
+
+    const contentLength = Number(resp.headers.get("content-length") ?? 0);
+    if (contentLength > BIRDNET_PLACEHOLDER_MAX_BYTES) {
+      return false;
+    }
+    if (contentLength > 0 && contentLength <= 1646) {
+      return true;
+    }
+
+    const buf = Buffer.from(await resp.arrayBuffer());
+    return isBirdNetPlaceholderBytes(buf.length, hashBytes(buf));
   } catch {
     return true;
   }
@@ -68,7 +99,7 @@ async function inaturalistTaxonPhoto(
   url.searchParams.set("per_page", "5");
   url.searchParams.set("is_active", "true");
 
-  const resp = await fetch(url);
+  const resp = await fetchWithTimeout(url);
   if (!resp.ok) return null;
 
   const data = (await resp.json()) as {
@@ -98,7 +129,29 @@ export async function resolveBirdPhoto(
   },
 ): Promise<string> {
   const key = scientificName.toLowerCase();
-  if (cache[key]) return cache[key];
+
+  if (cache[key]) {
+    const cached = cache[key];
+
+    if (isBirdPlaceholderUrl(cached)) {
+      delete cache[key];
+    } else if (cached.startsWith("/birds/")) {
+      try {
+        await access(path.join(process.cwd(), "public", cached.slice(1)));
+        return cached;
+      } catch {
+        delete cache[key];
+      }
+    } else if (
+      opts.fetchPhotos &&
+      isBirdNetImageUrl(cached) &&
+      (await isBirdNetPlaceholder(cached))
+    ) {
+      delete cache[key];
+    } else if (!cached.startsWith("/birds/")) {
+      return cached;
+    }
+  }
 
   const sciSlug = scientificName
     .trim()
@@ -119,7 +172,7 @@ export async function resolveBirdPhoto(
     /* no local image */
   }
 
-  if (!opts.fetchPhotos) return PLACEHOLDER;
+  if (!opts.fetchPhotos) return "";
 
   let birdnet: string | null = null;
   try {
@@ -149,8 +202,7 @@ export async function resolveBirdPhoto(
     /* network error */
   }
 
-  cache[key] = PLACEHOLDER;
-  return PLACEHOLDER;
+  return "";
 }
 
 export async function createPhotoResolver(opts: {
@@ -199,5 +251,3 @@ export async function createPhotoResolver(opts: {
     cache,
   };
 }
-
-export { PLACEHOLDER };

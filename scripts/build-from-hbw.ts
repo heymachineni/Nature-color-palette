@@ -28,6 +28,7 @@ import {
   previewHexes,
 } from "../src/lib/color/plumage";
 import { rankSimilarBirds } from "../src/lib/color/similarity";
+import { hasBirdImage } from "../src/lib/photos/placeholder";
 import type { BirdRecord } from "./bird-record";
 
 const OUTPUT = path.join(process.cwd(), "prisma", "seed", "dataset.json");
@@ -43,6 +44,18 @@ function parseArgs(argv: string[]) {
     useFixture: argv.includes("--fixture"),
     refreshPhotos: argv.includes("--refresh-photos"),
   };
+}
+
+const MAX_SIMILARITY_CANDIDATES = 250;
+
+function capSimilarityPool<T>(pool: T[], max: number): T[] {
+  if (pool.length <= max) return pool;
+  const step = pool.length / max;
+  const capped: T[] = [];
+  for (let k = 0; k < max; k++) {
+    capped.push(pool[Math.floor(k * step)]);
+  }
+  return capped;
 }
 
 function withSimilarity(birds: BirdRecord[]): BirdRecord[] {
@@ -71,18 +84,19 @@ function withSimilarity(birds: BirdRecord[]): BirdRecord[] {
       }
     }
 
-    const pool =
+    const rawPool =
       candidateIdx.size > 0
         ? [...candidateIdx].map((j) => index[j])
         : index.filter((_, j) => j !== i);
 
+    const pool = capSimilarityPool(rawPool, MAX_SIMILARITY_CANDIDATES);
     const ranked = rankSimilarBirds(target, pool, 8);
     birds[i].similar = ranked.slice(0, 4).map((r) => ({
       slug: r.birdId,
       rank: r.rank,
     }));
 
-    if ((i + 1) % 2000 === 0 || i + 1 === birds.length) {
+    if ((i + 1) % 200 === 0 || i + 1 === birds.length) {
       process.stdout.write(`\r  Similarity ${i + 1}/${birds.length}`);
     }
   }
@@ -99,6 +113,9 @@ function buildSearchIndex(birds: BirdRecord[]) {
     imageUrl: b.imageUrl,
     colorFamilies: b.colorFamilies,
     preview: previewHexes(b.colors),
+    palette: b.colors.map((c) => ({ hex: c.hex, share: c.share })),
+    colors: b.colors,
+    similar: (b.similar ?? []).map((s) => s.slug),
   }));
 }
 
@@ -159,6 +176,10 @@ async function main() {
 
     const theme = buildThemeFromPlumage(colors);
     const imageUrl = await photos.get(ill.scientificName, ill.commonName);
+    if (!hasBirdImage(imageUrl)) {
+      skipped++;
+      continue;
+    }
 
     birds.push({
       slug,

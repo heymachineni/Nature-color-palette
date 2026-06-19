@@ -2,12 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
-import { getBirdBySlug, getBirdSlugs } from "@/lib/data/birds";
-import { BirdPhoto } from "@/components/bird/bird-photo";
-import { ColorCombination } from "@/components/bird/color-combination";
-import { UiPreview } from "@/components/bird/ui-preview";
-import { SimilarBirdsSection } from "@/components/bird/similar-birds-section";
-import { Badge } from "@/components/ui/badge";
+import { getBirdBySlug, getBirdSlugs, getBirds } from "@/lib/data/birds";
+import { hasBirdImage } from "@/lib/photos/placeholder";
+import { BirdDetailContent } from "@/components/bird/bird-detail-content";
 
 export function generateStaticParams() {
   if (process.env.STATIC_EXPORT !== "true") {
@@ -31,7 +28,9 @@ export async function generateMetadata({
     openGraph: {
       title: `${bird.name} — Nature Palette`,
       description: `Plumage colors: ${families}`,
-      images: [bird.imageUrl],
+      ...(hasBirdImage(bird.imageUrl)
+        ? { images: [bird.imageUrl] }
+        : {}),
     },
   };
 }
@@ -45,75 +44,27 @@ export default async function BirdPage({
   const bird = await getBirdBySlug(slug);
   if (!bird) notFound();
 
+  const all = await getBirds();
+  const bySlug = new Map(all.map((b) => [b.slug, b]));
+  const related = bird.similar
+    .map((s) => bySlug.get(s))
+    .filter((b): b is NonNullable<typeof b> => Boolean(b))
+    .slice(0, 4);
+
   return (
-    <div className="container pb-20 pt-2 sm:pb-28">
+    <div className="container pb-24 pt-3 sm:pt-5">
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        scroll={false}
+        className="group inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
-        <ArrowLeft className="size-4" />
+        <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" />
         All birds
       </Link>
 
-      <article className="mx-auto mt-5 max-w-4xl space-y-10 sm:mt-8 sm:space-y-12">
-        <div className="flex flex-col gap-6 sm:gap-8 lg:grid lg:grid-cols-2 lg:items-start lg:gap-10">
-          <BirdPhoto
-            src={bird.imageUrl}
-            alt={bird.name}
-            variant="hero"
-            ambientColor={bird.colors[0]?.hex}
-          />
-
-          <div className="space-y-5">
-            <header>
-              <h1 className="font-serif text-[1.75rem] leading-[1.08] tracking-tight text-foreground sm:text-4xl">
-                {bird.name}
-              </h1>
-              <p className="mt-2 text-sm text-muted-foreground sm:text-[15px]">
-                <span className="italic">{bird.scientificName}</span>
-                <span className="px-2 text-border">·</span>
-                {bird.region}
-              </p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {bird.colorFamilies.map((family) => (
-                  <Badge
-                    key={family}
-                    variant="secondary"
-                    className="font-normal capitalize"
-                  >
-                    {family}
-                  </Badge>
-                ))}
-              </div>
-            </header>
-
-            <section>
-              <h2 className="mb-3 text-sm font-medium text-foreground">
-                Color combination
-              </h2>
-              <ColorCombination colors={bird.colors} />
-            </section>
-          </div>
-        </div>
-
-        <section className="space-y-3">
-          <div className="flex items-center justify-between gap-2">
-            <h2 className="text-sm font-medium text-foreground">In UI</h2>
-            {bird.wcagAA ? (
-              <Badge variant="secondary" className="font-normal text-xs">
-                Passes WCAG AA
-              </Badge>
-            ) : (
-              <Badge variant="secondary" className="font-normal text-xs">
-                Check contrast before use
-              </Badge>
-            )}
-          </div>
-          <UiPreview theme={bird.theme} />
-        </section>
-
-        <SimilarBirdsSection similar={bird.similar} />
-      </article>
+      <div className="mt-6 sm:mt-8">
+        <BirdDetailContent bird={bird} related={related} />
+      </div>
     </div>
   );
 }

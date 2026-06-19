@@ -1,4 +1,3 @@
-import { colorDistance } from "./extract";
 import { nameColor } from "./naming";
 import { rgbToHex } from "./convert";
 import type { PlumageColor } from "./plumage";
@@ -8,15 +7,6 @@ export type HbwColorGroup = {
   label: string;
   hex: string;
 };
-
-const NEUTRAL_LABELS = new Set([
-  "white",
-  "background",
-  "bg",
-  "gray",
-  "grey",
-  "black",
-]);
 
 function familyFromHbwLabel(label: string, hex: string): string {
   const l = label.trim().toLowerCase();
@@ -34,84 +24,32 @@ function familyFromHbwLabel(label: string, hex: string): string {
   return fromLabel[l] ?? nameColor(hex);
 }
 
-const MIN_SHARE = 5;
-const MAX_PLUMAGE = 6;
-
-function isBackgroundGroup(label: string, hex: string): boolean {
-  const l = label.trim().toLowerCase();
-  if (NEUTRAL_LABELS.has(l)) return true;
-  if (l.includes("white") || l.includes("background")) return true;
-  const family = nameColor(hex);
-  return family === "white" && l !== "cream";
-}
-
-function dedupePlumage(colors: PlumageColor[]): PlumageColor[] {
-  const byFamily = new Map<string, PlumageColor>();
-  for (const c of colors) {
-    const prev = byFamily.get(c.family);
-    if (!prev || c.share > prev.share) byFamily.set(c.family, c);
-  }
-
-  const perceptual: PlumageColor[] = [];
-  for (const c of [...byFamily.values()].sort((a, b) => b.share - a.share)) {
-    const dup = perceptual.find((d) => colorDistance(d.hex, c.hex) < 12);
-    if (dup) {
-      if (c.share > dup.share) {
-        dup.hex = c.hex;
-        dup.share = c.share;
-        dup.family = c.family;
-      }
-    } else {
-      perceptual.push({ ...c });
-    }
-  }
-
-  return perceptual.sort((a, b) => b.share - a.share).slice(0, MAX_PLUMAGE);
-}
-
-/** Convert HBW color1–color24 proportions into app plumage colors. */
+/**
+ * Convert HBW color1–color24 proportions into app plumage colors.
+ * Shows EVERY color present in the dataset — no thresholds, no dedupe, no filtering.
+ * A color is included whenever its proportion is greater than zero.
+ */
 export function plumageFromHbwProportions(
   proportions: number[],
   groups: HbwColorGroup[],
 ): PlumageColor[] {
-  const raw: PlumageColor[] = [];
+  const colors: PlumageColor[] = [];
 
   for (let i = 0; i < proportions.length; i++) {
-    const share = Math.round(proportions[i] * 100);
-    if (share < MIN_SHARE) continue;
+    const proportion = proportions[i];
+    if (!(proportion > 0)) continue;
+
     const group = groups[i];
     if (!group) continue;
-    if (isBackgroundGroup(group.label, group.hex)) continue;
 
-    const family = familyFromHbwLabel(group.label, group.hex);
-    if (family === "white") continue;
-
-    raw.push({
+    colors.push({
       hex: group.hex,
-      family,
-      share,
+      family: familyFromHbwLabel(group.label, group.hex),
+      share: Math.round(proportion * 1000) / 10,
     });
   }
 
-  const result = dedupePlumage(raw);
-  if (result.length >= 2) return result;
-
-  // Keep at least one chromatic tone if illustration is mostly neutral.
-  for (let i = 0; i < proportions.length; i++) {
-    const share = Math.round(proportions[i] * 100);
-    if (share < 3) continue;
-    const group = groups[i];
-    if (!group) continue;
-    const family = familyFromHbwLabel(group.label, group.hex);
-    if (family === "white") continue;
-    raw.push({
-      hex: group.hex,
-      family,
-      share,
-    });
-  }
-
-  return dedupePlumage(raw);
+  return colors.sort((a, b) => b.share - a.share);
 }
 
 export function parseHbwColorGroups(rows: Record<string, string>[]): HbwColorGroup[] {

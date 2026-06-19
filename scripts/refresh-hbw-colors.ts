@@ -69,6 +69,7 @@ async function main() {
     imageUrl: b.imageUrl,
     colorFamilies: b.colorFamilies,
     preview: previewHexes(b.colors),
+    palette: b.colors.map((c) => ({ hex: c.hex, share: c.share })),
   }));
 
   await writeFile(

@@ -12,10 +12,10 @@ import type {
   BirdDetail,
   BirdSummary,
   BirdIndexEntry,
-  SimilarBirdData,
   ThemeTokensData,
   PlumageColorData,
 } from "@/types/bird";
+import { filterBirdsWithPhotos, hasBirdImage } from "@/lib/photos/placeholder";
 
 export type RawBirdRecord = {
   slug: string;
@@ -180,7 +180,7 @@ function load(): RawBirdRecord[] {
   const parsed = JSON.parse(readFileSync(file, "utf-8")) as {
     birds: LegacyBirdRecord[];
   };
-  const birds = parsed.birds.map(normalizeBirdRecord);
+  const birds = filterBirdsWithPhotos(parsed.birds.map(normalizeBirdRecord));
   if (process.env.NODE_ENV === "production") {
     cache = birds;
   }
@@ -194,6 +194,7 @@ export function getDatasetBirds(): RawBirdRecord[] {
 export function toSummary(b: RawBirdRecord): BirdSummary {
   const colors = b.colors ?? [];
   const preview = colors.slice(0, 4).map((c) => c.hex);
+  const palette = colors.map((c) => ({ hex: c.hex, share: c.share }));
   return {
     id: b.slug,
     slug: b.slug,
@@ -203,35 +204,19 @@ export function toSummary(b: RawBirdRecord): BirdSummary {
     imageUrl: b.imageUrl,
     colorFamilies: b.colorFamilies ?? [],
     preview: preview.length ? preview : ["#64748B"],
+    palette: palette.length ? palette : [{ hex: "#64748B", share: 100 }],
+    colors,
+    similar: (b.similar ?? []).map((s) => s.slug),
   };
 }
 
-export function toDetail(b: RawBirdRecord, all: RawBirdRecord[]): BirdDetail {
-  const bySlug = new Map(all.map((x) => [x.slug, x]));
-  const similar: SimilarBirdData[] = (b.similar ?? [])
-    .map((s) => {
-      const ref = bySlug.get(s.slug);
-      if (!ref) return null;
-      return {
-        slug: ref.slug,
-        name: ref.name,
-        imageUrl: ref.imageUrl,
-        preview: toSummary(ref).preview,
-      };
-    })
-    .filter((x): x is SimilarBirdData => x !== null)
-    .slice(0, 4);
-
-  const theme =
-    b.theme ??
-    buildThemeFromPlumage(b.colors ?? []);
-
+export function toDetail(b: RawBirdRecord, _all: RawBirdRecord[]): BirdDetail {
+  void _all;
+  const theme = b.theme ?? buildThemeFromPlumage(b.colors ?? []);
   return {
     ...toSummary(b),
-    colors: b.colors ?? [],
     theme,
     wcagAA: b.wcagAA ?? passesWcagAA(theme),
-    similar,
   };
 }
 
@@ -242,14 +227,20 @@ export function loadSearchIndex(): BirdSummary[] {
     return getDatasetBirds().map(toSummary);
   }
   const entries = JSON.parse(readFileSync(file, "utf-8")) as BirdIndexEntry[];
-  return entries.map((e) => ({
+  const kept = entries.filter((e) => hasBirdImage(e.imageUrl ?? ""));
+  const slugs = new Set(kept.map((e) => e.slug));
+
+  return kept.map((e) => ({
     id: e.slug,
     slug: e.slug,
     name: e.name,
     scientificName: e.scientificName,
     region: e.region ?? "",
-    imageUrl: e.imageUrl ?? `/birds/${e.slug}.webp`,
+    imageUrl: e.imageUrl ?? "",
     colorFamilies: e.colorFamilies,
     preview: e.preview?.length ? e.preview : ["#64748B"],
+    palette: e.palette?.length ? e.palette : [{ hex: "#64748B", share: 100 }],
+    colors: e.colors ?? [],
+    similar: (e.similar ?? []).filter((s) => slugs.has(s)),
   }));
 }

@@ -21,28 +21,40 @@ async function main() {
   const photos = await createPhotoResolver({
     fetchPhotos: true,
     refreshCache: process.argv.includes("--refresh-cache"),
-    delayMs: 200,
+    delayMs: 0,
   });
 
   let birdnet = 0;
   let inat = 0;
   let local = 0;
   let placeholder = 0;
+  let done = 0;
 
-  for (let i = 0; i < birds.length; i++) {
-    const b = birds[i];
-    const url = await photos.get(b.scientificName, b.name);
-    b.imageUrl = url;
+  const CONCURRENCY = 16;
+  let cursor = 0;
 
-    if (url.includes("birdnet.cornell.edu")) birdnet++;
-    else if (url.includes("inaturalist")) inat++;
-    else if (url.startsWith("/birds/")) local++;
-    else placeholder++;
+  async function worker() {
+    while (cursor < birds.length) {
+      const i = cursor++;
+      const b = birds[i];
+      const url = await photos.get(b.scientificName, b.name);
+      b.imageUrl = url;
 
-    if ((i + 1) % 500 === 0 || i + 1 === birds.length) {
-      process.stdout.write(`\r  ${i + 1}/${birds.length}`);
+      if (url.includes("birdnet.cornell.edu")) birdnet++;
+      else if (url.includes("inaturalist")) inat++;
+      else if (url.startsWith("/birds/")) local++;
+      else placeholder++;
+
+      done++;
+      if (done % 500 === 0 || done === birds.length) {
+        process.stdout.write(`\r  ${done}/${birds.length}`);
+      }
     }
   }
+
+  await Promise.all(
+    Array.from({ length: CONCURRENCY }, () => worker()),
+  );
 
   await photos.flush();
 
@@ -54,6 +66,7 @@ async function main() {
     imageUrl: b.imageUrl,
     colorFamilies: b.colorFamilies,
     preview: previewHexes(b.colors),
+    palette: b.colors.map((c) => ({ hex: c.hex, share: c.share })),
   }));
 
   await writeFile(

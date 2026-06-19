@@ -2,45 +2,67 @@ import Link from "next/link";
 import type { BirdSummary } from "@/types/bird";
 import { BirdPhoto } from "@/components/bird/bird-photo";
 
-export function BirdThumbnail({
-  bird,
-  priority = false,
-}: {
-  bird: BirdSummary;
-  priority?: boolean;
-}) {
-  return (
-    <Link href={`/birds/${bird.slug}`} className="group block">
-      <BirdPhoto
-        src={bird.imageUrl}
-        alt={bird.name}
-        variant="card"
-        priority={priority}
-        ambientColor={bird.preview[0]}
-      />
+function CardBody({ bird, priority }: { bird: BirdSummary; priority: boolean }) {
+  const swatches = bird.palette.filter((c) => c.share > 0);
 
-      <div className="mt-3 flex items-start justify-between gap-3 sm:mt-3.5">
-        <div className="min-w-0">
-          <p className="truncate font-serif text-base leading-tight text-foreground sm:text-[17px]">
-            {bird.name}
-          </p>
-          <p className="mt-0.5 truncate text-sm italic text-muted-foreground">
-            {bird.scientificName}
-          </p>
-        </div>
+  return (
+    <div className="rounded-2xl bg-muted/70 p-2">
+      <div className="relative overflow-hidden rounded-xl group-hover:rounded-b-none">
+        <BirdPhoto
+          src={bird.imageUrl}
+          alt={bird.name}
+          variant="card"
+          priority={priority}
+          scientificName={bird.scientificName}
+          commonName={bird.name}
+        />
+      </div>
+
+      <div className="px-1.5 pb-0.5 pt-2.5">
+        <p className="truncate font-serif text-[15px] leading-tight text-foreground sm:text-base">
+          {bird.name}
+        </p>
+
         <div
-          className="mt-0.5 flex shrink-0 overflow-hidden rounded-full ring-1 ring-inset ring-border/70 sm:mt-1"
+          className="mt-2 flex h-3 w-full overflow-hidden rounded-full ring-1 ring-inset ring-black/[0.06]"
           aria-hidden
         >
-          {bird.preview.slice(0, 5).map((hex, i) => (
+          {swatches.map((c, i) => (
             <span
-              key={hex + i}
-              className="size-3 sm:size-3.5"
-              style={{ backgroundColor: hex }}
+              key={`${c.hex}-${i}`}
+              style={{ flexGrow: c.share, backgroundColor: c.hex }}
             />
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+export function BirdThumbnail({
+  bird,
+  priority = false,
+  onOpen,
+}: {
+  bird: BirdSummary;
+  priority?: boolean;
+  onOpen?: (bird: BirdSummary) => void;
+}) {
+  if (onOpen) {
+    return (
+      <button
+        type="button"
+        onClick={() => onOpen(bird)}
+        className="group block w-full text-left"
+      >
+        <CardBody bird={bird} priority={priority} />
+      </button>
+    );
+  }
+
+  return (
+    <Link href={`/birds/${bird.slug}`} className="group block">
+      <CardBody bird={bird} priority={priority} />
     </Link>
   );
 }
