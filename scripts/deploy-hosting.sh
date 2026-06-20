@@ -5,6 +5,8 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 echo "→ Building static site..."
+node scripts/prepare-static-export.mjs hide
+trap 'node scripts/prepare-static-export.mjs restore' EXIT
 npm run build:hosting
 
 SA="${FIREBASE_SERVICE_ACCOUNT_PATH:-}"
