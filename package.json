@@ -18,7 +18,8 @@
     "refresh-photos": "tsx scripts/refresh-photos.ts",
     "download:birdnet": "curl -sL 'https://birdnet.cornell.edu/taxonomy/api/download/csv' -o data/birdnet/birdnet-taxonomy.csv",
     "seed:firestore": "tsx scripts/seed-firestore.ts",
-    "deploy:hosting": "bash scripts/deploy-hosting.sh"
+    "deploy:hosting": "bash scripts/deploy-hosting.sh",
+    "deploy:functions": "bash scripts/deploy-functions.sh"
   },
   "prisma": {
     "seed": "tsx scripts/seed.ts"

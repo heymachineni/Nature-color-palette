@@ -1,0 +1,37 @@
+name: Deploy Cloud Functions
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy_functions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install Cloud Functions dependencies
+        run: npm install --prefix functions --no-audit --no-fund
+
+      # Requires GCP IAM on the service account:
+      # - roles/serviceusage.serviceUsageConsumer
+      # - roles/cloudfunctions.developer
+      # - roles/iam.serviceAccountUser
+      - name: Deploy photoSample function
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NATURE_COLORPALETTE }}
+        run: |
+          SA_FILE="${RUNNER_TEMP}/firebase-sa.json"
+          node -e "require('fs').writeFileSync(process.argv[1], process.env.FIREBASE_SERVICE_ACCOUNT)" "$SA_FILE"
+          node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$SA_FILE"
+          export GOOGLE_APPLICATION_CREDENTIALS="$SA_FILE"
+          npx firebase deploy --only functions:photoSample --project birdpalette --non-interactive

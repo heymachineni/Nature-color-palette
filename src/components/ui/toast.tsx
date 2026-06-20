@@ -5,22 +5,19 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
 import { bindToast } from "@/lib/toast";
 import { cn } from "@/lib/utils";
 
-const MAX_STACK = 3;
-const EXIT_MS = 300;
-const PEEK_PX = 10;
-/** Each step back in the stack shrinks noticeably (depth 1 → 92%, depth 2 → 84%). */
-const SCALE_STEP = 0.08;
+const EXIT_MS = 280;
 
 type ToastItem = {
   id: number;
   content: ReactNode;
-  exiting: boolean;
+  visible: boolean;
 };
 
 type ToastContextValue = {
@@ -41,91 +38,118 @@ export function toastClassName(className?: string) {
 }
 
 export function ToastProvider({ children }: { children: ReactNode }) {
-  const [toasts, setToasts] = useState<ToastItem[]>([]);
+  const [toast, setToast] = useState<ToastItem | null>(null);
+  const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const swapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const dismiss = useCallback((id: number) => {
-    setToasts((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, exiting: true } : t)),
-    );
-    window.setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
+  const clearDismissTimer = () => {
+    if (dismissTimerRef.current) {
+      clearTimeout(dismissTimerRef.current);
+      dismissTimerRef.current = null;
+    }
+  };
+
+  const clearSwapTimer = () => {
+    if (swapTimerRef.current) {
+      clearTimeout(swapTimerRef.current);
+      swapTimerRef.current = null;
+    }
+  };
+
+  const fadeIn = useCallback((id: number) => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setToast((current) =>
+          current?.id === id ? { ...current, visible: true } : current,
+        );
+      });
+    });
+  }, []);
+
+  const fadeOutAndRemove = useCallback((id: number) => {
+    setToast((current) => {
+      if (!current || current.id !== id) return current;
+      return { ...current, visible: false };
+    });
+    swapTimerRef.current = setTimeout(() => {
+      setToast((current) => (current?.id === id ? null : current));
     }, EXIT_MS);
   }, []);
 
+  const show = useCallback(
+    (content: ReactNode, duration: number) => {
+      const id = ++nextId;
+      clearDismissTimer();
+      clearSwapTimer();
+
+      setToast({ id, content, visible: false });
+      fadeIn(id);
+
+      dismissTimerRef.current = setTimeout(() => {
+        fadeOutAndRemove(id);
+      }, duration);
+    },
+    [fadeIn, fadeOutAndRemove],
+  );
+
   const push = useCallback(
     (content: ReactNode, duration = 2000) => {
-      const id = ++nextId;
-      setToasts((prev) => [...prev, { id, content, exiting: false }]);
-      window.setTimeout(() => dismiss(id), duration);
+      clearDismissTimer();
+
+      setToast((current) => {
+        if (!current) {
+          queueMicrotask(() => show(content, duration));
+          return current;
+        }
+
+        clearSwapTimer();
+        swapTimerRef.current = setTimeout(() => {
+          show(content, duration);
+        }, EXIT_MS);
+
+        return { ...current, visible: false };
+      });
     },
-    [dismiss],
+    [show],
   );
 
   useEffect(() => {
     bindToast(push);
-    return () => bindToast(null);
+    return () => {
+      bindToast(null);
+      clearDismissTimer();
+      clearSwapTimer();
+    };
   }, [push]);
 
   return (
     <ToastContext.Provider value={{ push }}>
       {children}
-      <ToastViewport toasts={toasts} />
+      <ToastViewport toast={toast} />
     </ToastContext.Provider>
   );
 }
 
-function stackTransform(depth: number, exiting: boolean) {
-  const y = exiting ? 4 - depth * PEEK_PX : -depth * PEEK_PX;
-  const scale = exiting ? 0.96 : 1 - depth * SCALE_STEP;
-  return `translateX(-50%) translateY(${y}px) scale(${scale})`;
-}
-
-function ToastViewport({ toasts }: { toasts: ToastItem[] }) {
-  if (toasts.length === 0) return null;
-
-  const stacked = toasts.slice(-MAX_STACK);
-  const peekOffset = (stacked.length - 1) * PEEK_PX;
+function ToastViewport({ toast }: { toast: ToastItem | null }) {
+  if (!toast) return null;
 
   return (
     <div
       role="status"
       aria-live="polite"
-      aria-atomic="false"
+      aria-atomic="true"
       className="pointer-events-none fixed inset-x-0 top-4 z-[200] flex justify-center px-4"
     >
       <div
-        className="relative w-max transition-[padding] duration-300 ease-out"
-        style={{ paddingTop: peekOffset, minHeight: 36 }}
+        className={cn(
+          "pointer-events-auto absolute left-1/2 top-0 origin-top",
+          "transition-[transform,opacity] duration-300 ease-out",
+          toast.visible
+            ? "translate-x-[-50%] translate-y-0 scale-100 opacity-100"
+            : "translate-x-[-50%] translate-y-1 scale-[0.97] opacity-0",
+        )}
       >
-        {stacked.map((t, idx) => {
-          const depth = stacked.length - 1 - idx;
-          const isFront = depth === 0;
-
-          return (
-            <div
-              key={t.id}
-              className={cn(
-                "absolute bottom-0 left-1/2 origin-bottom",
-                "transition-[transform,opacity] duration-300 ease-out",
-                isFront ? "pointer-events-auto" : "pointer-events-none",
-              )}
-              style={{
-                zIndex: MAX_STACK - depth,
-                transform: stackTransform(depth, t.exiting),
-                opacity: t.exiting ? 0 : 1 - depth * 0.15,
-              }}
-            >
-              <div
-                className={cn(
-                  toastClassName(),
-                  isFront && !t.exiting && "animate-toast-pill-in",
-                )}
-              >
-                {t.content}
-              </div>
-            </div>
-          );
-        })}
+        <div className={toastClassName()}>{toast.content}</div>
       </div>
     </div>
   );

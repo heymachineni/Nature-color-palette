@@ -25,9 +25,6 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
-      - name: Install Cloud Functions dependencies
-        run: npm install --prefix functions --no-audit --no-fund
-
       - name: Build static site
         run: npm run build:hosting
         env:
@@ -48,7 +45,10 @@ jobs:
           echo "Static files:" && find out -maxdepth 2 -type f | head -20
           echo "Total files:" && find out -type f | wc -l
 
-      - name: Deploy to Firebase Hosting
+      # Hosting only — the CI service account lacks Cloud Functions API access (403).
+      # Deploy functions locally: npm run deploy:functions
+      # Or grant the SA: Service Usage Consumer + Cloud Functions Developer + Service Account User
+      - name: Deploy Firebase Hosting
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NATURE_COLORPALETTE }}
         run: |
@@ -56,4 +56,4 @@ jobs:
           node -e "require('fs').writeFileSync(process.argv[1], process.env.FIREBASE_SERVICE_ACCOUNT)" "$SA_FILE"
           node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$SA_FILE"
           export GOOGLE_APPLICATION_CREDENTIALS="$SA_FILE"
-          npx firebase deploy --only hosting,functions --project birdpalette --non-interactive
+          npx firebase deploy --only hosting --project birdpalette --non-interactive
