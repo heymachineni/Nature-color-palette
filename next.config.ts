@@ -3,10 +3,8 @@ import type { NextConfig } from "next";
 const isStaticExport = process.env.STATIC_EXPORT === "true";
 
 const nextConfig: NextConfig = {
-  /** Static export only for Firebase deploy — dev stays dynamic for 10k+ bird pages. */
+  /** Static export for Firebase — bird detail lives in the home modal, not per-slug HTML. */
   ...(isStaticExport ? { output: "export" as const } : {}),
-  /** Some bird detail pages exceed the default 60s during full static export. */
-  staticPageGenerationTimeout: isStaticExport ? 180 : undefined,
   images: {
     unoptimized: true,
     remotePatterns: [

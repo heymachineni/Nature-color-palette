@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import type { BirdSummary } from "@/types/bird";
 import { BirdAbout } from "@/components/bird/bird-about";
 import { PaletteStudy } from "@/components/bird/palette-study";
@@ -17,12 +16,6 @@ export function BirdDetailContent({
   related: BirdSummary[];
   onSelectBird?: (bird: BirdSummary) => void;
 }) {
-  const [activeHexes, setActiveHexes] = useState<Set<string> | null>(null);
-
-  useEffect(() => {
-    setActiveHexes(null);
-  }, [bird.slug]);
-
   return (
     <article>
       <header>
@@ -31,9 +24,6 @@ export function BirdDetailContent({
             <PhotoPalettePicker
               src={bird.imageUrl}
               alt={bird.name}
-              colors={bird.colors}
-              activeHexes={activeHexes}
-              onActiveHexesChange={setActiveHexes}
               priority
             />
           </div>
@@ -53,7 +43,7 @@ export function BirdDetailContent({
         </div>
       </header>
 
-      <PaletteStudy colors={bird.colors} activeHexes={activeHexes} />
+      <PaletteStudy colors={bird.colors} />
 
       <PaletteInUse colors={bird.colors} />
 

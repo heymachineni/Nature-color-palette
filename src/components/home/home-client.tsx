@@ -11,6 +11,7 @@ import {
 import type { BirdSummary, DataManifest } from "@/types/bird";
 import { filterBirds, filterBirdsByHex } from "@/lib/search";
 import { fetchBirdPage, fetchSearchIndex } from "@/lib/data/client-birds";
+import { birdSlugFromPath } from "@/lib/bird-url";
 import { HomeSearch } from "./home-search";
 import { BirdThumbnail } from "./bird-thumbnail";
 import { BirdDetailModal } from "@/components/bird/bird-detail-modal";
@@ -72,6 +73,41 @@ export function HomeClient({
     if (!activeBird || searchIndex) return;
     fetchSearchIndex().then(setSearchIndex);
   }, [activeBird, searchIndex]);
+
+  /** Open modal when visiting /birds/{slug} (shared link or refresh). */
+  useEffect(() => {
+    const slug = birdSlugFromPath(window.location.pathname);
+    if (!slug || activeBird?.slug === slug) return;
+
+    let cancelled = false;
+
+    const resolve = (birds: BirdSummary[]) => {
+      const bird = birds.find((b) => b.slug === slug);
+      if (!cancelled && bird) setActiveBird(bird);
+    };
+
+    const fromLoaded = loadedBirdsRef.current.find((b) => b.slug === slug);
+    if (fromLoaded) {
+      setActiveBird(fromLoaded);
+      return;
+    }
+
+    if (searchIndex) {
+      resolve(searchIndex);
+      return;
+    }
+
+    void fetchSearchIndex().then((index) => {
+      if (!cancelled) {
+        setSearchIndex(index);
+        resolve(index);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [searchIndex, activeBird?.slug]);
 
   const fetchNextPage = useCallback(async () => {
     if (
@@ -346,7 +382,12 @@ export function HomeClient({
       <BirdDetailModal
         bird={activeBird}
         allBirds={allBirds}
-        onClose={() => setActiveBird(null)}
+        onClose={() => {
+          setActiveBird(null);
+          if (birdSlugFromPath(window.location.pathname)) {
+            window.history.replaceState(null, "", "/");
+          }
+        }}
         onSelectBird={setActiveBird}
       />
     </div>

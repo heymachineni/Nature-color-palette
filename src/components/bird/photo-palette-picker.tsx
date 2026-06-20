@@ -7,27 +7,27 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import { X } from "lucide-react";
-import type { PlumageColorData } from "@/types/bird";
+import { toast } from "sonner";
 import {
-  matchPaletteFromPixel,
   objectCoverPixelAt,
-  REGION_HIGHLIGHT_DELTA,
   rgbToHex,
 } from "@/lib/color/match-palette";
-import { colorDistance } from "@/lib/color/extract";
 import { paletteHaptic } from "@/lib/haptics";
 import { isSameOriginSampleUrl, sampleImageUrl } from "@/lib/photos/sample-url";
 import { cn } from "@/lib/utils";
 
 const MAX_SAMPLE_EDGE = 640;
+const HOLD_MS = 280;
+
+type Preview = {
+  hex: string;
+  x: number;
+  y: number;
+};
 
 type PhotoPalettePickerProps = {
   src: string;
   alt: string;
-  colors: PlumageColorData[];
-  activeHexes: Set<string> | null;
-  onActiveHexesChange: (hexes: Set<string> | null) => void;
   className?: string;
   priority?: boolean;
 };
@@ -35,32 +35,26 @@ type PhotoPalettePickerProps = {
 export function PhotoPalettePicker({
   src,
   alt,
-  colors,
-  activeHexes,
-  onActiveHexesChange,
   className,
   priority = false,
 }: PhotoPalettePickerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
   const sampleImgRef = useRef<HTMLImageElement | null>(null);
-  const overlayRef = useRef<HTMLCanvasElement>(null);
   const sampleCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchHoldingRef = useRef(false);
+
   const [loaded, setLoaded] = useState(false);
   const [canPick, setCanPick] = useState(false);
-  const paintingRef = useRef(false);
-
-  const clearSelection = useCallback(() => {
-    onActiveHexesChange(null);
-    const canvas = overlayRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext("2d");
-      ctx?.clearRect(0, 0, canvas.width, canvas.height);
-    }
-  }, [onActiveHexesChange]);
+  const [preview, setPreview] = useState<Preview | null>(null);
+  const [coarsePointer, setCoarsePointer] = useState(false);
 
   useEffect(() => {
-    clearSelection();
+    setCoarsePointer(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+
+  useEffect(() => {
+    setPreview(null);
     setLoaded(false);
     setCanPick(false);
     sampleImgRef.current = null;
@@ -90,7 +84,7 @@ export function PhotoPalettePicker({
 
     probe.onerror = () => setCanPick(false);
     probe.src = sampleSrc;
-  }, [src, clearSelection]);
+  }, [src]);
 
   const ensureSampleCanvas = useCallback((): CanvasRenderingContext2D | null => {
     const img = sampleImgRef.current;
@@ -120,16 +114,23 @@ export function PhotoPalettePicker({
     }
   }, []);
 
-  const readPixelHex = useCallback(
-    (imageX: number, imageY: number): string | null => {
-      const ctx = ensureSampleCanvas();
+  const sampleAt = useCallback(
+    (clientX: number, clientY: number): string | null => {
+      const container = containerRef.current;
       const img = sampleImgRef.current;
-      if (!ctx || !img?.naturalWidth) return null;
+      if (!container || !img?.naturalWidth || !canPick) return null;
+
+      const box = container.getBoundingClientRect();
+      const pixel = objectCoverPixelAt(img, clientX, clientY, box);
+      if (!pixel) return null;
+
+      const ctx = ensureSampleCanvas();
+      if (!ctx) return null;
 
       const scaleX = ctx.canvas.width / img.naturalWidth;
       const scaleY = ctx.canvas.height / img.naturalHeight;
-      const sx = Math.min(ctx.canvas.width - 1, Math.floor(imageX * scaleX));
-      const sy = Math.min(ctx.canvas.height - 1, Math.floor(imageY * scaleY));
+      const sx = Math.min(ctx.canvas.width - 1, Math.floor(pixel.x * scaleX));
+      const sy = Math.min(ctx.canvas.height - 1, Math.floor(pixel.y * scaleY));
 
       try {
         const [r, g, b, a] = ctx.getImageData(sx, sy, 1, 1).data;
@@ -139,148 +140,94 @@ export function PhotoPalettePicker({
         return null;
       }
     },
-    [ensureSampleCanvas],
+    [canPick, ensureSampleCanvas],
   );
 
-  const paintOverlay = useCallback(
-    (regionHex: string, reset: boolean) => {
-      const container = containerRef.current;
-      const canvas = overlayRef.current;
-      const img = sampleImgRef.current;
-      const ctxSample = ensureSampleCanvas();
-      if (!container || !canvas || !img?.naturalWidth || !ctxSample) return;
-
-      const rect = container.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = Math.floor(rect.width * dpr);
-      canvas.height = Math.floor(rect.height * dpr);
-      canvas.style.width = `${rect.width}px`;
-      canvas.style.height = `${rect.height}px`;
-
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (reset) ctx.clearRect(0, 0, rect.width, rect.height);
-
-      const nw = img.naturalWidth;
-      const nh = img.naturalHeight;
-      const imageAspect = nw / nh;
-      const boxAspect = rect.width / rect.height;
-
-      let sx: number;
-      let sy: number;
-      let sw: number;
-      let sh: number;
-
-      if (imageAspect > boxAspect) {
-        sh = nh;
-        sw = nh * boxAspect;
-        sx = (nw - sw) / 2;
-        sy = 0;
-      } else {
-        sw = nw;
-        sh = nw / boxAspect;
-        sx = 0;
-        sy = (nh - sh) / 2;
+  const updatePreview = useCallback(
+    (clientX: number, clientY: number) => {
+      const hex = sampleAt(clientX, clientY);
+      if (!hex) {
+        setPreview(null);
+        return;
       }
 
-      const step = Math.max(2, Math.floor(Math.min(rect.width, rect.height) / 80));
-      const sample = ctxSample;
-      const scaleX = sample.canvas.width / nw;
-      const scaleY = sample.canvas.height / nh;
-
-      for (let py = 0; py < rect.height; py += step) {
-        for (let px = 0; px < rect.width; px += step) {
-          const relX = px / rect.width;
-          const relY = py / rect.height;
-          const ix = sx + relX * sw;
-          const iy = sy + relY * sh;
-
-          const sxp = Math.min(
-            sample.canvas.width - 1,
-            Math.floor(ix * scaleX),
-          );
-          const syp = Math.min(
-            sample.canvas.height - 1,
-            Math.floor(iy * scaleY),
-          );
-
-          let r: number;
-          let g: number;
-          let b: number;
-          let a: number;
-          try {
-            [r, g, b, a] = sample.getImageData(sxp, syp, 1, 1).data;
-          } catch {
-            continue;
-          }
-          if (a < 40) continue;
-
-          const hex = rgbToHex(r, g, b);
-          if (colorDistance(hex, regionHex) > REGION_HIGHLIGHT_DELTA) continue;
-
-          ctx.fillStyle = `${hex}66`;
-          ctx.fillRect(px, py, step, step);
-        }
-      }
-    },
-    [ensureSampleCanvas],
-  );
-
-  const applyPick = useCallback(
-    (clientX: number, clientY: number, merge: boolean) => {
-      if (!canPick) return;
-
       const container = containerRef.current;
-      const img = sampleImgRef.current;
-      if (!container || !img?.naturalWidth) return;
-
+      if (!container) return;
       const box = container.getBoundingClientRect();
-      const pixel = objectCoverPixelAt(img, clientX, clientY, box);
-      if (!pixel) return;
-
-      const hex = readPixelHex(pixel.x, pixel.y);
-      if (!hex) return;
-
-      const matched = matchPaletteFromPixel(hex, colors);
-      if (matched.size === 0) return;
-
-      const swatchHex = [...matched][0]!;
-      const next =
-        merge && activeHexes
-          ? new Set([...activeHexes, swatchHex])
-          : matched;
-
-      onActiveHexesChange(next);
-      paintOverlay(swatchHex, !merge);
-      paletteHaptic("tick");
+      setPreview({
+        hex,
+        x: clientX - box.left,
+        y: clientY - box.top,
+      });
     },
-    [
-      activeHexes,
-      canPick,
-      colors,
-      onActiveHexesChange,
-      paintOverlay,
-      readPixelHex,
-    ],
+    [sampleAt],
   );
 
-  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (!canPick) return;
-    paintingRef.current = true;
-    containerRef.current?.setPointerCapture(e.pointerId);
-    applyPick(e.clientX, e.clientY, false);
+  const copyHex = useCallback(async (hex: string) => {
+    try {
+      await navigator.clipboard.writeText(hex);
+      toast.success(`Copied ${hex}`);
+      paletteHaptic("copy");
+    } catch {
+      toast.error("Couldn't copy");
+    }
+  }, []);
+
+  const clearHoldTimer = () => {
+    if (holdTimerRef.current) {
+      clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = null;
+    }
   };
 
   const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (!paintingRef.current || !canPick) return;
-    applyPick(e.clientX, e.clientY, true);
+    if (!canPick || e.pointerType !== "mouse") return;
+    updatePreview(e.clientX, e.clientY);
   };
 
-  const endPointer = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (!paintingRef.current) return;
-    paintingRef.current = false;
+  const onPointerLeave = () => {
+    clearHoldTimer();
+    touchHoldingRef.current = false;
+    if (!coarsePointer) setPreview(null);
+  };
+
+  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!canPick || e.pointerType === "mouse") return;
+    clearHoldTimer();
+    touchHoldingRef.current = false;
+    containerRef.current?.setPointerCapture(e.pointerId);
+    holdTimerRef.current = setTimeout(() => {
+      touchHoldingRef.current = true;
+      updatePreview(e.clientX, e.clientY);
+      paletteHaptic("tick");
+    }, HOLD_MS);
+  };
+
+  const onTouchPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!canPick || e.pointerType === "mouse") return;
+    if (!touchHoldingRef.current) return;
+    updatePreview(e.clientX, e.clientY);
+  };
+
+  const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "mouse") return;
+
+    clearHoldTimer();
     containerRef.current?.releasePointerCapture(e.pointerId);
+
+    const hex = sampleAt(e.clientX, e.clientY);
+    if (hex && touchHoldingRef.current) {
+      void copyHex(hex);
+    }
+
+    touchHoldingRef.current = false;
+    setPreview(null);
+  };
+
+  const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!canPick || coarsePointer) return;
+    const hex = sampleAt(e.clientX, e.clientY);
+    if (hex) void copyHex(hex);
   };
 
   return (
@@ -291,20 +238,21 @@ export function PhotoPalettePicker({
           "relative aspect-[4/3] w-full overflow-hidden rounded-xl",
           canPick && "cursor-crosshair touch-none",
         )}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endPointer}
-        onPointerCancel={endPointer}
-        onKeyDown={(e) => {
-          if (e.key === "Escape") clearSelection();
+        onPointerMove={(e) => {
+          onPointerMove(e);
+          onTouchPointerMove(e);
         }}
+        onPointerLeave={onPointerLeave}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        onClick={onClick}
       >
         {!loaded && (
           <div aria-hidden className="absolute inset-0 bg-muted shimmer" />
         )}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          ref={imgRef}
           src={src}
           alt={alt}
           decoding="async"
@@ -317,32 +265,30 @@ export function PhotoPalettePicker({
           onLoad={() => setLoaded(true)}
           onError={() => setLoaded(true)}
         />
-        <canvas
-          ref={overlayRef}
-          className="pointer-events-none absolute inset-0 h-full w-full"
-          aria-hidden
-        />
+
+        {preview && (
+          <div
+            className="pointer-events-none absolute z-10 flex items-center gap-2 rounded-full border border-border/80 bg-background/95 px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-wide text-foreground shadow-md backdrop-blur"
+            style={{
+              left: Math.max(8, Math.min(preview.x + 12, (containerRef.current?.clientWidth ?? 0) - 100)),
+              top: Math.max(8, Math.min(preview.y - 36, (containerRef.current?.clientHeight ?? 0) - 40)),
+            }}
+          >
+            <span
+              className="size-3.5 shrink-0 rounded-full ring-1 ring-inset ring-black/10"
+              style={{ backgroundColor: preview.hex }}
+              aria-hidden
+            />
+            {preview.hex}
+          </div>
+        )}
       </div>
 
-      {activeHexes && activeHexes.size > 0 ? (
-        <div className="mt-2 flex items-center justify-between gap-2 px-1">
-          <p className="text-[11px] leading-snug text-muted-foreground">
-            {activeHexes.size === 1
-              ? "Showing the closest palette match to your selection."
-              : `${activeHexes.size} palette colors selected — drag to add more.`}
-          </p>
-          <button
-            type="button"
-            onClick={clearSelection}
-            className="flex shrink-0 items-center gap-1 rounded-full border border-border/80 bg-background px-2.5 py-1 text-[11px] font-medium text-foreground transition-colors hover:bg-muted"
-          >
-            Show all
-            <X className="size-3" />
-          </button>
-        </div>
-      ) : canPick ? (
+      {canPick ? (
         <p className="mt-2 px-1 text-[11px] leading-snug text-muted-foreground">
-          Tap or drag on the photo to highlight a palette color.
+          {coarsePointer
+            ? "Hold to preview · release to copy"
+            : "Hover for hex · click to copy"}
         </p>
       ) : null}
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Check, Copy } from "lucide-react";
 import { toast } from "sonner";
 import type { PlumageColorData } from "@/types/bird";
@@ -56,29 +56,13 @@ type DragState = {
   lastIndex: number | null;
 };
 
-export function PaletteStudy({
-  colors,
-  activeHexes = null,
-}: {
-  colors: PlumageColorData[];
-  activeHexes?: Set<string> | null;
-}) {
+export function PaletteStudy({ colors }: { colors: PlumageColorData[] }) {
   const [copied, setCopied] = useState<string | null>(null);
   const [hovered, setHovered] = useState<number | null>(null);
   const [dragging, setDragging] = useState(false);
   const [view, setView] = useState<PaletteView>("swatch");
   const scrollRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<DragState | null>(null);
-  const listRef = useRef<HTMLUListElement>(null);
-  const photoPickActive = activeHexes != null && activeHexes.size > 0;
-
-  useEffect(() => {
-    if (!photoPickActive || view !== "list") return;
-    const root = listRef.current;
-    if (!root) return;
-    const first = root.querySelector<HTMLElement>("[data-palette-active='true']");
-    first?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [activeHexes, photoPickActive, view]);
 
   if (colors.length === 0) return null;
 
@@ -111,25 +95,16 @@ export function PaletteStudy({
   };
 
   const highlightSwatch = (index: number | null, withHaptic = false) => {
-    if (photoPickActive) return;
     setHovered((prev) => {
       if (withHaptic && index !== null && prev !== index) paletteHaptic("tick");
       return index;
     });
   };
 
-  const isSwatchActive = (c: PlumageColorData, index: number) => {
-    if (photoPickActive) return activeHexes!.has(c.hex);
-    return hovered === index;
-  };
+  const isSwatchActive = (_c: PlumageColorData, index: number) => hovered === index;
 
-  const isSwatchDimmed = (c: PlumageColorData, index: number) => {
-    if (photoPickActive) return !activeHexes!.has(c.hex);
-    return hovered !== null && hovered !== index;
-  };
-
-  const isListDimmed = (c: PlumageColorData) =>
-    photoPickActive && !activeHexes!.has(c.hex);
+  const isSwatchDimmed = (_c: PlumageColorData, index: number) =>
+    hovered !== null && hovered !== index;
 
   const onBarPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!scrollRef.current) return;
@@ -253,7 +228,7 @@ export function PaletteStudy({
           onPointerUp={endBarDrag}
           onPointerCancel={endBarDrag}
           onMouseLeave={() => {
-            if (!dragRef.current && !photoPickActive) setHovered(null);
+            if (!dragRef.current) setHovered(null);
           }}
         >
           {sorted.map((c, i) => {
@@ -301,28 +276,15 @@ export function PaletteStudy({
           })}
         </div>
       ) : (
-        <ul
-          ref={listRef}
-          className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4"
-        >
+        <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
           {sorted.map((c, i) => {
             const isCopied = copied === c.hex;
-            const isActive = photoPickActive && activeHexes!.has(c.hex);
-            const dimmed = isListDimmed(c);
             return (
-              <li
-                key={`row-${c.hex}-${i}`}
-                data-palette-active={isActive ? "true" : undefined}
-              >
+              <li key={`row-${c.hex}-${i}`}>
                 <button
                   type="button"
                   onClick={() => copy(c.hex, `Copied ${c.hex.toUpperCase()}`)}
-                  className={cn(
-                    "group flex w-full items-center gap-3 rounded-xl bg-muted/60 p-2.5 text-left transition-all",
-                    dimmed ? "opacity-[0.22]" : "opacity-100",
-                    isActive && "ring-2 ring-foreground/25",
-                    !dimmed && "hover:bg-muted",
-                  )}
+                  className="group flex w-full items-center gap-3 rounded-xl bg-muted/60 p-2.5 text-left transition-all hover:bg-muted"
                 >
                   <span
                     className="size-10 shrink-0 rounded-lg ring-1 ring-inset ring-black/[0.06]"

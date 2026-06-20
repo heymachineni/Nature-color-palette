@@ -57,7 +57,6 @@ export function BirdDetailModal({
 
   useEffect(() => {
     if (!open && prevOpen.current) {
-      if (window.history.state?.birdModal) window.history.back();
       prevOpen.current = false;
       return;
     }
@@ -68,9 +67,14 @@ export function BirdDetailModal({
     }
 
     const path = `/birds/${bird.slug}`;
+    const alreadyOnPath = window.location.pathname === path;
 
     if (!prevOpen.current) {
-      window.history.pushState({ birdModal: true }, "", path);
+      if (alreadyOnPath) {
+        window.history.replaceState({ birdModal: true }, "", path);
+      } else {
+        window.history.pushState({ birdModal: true }, "", path);
+      }
     } else {
       window.history.replaceState({ birdModal: true }, "", path);
     }

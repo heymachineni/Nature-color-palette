@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { getBirdSlugs } from "@/lib/data/birds";
 
 export const dynamic = "force-static";
 
@@ -8,7 +7,6 @@ const BASE_URL =
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const slugs = getBirdSlugs();
 
   return [
     {
@@ -29,11 +27,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
-    ...slugs.map((slug) => ({
-      url: `${BASE_URL}/birds/${slug}`,
-      lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    })),
   ];
 }

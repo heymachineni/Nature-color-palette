@@ -18,6 +18,10 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
+        "source": "/birds/**",
+        "destination": "/index.html"
+      },
+      {
         "source": "/api/photo-sample",
         "function": "photoSample"
       }
