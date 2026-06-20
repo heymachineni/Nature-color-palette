@@ -55,6 +55,12 @@ export function HomeClient({
   const isFiltering = query.length > 0 || pickedColor !== null;
 
   useEffect(() => {
+    setLoadedBirds(initialBirds);
+    setLoadedPageCount(1);
+    loadedPageCountRef.current = 1;
+  }, [initialBirds]);
+
+  useEffect(() => {
     if (!isFiltering || searchIndex !== null || searchIndexLoading) return;
     setSearchIndexLoading(true);
     fetchSearchIndex()

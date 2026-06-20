@@ -9,6 +9,7 @@ function CardBody({ bird, priority }: { bird: BirdSummary; priority: boolean }) 
     <div className="rounded-2xl bg-muted/70 p-2">
       <div className="relative overflow-hidden rounded-xl group-hover:rounded-b-none">
         <BirdPhoto
+          key={bird.imageUrl}
           src={bird.imageUrl}
           alt={bird.name}
           variant="card"

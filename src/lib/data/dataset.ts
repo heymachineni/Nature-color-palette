@@ -122,7 +122,7 @@ function colorsFromLegacyCurated(
   return out;
 }
 
-/** Accept v2 or legacy v1 documents (e.g. stale Firestore). */
+/** Accept legacy bird documents (e.g. stale Firestore). */
 export function normalizeBirdRecord(raw: LegacyBirdRecord): RawBirdRecord {
   if (Array.isArray(raw.colors) && raw.colors.length > 0 && raw.theme) {
     return {

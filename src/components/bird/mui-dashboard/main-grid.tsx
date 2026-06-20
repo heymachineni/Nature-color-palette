@@ -2,7 +2,6 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Copyright from "./copyright";
 import ChartUserByCountry from "./chart-user-by-country";
 import CustomizedTreeView from "./customized-tree-view";
 import CustomizedDataGrid from "./customized-data-grid";
@@ -45,7 +44,6 @@ export default function MainGrid() {
           </Stack>
         </Grid>
       </Grid>
-      <Copyright sx={{ my: 4 }} />
     </Box>
   );
 }

@@ -56,18 +56,25 @@ export function BirdDetailModal({
   }, [bird?.slug, open]);
 
   useEffect(() => {
-    if (open && !prevOpen.current) {
-      window.history.pushState({ birdModal: true }, "", `/birds/${bird!.slug}`);
-    } else if (open && prevOpen.current && bird) {
-      window.history.replaceState(
-        { birdModal: true },
-        "",
-        `/birds/${bird.slug}`,
-      );
-    } else if (!open && prevOpen.current) {
+    if (!open && prevOpen.current) {
       if (window.history.state?.birdModal) window.history.back();
+      prevOpen.current = false;
+      return;
     }
-    prevOpen.current = open;
+
+    if (!open || !bird) {
+      prevOpen.current = open;
+      return;
+    }
+
+    const path = `/birds/${bird.slug}`;
+
+    if (!prevOpen.current) {
+      window.history.pushState({ birdModal: true }, "", path);
+    } else {
+      window.history.replaceState({ birdModal: true }, "", path);
+    }
+    prevOpen.current = true;
   }, [open, bird?.slug, bird]);
 
   useEffect(() => {

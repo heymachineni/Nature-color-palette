@@ -9,7 +9,7 @@ import {
 } from "../../src/lib/photos/birdnet-placeholder";
 import { isBirdPlaceholderUrl } from "../../src/lib/photos/placeholder";
 
-const CACHE = path.join(process.cwd(), "data", "hbw", "photo-cache.json");
+const CACHE = path.join(process.cwd(), "data", "photos", "photo-cache.json");
 
 type PhotoCache = Record<string, string>;
 
@@ -33,7 +33,6 @@ function hashBytes(buf: Buffer): string {
   return createHash("sha256").update(buf).digest("hex");
 }
 
-/** fetch with an abort timeout so a single hung connection can't stall the run. */
 async function fetchWithTimeout(
   input: string | URL,
   init: RequestInit = {},
@@ -254,3 +253,5 @@ export async function createPhotoResolver(opts: {
     cache,
   };
 }
+
+export const PHOTO_CACHE_PATH = CACHE;

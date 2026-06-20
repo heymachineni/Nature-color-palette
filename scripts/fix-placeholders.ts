@@ -6,8 +6,8 @@
  */
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { birdNetImageUrl } from "./hbw/birdnet";
-import { isBirdNetPlaceholder } from "./hbw/photos";
+import { birdNetImageUrl } from "./lib/birdnet";
+import { isBirdNetPlaceholder } from "./lib/photos";
 import { fetchInaturalistPhoto } from "../src/lib/photos/inaturalist";
 import {
   filterBirdsWithPhotos,
@@ -17,7 +17,7 @@ import { writePublicBirdData } from "./lib/write-public-data";
 import type { BirdRecord } from "./bird-record";
 
 const DATASET = path.join(process.cwd(), "prisma", "seed", "dataset.json");
-const CACHE = path.join(process.cwd(), "data", "hbw", "photo-cache.json");
+const CACHE = path.join(process.cwd(), "data", "photos", "photo-cache.json");
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -92,7 +92,7 @@ async function main() {
     JSON.stringify(
       {
         version: 2,
-        source: "hbw-dryad",
+        source: "photo-extraction",
         generatedAt: new Date().toISOString(),
         birds: withPhotos,
       },

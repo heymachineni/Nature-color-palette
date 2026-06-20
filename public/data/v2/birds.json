@@ -1,0 +1,5030 @@
+[
+  {
+    "id": "passerina-ciris",
+    "slug": "passerina-ciris",
+    "name": "Painted Bunting",
+    "scientificName": "Passerina ciris",
+    "region": "Cardinals and Allies",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Passerina%20ciris?size=medium",
+    "colorFamilies": [
+      "orange",
+      "blue",
+      "brown",
+      "green",
+      "yellow",
+      "red",
+      "gray",
+      "purple",
+      "pink",
+      "black"
+    ],
+    "preview": [
+      "#C85428",
+      "#333D92",
+      "#775F4C",
+      "#90A60B"
+    ],
+    "palette": [
+      {
+        "hex": "#C85428",
+        "share": 12.59
+      },
+      {
+        "hex": "#333D92",
+        "share": 9.03
+      },
+      {
+        "hex": "#775F4C",
+        "share": 6.68
+      },
+      {
+        "hex": "#90A60B",
+        "share": 5.48
+      },
+      {
+        "hex": "#BC5224",
+        "share": 4.89
+      },
+      {
+        "hex": "#585A45",
+        "share": 4.61
+      },
+      {
+        "hex": "#5F5997",
+        "share": 3.83
+      },
+      {
+        "hex": "#CC917A",
+        "share": 3.49
+      },
+      {
+        "hex": "#A72903",
+        "share": 3.29
+      },
+      {
+        "hex": "#6D7532",
+        "share": 3.22
+      },
+      {
+        "hex": "#8F8770",
+        "share": 2.79
+      },
+      {
+        "hex": "#B6493C",
+        "share": 2.61
+      },
+      {
+        "hex": "#63682C",
+        "share": 2.54
+      },
+      {
+        "hex": "#824A2E",
+        "share": 2.41
+      },
+      {
+        "hex": "#545A35",
+        "share": 2.17
+      },
+      {
+        "hex": "#FD5B23",
+        "share": 1.95
+      },
+      {
+        "hex": "#6B696B",
+        "share": 1.89
+      },
+      {
+        "hex": "#BBCD34",
+        "share": 1.45
+      },
+      {
+        "hex": "#E03608",
+        "share": 1.43
+      },
+      {
+        "hex": "#987763",
+        "share": 1.04
+      },
+      {
+        "hex": "#7F79B0",
+        "share": 1.02
+      },
+      {
+        "hex": "#FE643B",
+        "share": 0.95
+      },
+      {
+        "hex": "#79785E",
+        "share": 0.9
+      },
+      {
+        "hex": "#999489",
+        "share": 0.83
+      },
+      {
+        "hex": "#A4AC13",
+        "share": 0.74
+      },
+      {
+        "hex": "#64586F",
+        "share": 0.74
+      },
+      {
+        "hex": "#5D4660",
+        "share": 0.74
+      },
+      {
+        "hex": "#937190",
+        "share": 0.62
+      },
+      {
+        "hex": "#6B6A5A",
+        "share": 0.47
+      },
+      {
+        "hex": "#2C2726",
+        "share": 0.43
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#C85428",
+        "family": "orange",
+        "share": 12.59
+      },
+      {
+        "hex": "#333D92",
+        "family": "blue",
+        "share": 9.03
+      },
+      {
+        "hex": "#775F4C",
+        "family": "brown",
+        "share": 6.68
+      },
+      {
+        "hex": "#90A60B",
+        "family": "green",
+        "share": 5.48
+      },
+      {
+        "hex": "#BC5224",
+        "family": "brown",
+        "share": 4.89
+      },
+      {
+        "hex": "#585A45",
+        "family": "yellow",
+        "share": 4.61
+      },
+      {
+        "hex": "#5F5997",
+        "family": "blue",
+        "share": 3.83
+      },
+      {
+        "hex": "#CC917A",
+        "family": "orange",
+        "share": 3.49
+      },
+      {
+        "hex": "#A72903",
+        "family": "red",
+        "share": 3.29
+      },
+      {
+        "hex": "#6D7532",
+        "family": "green",
+        "share": 3.22
+      },
+      {
+        "hex": "#8F8770",
+        "family": "brown",
+        "share": 2.79
+      },
+      {
+        "hex": "#B6493C",
+        "family": "red",
+        "share": 2.61
+      },
+      {
+        "hex": "#63682C",
+        "family": "yellow",
+        "share": 2.54
+      },
+      {
+        "hex": "#824A2E",
+        "family": "brown",
+        "share": 2.41
+      },
+      {
+        "hex": "#545A35",
+        "family": "green",
+        "share": 2.17
+      },
+      {
+        "hex": "#FD5B23",
+        "family": "orange",
+        "share": 1.95
+      },
+      {
+        "hex": "#6B696B",
+        "family": "gray",
+        "share": 1.89
+      },
+      {
+        "hex": "#BBCD34",
+        "family": "green",
+        "share": 1.45
+      },
+      {
+        "hex": "#E03608",
+        "family": "red",
+        "share": 1.43
+      },
+      {
+        "hex": "#987763",
+        "family": "orange",
+        "share": 1.04
+      },
+      {
+        "hex": "#7F79B0",
+        "family": "blue",
+        "share": 1.02
+      },
+      {
+        "hex": "#FE643B",
+        "family": "red",
+        "share": 0.95
+      },
+      {
+        "hex": "#79785E",
+        "family": "yellow",
+        "share": 0.9
+      },
+      {
+        "hex": "#999489",
+        "family": "gray",
+        "share": 0.83
+      },
+      {
+        "hex": "#A4AC13",
+        "family": "yellow",
+        "share": 0.74
+      },
+      {
+        "hex": "#64586F",
+        "family": "purple",
+        "share": 0.74
+      },
+      {
+        "hex": "#5D4660",
+        "family": "pink",
+        "share": 0.74
+      },
+      {
+        "hex": "#937190",
+        "family": "pink",
+        "share": 0.62
+      },
+      {
+        "hex": "#6B6A5A",
+        "family": "gray",
+        "share": 0.47
+      },
+      {
+        "hex": "#2C2726",
+        "family": "black",
+        "share": 0.43
+      }
+    ],
+    "similar": [
+      "trichoglossus-moluccanus",
+      "piranga-olivacea",
+      "eclectus-roratus",
+      "ara-macao"
+    ]
+  },
+  {
+    "id": "pharomachrus-mocinno",
+    "slug": "pharomachrus-mocinno",
+    "name": "Resplendent Quetzal",
+    "scientificName": "Pharomachrus mocinno",
+    "region": "Trogons",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Pharomachrus%20mocinno?size=medium",
+    "colorFamilies": [
+      "green",
+      "brown",
+      "teal",
+      "yellow",
+      "red",
+      "black",
+      "blue"
+    ],
+    "preview": [
+      "#039331",
+      "#731620",
+      "#14CC58",
+      "#D4DCA8"
+    ],
+    "palette": [
+      {
+        "hex": "#039331",
+        "share": 18.86
+      },
+      {
+        "hex": "#731620",
+        "share": 16.13
+      },
+      {
+        "hex": "#14CC58",
+        "share": 9.22
+      },
+      {
+        "hex": "#D4DCA8",
+        "share": 8.26
+      },
+      {
+        "hex": "#0B99A2",
+        "share": 5.41
+      },
+      {
+        "hex": "#056E24",
+        "share": 4.72
+      },
+      {
+        "hex": "#A1986A",
+        "share": 4.21
+      },
+      {
+        "hex": "#9D0F21",
+        "share": 3.71
+      },
+      {
+        "hex": "#089378",
+        "share": 2.11
+      },
+      {
+        "hex": "#461916",
+        "share": 2.09
+      },
+      {
+        "hex": "#0F1518",
+        "share": 2.01
+      },
+      {
+        "hex": "#2DB2A6",
+        "share": 0.8
+      },
+      {
+        "hex": "#7B6F57",
+        "share": 0.74
+      },
+      {
+        "hex": "#47090D",
+        "share": 0.73
+      },
+      {
+        "hex": "#9D8F74",
+        "share": 0.72
+      },
+      {
+        "hex": "#041D0C",
+        "share": 0.64
+      },
+      {
+        "hex": "#536778",
+        "share": 0.6
+      },
+      {
+        "hex": "#544E37",
+        "share": 0.59
+      },
+      {
+        "hex": "#39454A",
+        "share": 0.57
+      },
+      {
+        "hex": "#BBBE9A",
+        "share": 0.38
+      },
+      {
+        "hex": "#2F1B20",
+        "share": 0.38
+      },
+      {
+        "hex": "#74A4DD",
+        "share": 0.38
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#039331",
+        "family": "green",
+        "share": 18.86
+      },
+      {
+        "hex": "#731620",
+        "family": "brown",
+        "share": 16.13
+      },
+      {
+        "hex": "#14CC58",
+        "family": "green",
+        "share": 9.22
+      },
+      {
+        "hex": "#D4DCA8",
+        "family": "green",
+        "share": 8.26
+      },
+      {
+        "hex": "#0B99A2",
+        "family": "teal",
+        "share": 5.41
+      },
+      {
+        "hex": "#056E24",
+        "family": "green",
+        "share": 4.72
+      },
+      {
+        "hex": "#A1986A",
+        "family": "yellow",
+        "share": 4.21
+      },
+      {
+        "hex": "#9D0F21",
+        "family": "red",
+        "share": 3.71
+      },
+      {
+        "hex": "#089378",
+        "family": "teal",
+        "share": 2.11
+      },
+      {
+        "hex": "#461916",
+        "family": "brown",
+        "share": 2.09
+      },
+      {
+        "hex": "#0F1518",
+        "family": "black",
+        "share": 2.01
+      },
+      {
+        "hex": "#2DB2A6",
+        "family": "teal",
+        "share": 0.8
+      },
+      {
+        "hex": "#7B6F57",
+        "family": "brown",
+        "share": 0.74
+      },
+      {
+        "hex": "#47090D",
+        "family": "red",
+        "share": 0.73
+      },
+      {
+        "hex": "#9D8F74",
+        "family": "brown",
+        "share": 0.72
+      },
+      {
+        "hex": "#041D0C",
+        "family": "black",
+        "share": 0.64
+      },
+      {
+        "hex": "#536778",
+        "family": "blue",
+        "share": 0.6
+      },
+      {
+        "hex": "#544E37",
+        "family": "yellow",
+        "share": 0.59
+      },
+      {
+        "hex": "#39454A",
+        "family": "teal",
+        "share": 0.57
+      },
+      {
+        "hex": "#BBBE9A",
+        "family": "yellow",
+        "share": 0.38
+      },
+      {
+        "hex": "#2F1B20",
+        "family": "red",
+        "share": 0.38
+      },
+      {
+        "hex": "#74A4DD",
+        "family": "blue",
+        "share": 0.38
+      }
+    ],
+    "similar": [
+      "platycercus-elegans",
+      "ara-macao",
+      "eclectus-roratus",
+      "coracias-caudatus"
+    ]
+  },
+  {
+    "id": "ara-macao",
+    "slug": "ara-macao",
+    "name": "Scarlet Macaw",
+    "scientificName": "Ara macao",
+    "region": "New World and African Parrots",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Ara%20macao?size=medium",
+    "colorFamilies": [
+      "red",
+      "brown",
+      "orange",
+      "blue",
+      "teal",
+      "yellow",
+      "green",
+      "black",
+      "gray"
+    ],
+    "preview": [
+      "#F45D31",
+      "#423A29",
+      "#FD9557",
+      "#4D190F"
+    ],
+    "palette": [
+      {
+        "hex": "#F45D31",
+        "share": 11.75
+      },
+      {
+        "hex": "#423A29",
+        "share": 11.61
+      },
+      {
+        "hex": "#FD9557",
+        "share": 9.98
+      },
+      {
+        "hex": "#4D190F",
+        "share": 6.58
+      },
+      {
+        "hex": "#9C2D1E",
+        "share": 5.62
+      },
+      {
+        "hex": "#7F7360",
+        "share": 3.49
+      },
+      {
+        "hex": "#C43525",
+        "share": 3.49
+      },
+      {
+        "hex": "#E85828",
+        "share": 3.26
+      },
+      {
+        "hex": "#E3C9B8",
+        "share": 2.92
+      },
+      {
+        "hex": "#2A3F4B",
+        "share": 2.91
+      },
+      {
+        "hex": "#1D6C93",
+        "share": 2.9
+      },
+      {
+        "hex": "#FCB66C",
+        "share": 2.78
+      },
+      {
+        "hex": "#761809",
+        "share": 2.22
+      },
+      {
+        "hex": "#307DA4",
+        "share": 1.94
+      },
+      {
+        "hex": "#1C2E31",
+        "share": 1.73
+      },
+      {
+        "hex": "#C1A72E",
+        "share": 1.65
+      },
+      {
+        "hex": "#2B5C44",
+        "share": 1.55
+      },
+      {
+        "hex": "#0A0B07",
+        "share": 1.33
+      },
+      {
+        "hex": "#7B7569",
+        "share": 1.33
+      },
+      {
+        "hex": "#4D6223",
+        "share": 1.29
+      },
+      {
+        "hex": "#1E5A5C",
+        "share": 1.22
+      },
+      {
+        "hex": "#3B617D",
+        "share": 1.15
+      },
+      {
+        "hex": "#8AAB71",
+        "share": 1.13
+      },
+      {
+        "hex": "#F0CC3C",
+        "share": 0.9
+      },
+      {
+        "hex": "#2B3234",
+        "share": 0.82
+      },
+      {
+        "hex": "#1C2921",
+        "share": 0.68
+      },
+      {
+        "hex": "#A0830D",
+        "share": 0.66
+      },
+      {
+        "hex": "#737F96",
+        "share": 0.61
+      },
+      {
+        "hex": "#766507",
+        "share": 0.59
+      },
+      {
+        "hex": "#595A5A",
+        "share": 0.52
+      },
+      {
+        "hex": "#458C9F",
+        "share": 0.37
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#F45D31",
+        "family": "red",
+        "share": 11.75
+      },
+      {
+        "hex": "#423A29",
+        "family": "brown",
+        "share": 11.61
+      },
+      {
+        "hex": "#FD9557",
+        "family": "orange",
+        "share": 9.98
+      },
+      {
+        "hex": "#4D190F",
+        "family": "brown",
+        "share": 6.58
+      },
+      {
+        "hex": "#9C2D1E",
+        "family": "brown",
+        "share": 5.62
+      },
+      {
+        "hex": "#7F7360",
+        "family": "brown",
+        "share": 3.49
+      },
+      {
+        "hex": "#C43525",
+        "family": "red",
+        "share": 3.49
+      },
+      {
+        "hex": "#E85828",
+        "family": "orange",
+        "share": 3.26
+      },
+      {
+        "hex": "#E3C9B8",
+        "family": "orange",
+        "share": 2.92
+      },
+      {
+        "hex": "#2A3F4B",
+        "family": "blue",
+        "share": 2.91
+      },
+      {
+        "hex": "#1D6C93",
+        "family": "teal",
+        "share": 2.9
+      },
+      {
+        "hex": "#FCB66C",
+        "family": "orange",
+        "share": 2.78
+      },
+      {
+        "hex": "#761809",
+        "family": "red",
+        "share": 2.22
+      },
+      {
+        "hex": "#307DA4",
+        "family": "blue",
+        "share": 1.94
+      },
+      {
+        "hex": "#1C2E31",
+        "family": "teal",
+        "share": 1.73
+      },
+      {
+        "hex": "#C1A72E",
+        "family": "yellow",
+        "share": 1.65
+      },
+      {
+        "hex": "#2B5C44",
+        "family": "green",
+        "share": 1.55
+      },
+      {
+        "hex": "#0A0B07",
+        "family": "black",
+        "share": 1.33
+      },
+      {
+        "hex": "#7B7569",
+        "family": "gray",
+        "share": 1.33
+      },
+      {
+        "hex": "#4D6223",
+        "family": "green",
+        "share": 1.29
+      },
+      {
+        "hex": "#1E5A5C",
+        "family": "teal",
+        "share": 1.22
+      },
+      {
+        "hex": "#3B617D",
+        "family": "blue",
+        "share": 1.15
+      },
+      {
+        "hex": "#8AAB71",
+        "family": "green",
+        "share": 1.13
+      },
+      {
+        "hex": "#F0CC3C",
+        "family": "yellow",
+        "share": 0.9
+      },
+      {
+        "hex": "#2B3234",
+        "family": "black",
+        "share": 0.82
+      },
+      {
+        "hex": "#1C2921",
+        "family": "green",
+        "share": 0.68
+      },
+      {
+        "hex": "#A0830D",
+        "family": "yellow",
+        "share": 0.66
+      },
+      {
+        "hex": "#737F96",
+        "family": "blue",
+        "share": 0.61
+      },
+      {
+        "hex": "#766507",
+        "family": "yellow",
+        "share": 0.59
+      },
+      {
+        "hex": "#595A5A",
+        "family": "gray",
+        "share": 0.52
+      },
+      {
+        "hex": "#458C9F",
+        "family": "teal",
+        "share": 0.37
+      }
+    ],
+    "similar": [
+      "piranga-olivacea",
+      "merops-apiaster",
+      "passerina-ciris",
+      "lamprotornis-superbus"
+    ]
+  },
+  {
+    "id": "pavo-cristatus",
+    "slug": "pavo-cristatus",
+    "name": "Indian Peafowl",
+    "scientificName": "Pavo cristatus",
+    "region": "Pheasants, Grouse, and Allies",
+    "imageUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/165318600/medium.jpg",
+    "colorFamilies": [
+      "green",
+      "blue",
+      "gray",
+      "teal",
+      "black",
+      "white"
+    ],
+    "preview": [
+      "#2C3C31",
+      "#021965",
+      "#0439C2",
+      "#778A86"
+    ],
+    "palette": [
+      {
+        "hex": "#2C3C31",
+        "share": 18.75
+      },
+      {
+        "hex": "#021965",
+        "share": 18.04
+      },
+      {
+        "hex": "#0439C2",
+        "share": 9.77
+      },
+      {
+        "hex": "#778A86",
+        "share": 9.49
+      },
+      {
+        "hex": "#4B635F",
+        "share": 8.98
+      },
+      {
+        "hex": "#AFB4B3",
+        "share": 6.65
+      },
+      {
+        "hex": "#486154",
+        "share": 6.01
+      },
+      {
+        "hex": "#0859E4",
+        "share": 3.88
+      },
+      {
+        "hex": "#030923",
+        "share": 2.78
+      },
+      {
+        "hex": "#D8DBDF",
+        "share": 2.12
+      },
+      {
+        "hex": "#020A2D",
+        "share": 2.04
+      },
+      {
+        "hex": "#668478",
+        "share": 2.03
+      },
+      {
+        "hex": "#1C3B3C",
+        "share": 1.72
+      },
+      {
+        "hex": "#5F8A8B",
+        "share": 1.05
+      },
+      {
+        "hex": "#CDD5D9",
+        "share": 0.74
+      },
+      {
+        "hex": "#090F14",
+        "share": 0.37
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#2C3C31",
+        "family": "green",
+        "share": 18.75
+      },
+      {
+        "hex": "#021965",
+        "family": "blue",
+        "share": 18.04
+      },
+      {
+        "hex": "#0439C2",
+        "family": "blue",
+        "share": 9.77
+      },
+      {
+        "hex": "#778A86",
+        "family": "gray",
+        "share": 9.49
+      },
+      {
+        "hex": "#4B635F",
+        "family": "teal",
+        "share": 8.98
+      },
+      {
+        "hex": "#AFB4B3",
+        "family": "gray",
+        "share": 6.65
+      },
+      {
+        "hex": "#486154",
+        "family": "green",
+        "share": 6.01
+      },
+      {
+        "hex": "#0859E4",
+        "family": "blue",
+        "share": 3.88
+      },
+      {
+        "hex": "#030923",
+        "family": "black",
+        "share": 2.78
+      },
+      {
+        "hex": "#D8DBDF",
+        "family": "white",
+        "share": 2.12
+      },
+      {
+        "hex": "#020A2D",
+        "family": "blue",
+        "share": 2.04
+      },
+      {
+        "hex": "#668478",
+        "family": "green",
+        "share": 2.03
+      },
+      {
+        "hex": "#1C3B3C",
+        "family": "teal",
+        "share": 1.72
+      },
+      {
+        "hex": "#5F8A8B",
+        "family": "teal",
+        "share": 1.05
+      },
+      {
+        "hex": "#CDD5D9",
+        "family": "teal",
+        "share": 0.74
+      },
+      {
+        "hex": "#090F14",
+        "family": "black",
+        "share": 0.37
+      }
+    ],
+    "similar": [
+      "cinnyricinclus-leucogaster",
+      "cyanocitta-cristata",
+      "aix-sponsa",
+      "platycercus-elegans"
+    ]
+  },
+  {
+    "id": "coracias-caudatus",
+    "slug": "coracias-caudatus",
+    "name": "Lilac-breasted Roller",
+    "scientificName": "Coracias caudatus",
+    "region": "Rollers",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Coracias%20caudatus?size=medium",
+    "colorFamilies": [
+      "gray",
+      "orange",
+      "brown",
+      "teal",
+      "pink",
+      "red",
+      "white",
+      "yellow",
+      "green",
+      "blue",
+      "black"
+    ],
+    "preview": [
+      "#9E928F",
+      "#C5A882",
+      "#AE9B6E",
+      "#20A8AD"
+    ],
+    "palette": [
+      {
+        "hex": "#9E928F",
+        "share": 19.07
+      },
+      {
+        "hex": "#C5A882",
+        "share": 10.73
+      },
+      {
+        "hex": "#AE9B6E",
+        "share": 9.75
+      },
+      {
+        "hex": "#20A8AD",
+        "share": 6.89
+      },
+      {
+        "hex": "#D191BB",
+        "share": 5.15
+      },
+      {
+        "hex": "#D1C5C2",
+        "share": 4.92
+      },
+      {
+        "hex": "#C5BAB9",
+        "share": 4.09
+      },
+      {
+        "hex": "#70635A",
+        "share": 3.59
+      },
+      {
+        "hex": "#A4935D",
+        "share": 3.32
+      },
+      {
+        "hex": "#DB9AA7",
+        "share": 3.02
+      },
+      {
+        "hex": "#5BA88A",
+        "share": 2.22
+      },
+      {
+        "hex": "#81726A",
+        "share": 2.04
+      },
+      {
+        "hex": "#AE6F61",
+        "share": 1.62
+      },
+      {
+        "hex": "#2B1D11",
+        "share": 1.56
+      },
+      {
+        "hex": "#A1AD8C",
+        "share": 1.49
+      },
+      {
+        "hex": "#765235",
+        "share": 1.39
+      },
+      {
+        "hex": "#289AB8",
+        "share": 1.29
+      },
+      {
+        "hex": "#AA9388",
+        "share": 1.24
+      },
+      {
+        "hex": "#CBC1BD",
+        "share": 1.2
+      },
+      {
+        "hex": "#91C49A",
+        "share": 1.03
+      },
+      {
+        "hex": "#4D60CE",
+        "share": 1
+      },
+      {
+        "hex": "#47D5D9",
+        "share": 0.97
+      },
+      {
+        "hex": "#2C4646",
+        "share": 0.81
+      },
+      {
+        "hex": "#3A8FBE",
+        "share": 0.67
+      },
+      {
+        "hex": "#1F2425",
+        "share": 0.62
+      },
+      {
+        "hex": "#57574F",
+        "share": 0.59
+      },
+      {
+        "hex": "#1A1913",
+        "share": 0.59
+      },
+      {
+        "hex": "#DDE7D7",
+        "share": 0.55
+      },
+      {
+        "hex": "#272E38",
+        "share": 0.54
+      },
+      {
+        "hex": "#C9BC8F",
+        "share": 0.51
+      },
+      {
+        "hex": "#8FA293",
+        "share": 0.48
+      },
+      {
+        "hex": "#8382A2",
+        "share": 0.48
+      },
+      {
+        "hex": "#555338",
+        "share": 0.35
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#9E928F",
+        "family": "gray",
+        "share": 19.07
+      },
+      {
+        "hex": "#C5A882",
+        "family": "orange",
+        "share": 10.73
+      },
+      {
+        "hex": "#AE9B6E",
+        "family": "brown",
+        "share": 9.75
+      },
+      {
+        "hex": "#20A8AD",
+        "family": "teal",
+        "share": 6.89
+      },
+      {
+        "hex": "#D191BB",
+        "family": "pink",
+        "share": 5.15
+      },
+      {
+        "hex": "#D1C5C2",
+        "family": "red",
+        "share": 4.92
+      },
+      {
+        "hex": "#C5BAB9",
+        "family": "white",
+        "share": 4.09
+      },
+      {
+        "hex": "#70635A",
+        "family": "brown",
+        "share": 3.59
+      },
+      {
+        "hex": "#A4935D",
+        "family": "yellow",
+        "share": 3.32
+      },
+      {
+        "hex": "#DB9AA7",
+        "family": "red",
+        "share": 3.02
+      },
+      {
+        "hex": "#5BA88A",
+        "family": "green",
+        "share": 2.22
+      },
+      {
+        "hex": "#81726A",
+        "family": "gray",
+        "share": 2.04
+      },
+      {
+        "hex": "#AE6F61",
+        "family": "red",
+        "share": 1.62
+      },
+      {
+        "hex": "#2B1D11",
+        "family": "brown",
+        "share": 1.56
+      },
+      {
+        "hex": "#A1AD8C",
+        "family": "green",
+        "share": 1.49
+      },
+      {
+        "hex": "#765235",
+        "family": "brown",
+        "share": 1.39
+      },
+      {
+        "hex": "#289AB8",
+        "family": "teal",
+        "share": 1.29
+      },
+      {
+        "hex": "#AA9388",
+        "family": "orange",
+        "share": 1.24
+      },
+      {
+        "hex": "#CBC1BD",
+        "family": "orange",
+        "share": 1.2
+      },
+      {
+        "hex": "#91C49A",
+        "family": "green",
+        "share": 1.03
+      },
+      {
+        "hex": "#4D60CE",
+        "family": "blue",
+        "share": 1
+      },
+      {
+        "hex": "#47D5D9",
+        "family": "teal",
+        "share": 0.97
+      },
+      {
+        "hex": "#2C4646",
+        "family": "teal",
+        "share": 0.81
+      },
+      {
+        "hex": "#3A8FBE",
+        "family": "blue",
+        "share": 0.67
+      },
+      {
+        "hex": "#1F2425",
+        "family": "black",
+        "share": 0.62
+      },
+      {
+        "hex": "#57574F",
+        "family": "gray",
+        "share": 0.59
+      },
+      {
+        "hex": "#1A1913",
+        "family": "yellow",
+        "share": 0.59
+      },
+      {
+        "hex": "#DDE7D7",
+        "family": "green",
+        "share": 0.55
+      },
+      {
+        "hex": "#272E38",
+        "family": "blue",
+        "share": 0.54
+      },
+      {
+        "hex": "#C9BC8F",
+        "family": "yellow",
+        "share": 0.51
+      },
+      {
+        "hex": "#8FA293",
+        "family": "gray",
+        "share": 0.48
+      },
+      {
+        "hex": "#8382A2",
+        "family": "blue",
+        "share": 0.48
+      },
+      {
+        "hex": "#555338",
+        "family": "yellow",
+        "share": 0.35
+      }
+    ],
+    "similar": [
+      "merops-apiaster",
+      "aix-sponsa",
+      "cyanocitta-cristata",
+      "aix-galericulata"
+    ]
+  },
+  {
+    "id": "chrysolophus-pictus",
+    "slug": "chrysolophus-pictus",
+    "name": "Golden Pheasant",
+    "scientificName": "Chrysolophus pictus",
+    "region": "Pheasants, Grouse, and Allies",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Chrysolophus%20pictus?size=medium",
+    "colorFamilies": [
+      "brown",
+      "orange",
+      "red",
+      "yellow",
+      "black",
+      "blue",
+      "pink"
+    ],
+    "preview": [
+      "#665142",
+      "#A38A7B",
+      "#372215",
+      "#510609"
+    ],
+    "palette": [
+      {
+        "hex": "#665142",
+        "share": 39.19
+      },
+      {
+        "hex": "#A38A7B",
+        "share": 13.14
+      },
+      {
+        "hex": "#372215",
+        "share": 12.07
+      },
+      {
+        "hex": "#510609",
+        "share": 3.6
+      },
+      {
+        "hex": "#81040D",
+        "share": 2.86
+      },
+      {
+        "hex": "#F2B209",
+        "share": 2.73
+      },
+      {
+        "hex": "#856C5E",
+        "share": 2.35
+      },
+      {
+        "hex": "#F5BD0B",
+        "share": 2.22
+      },
+      {
+        "hex": "#99796F",
+        "share": 2.18
+      },
+      {
+        "hex": "#8F522A",
+        "share": 2.13
+      },
+      {
+        "hex": "#D01F1E",
+        "share": 2.02
+      },
+      {
+        "hex": "#D98D1B",
+        "share": 1.71
+      },
+      {
+        "hex": "#CF5529",
+        "share": 1.6
+      },
+      {
+        "hex": "#0B0406",
+        "share": 1.19
+      },
+      {
+        "hex": "#2B234F",
+        "share": 0.53
+      },
+      {
+        "hex": "#2E3035",
+        "share": 0.45
+      },
+      {
+        "hex": "#2A1321",
+        "share": 0.36
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#665142",
+        "family": "brown",
+        "share": 39.19
+      },
+      {
+        "hex": "#A38A7B",
+        "family": "orange",
+        "share": 13.14
+      },
+      {
+        "hex": "#372215",
+        "family": "brown",
+        "share": 12.07
+      },
+      {
+        "hex": "#510609",
+        "family": "red",
+        "share": 3.6
+      },
+      {
+        "hex": "#81040D",
+        "family": "red",
+        "share": 2.86
+      },
+      {
+        "hex": "#F2B209",
+        "family": "orange",
+        "share": 2.73
+      },
+      {
+        "hex": "#856C5E",
+        "family": "brown",
+        "share": 2.35
+      },
+      {
+        "hex": "#F5BD0B",
+        "family": "yellow",
+        "share": 2.22
+      },
+      {
+        "hex": "#99796F",
+        "family": "red",
+        "share": 2.18
+      },
+      {
+        "hex": "#8F522A",
+        "family": "brown",
+        "share": 2.13
+      },
+      {
+        "hex": "#D01F1E",
+        "family": "red",
+        "share": 2.02
+      },
+      {
+        "hex": "#D98D1B",
+        "family": "orange",
+        "share": 1.71
+      },
+      {
+        "hex": "#CF5529",
+        "family": "orange",
+        "share": 1.6
+      },
+      {
+        "hex": "#0B0406",
+        "family": "black",
+        "share": 1.19
+      },
+      {
+        "hex": "#2B234F",
+        "family": "blue",
+        "share": 0.53
+      },
+      {
+        "hex": "#2E3035",
+        "family": "black",
+        "share": 0.45
+      },
+      {
+        "hex": "#2A1321",
+        "family": "pink",
+        "share": 0.36
+      }
+    ],
+    "similar": [
+      "cardinalis-cardinalis",
+      "piranga-olivacea",
+      "aix-galericulata",
+      "spinus-tristis"
+    ]
+  },
+  {
+    "id": "ramphastos-sulfuratus",
+    "slug": "ramphastos-sulfuratus",
+    "name": "Keel-billed Toucan",
+    "scientificName": "Ramphastos sulfuratus",
+    "region": "Toucans",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Ramphastos%20sulfuratus?size=medium",
+    "colorFamilies": [
+      "yellow",
+      "black",
+      "green",
+      "pink",
+      "orange",
+      "brown",
+      "red",
+      "purple",
+      "blue",
+      "teal",
+      "gray"
+    ],
+    "preview": [
+      "#F2E995",
+      "#120A0A",
+      "#C5E482",
+      "#191315"
+    ],
+    "palette": [
+      {
+        "hex": "#F2E995",
+        "share": 28.15
+      },
+      {
+        "hex": "#120A0A",
+        "share": 11.64
+      },
+      {
+        "hex": "#C5E482",
+        "share": 9.15
+      },
+      {
+        "hex": "#191315",
+        "share": 7.98
+      },
+      {
+        "hex": "#C4B747",
+        "share": 5.53
+      },
+      {
+        "hex": "#529D04",
+        "share": 3.31
+      },
+      {
+        "hex": "#E85901",
+        "share": 2.92
+      },
+      {
+        "hex": "#545142",
+        "share": 2.87
+      },
+      {
+        "hex": "#191112",
+        "share": 2.75
+      },
+      {
+        "hex": "#98C611",
+        "share": 1.91
+      },
+      {
+        "hex": "#406B0A",
+        "share": 1.82
+      },
+      {
+        "hex": "#690314",
+        "share": 1.81
+      },
+      {
+        "hex": "#B75782",
+        "share": 1.37
+      },
+      {
+        "hex": "#17141A",
+        "share": 1.31
+      },
+      {
+        "hex": "#650224",
+        "share": 1.3
+      },
+      {
+        "hex": "#087AB6",
+        "share": 1.13
+      },
+      {
+        "hex": "#CFDA3E",
+        "share": 0.91
+      },
+      {
+        "hex": "#211417",
+        "share": 0.72
+      },
+      {
+        "hex": "#4A3629",
+        "share": 0.7
+      },
+      {
+        "hex": "#322E35",
+        "share": 0.59
+      },
+      {
+        "hex": "#A95007",
+        "share": 0.59
+      },
+      {
+        "hex": "#794F2A",
+        "share": 0.51
+      },
+      {
+        "hex": "#EB7D04",
+        "share": 0.48
+      },
+      {
+        "hex": "#0F8DCB",
+        "share": 0.48
+      },
+      {
+        "hex": "#8B2953",
+        "share": 0.45
+      },
+      {
+        "hex": "#504D4A",
+        "share": 0.43
+      },
+      {
+        "hex": "#A20921",
+        "share": 0.38
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#F2E995",
+        "family": "yellow",
+        "share": 28.15
+      },
+      {
+        "hex": "#120A0A",
+        "family": "black",
+        "share": 11.64
+      },
+      {
+        "hex": "#C5E482",
+        "family": "green",
+        "share": 9.15
+      },
+      {
+        "hex": "#191315",
+        "family": "pink",
+        "share": 7.98
+      },
+      {
+        "hex": "#C4B747",
+        "family": "yellow",
+        "share": 5.53
+      },
+      {
+        "hex": "#529D04",
+        "family": "green",
+        "share": 3.31
+      },
+      {
+        "hex": "#E85901",
+        "family": "orange",
+        "share": 2.92
+      },
+      {
+        "hex": "#545142",
+        "family": "yellow",
+        "share": 2.87
+      },
+      {
+        "hex": "#191112",
+        "family": "brown",
+        "share": 2.75
+      },
+      {
+        "hex": "#98C611",
+        "family": "green",
+        "share": 1.91
+      },
+      {
+        "hex": "#406B0A",
+        "family": "green",
+        "share": 1.82
+      },
+      {
+        "hex": "#690314",
+        "family": "red",
+        "share": 1.81
+      },
+      {
+        "hex": "#B75782",
+        "family": "pink",
+        "share": 1.37
+      },
+      {
+        "hex": "#17141A",
+        "family": "purple",
+        "share": 1.31
+      },
+      {
+        "hex": "#650224",
+        "family": "pink",
+        "share": 1.3
+      },
+      {
+        "hex": "#087AB6",
+        "family": "blue",
+        "share": 1.13
+      },
+      {
+        "hex": "#CFDA3E",
+        "family": "yellow",
+        "share": 0.91
+      },
+      {
+        "hex": "#211417",
+        "family": "red",
+        "share": 0.72
+      },
+      {
+        "hex": "#4A3629",
+        "family": "brown",
+        "share": 0.7
+      },
+      {
+        "hex": "#322E35",
+        "family": "black",
+        "share": 0.59
+      },
+      {
+        "hex": "#A95007",
+        "family": "orange",
+        "share": 0.59
+      },
+      {
+        "hex": "#794F2A",
+        "family": "brown",
+        "share": 0.51
+      },
+      {
+        "hex": "#EB7D04",
+        "family": "orange",
+        "share": 0.48
+      },
+      {
+        "hex": "#0F8DCB",
+        "family": "teal",
+        "share": 0.48
+      },
+      {
+        "hex": "#8B2953",
+        "family": "pink",
+        "share": 0.45
+      },
+      {
+        "hex": "#504D4A",
+        "family": "gray",
+        "share": 0.43
+      },
+      {
+        "hex": "#A20921",
+        "family": "red",
+        "share": 0.38
+      }
+    ],
+    "similar": [
+      "ara-macao",
+      "trichoglossus-moluccanus",
+      "passerina-ciris",
+      "eclectus-roratus"
+    ]
+  },
+  {
+    "id": "cyanocitta-cristata",
+    "slug": "cyanocitta-cristata",
+    "name": "Blue Jay",
+    "scientificName": "Cyanocitta cristata",
+    "region": "Crows, Jays, and Magpies",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Cyanocitta%20cristata?size=medium",
+    "colorFamilies": [
+      "blue",
+      "gray",
+      "brown",
+      "orange",
+      "black",
+      "white"
+    ],
+    "preview": [
+      "#4D5982",
+      "#695E5D",
+      "#91919D",
+      "#554836"
+    ],
+    "palette": [
+      {
+        "hex": "#4D5982",
+        "share": 20.53
+      },
+      {
+        "hex": "#695E5D",
+        "share": 12.96
+      },
+      {
+        "hex": "#91919D",
+        "share": 10.44
+      },
+      {
+        "hex": "#554836",
+        "share": 10.3
+      },
+      {
+        "hex": "#777D99",
+        "share": 6.75
+      },
+      {
+        "hex": "#547291",
+        "share": 4.96
+      },
+      {
+        "hex": "#BCB0AB",
+        "share": 4.84
+      },
+      {
+        "hex": "#262B36",
+        "share": 4.72
+      },
+      {
+        "hex": "#0A0B0B",
+        "share": 3.59
+      },
+      {
+        "hex": "#353233",
+        "share": 3.17
+      },
+      {
+        "hex": "#A49791",
+        "share": 2.65
+      },
+      {
+        "hex": "#C3C3C7",
+        "share": 2.38
+      },
+      {
+        "hex": "#342D29",
+        "share": 1.88
+      },
+      {
+        "hex": "#7D7979",
+        "share": 0.46
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#4D5982",
+        "family": "blue",
+        "share": 20.53
+      },
+      {
+        "hex": "#695E5D",
+        "family": "gray",
+        "share": 12.96
+      },
+      {
+        "hex": "#91919D",
+        "family": "gray",
+        "share": 10.44
+      },
+      {
+        "hex": "#554836",
+        "family": "brown",
+        "share": 10.3
+      },
+      {
+        "hex": "#777D99",
+        "family": "blue",
+        "share": 6.75
+      },
+      {
+        "hex": "#547291",
+        "family": "blue",
+        "share": 4.96
+      },
+      {
+        "hex": "#BCB0AB",
+        "family": "orange",
+        "share": 4.84
+      },
+      {
+        "hex": "#262B36",
+        "family": "blue",
+        "share": 4.72
+      },
+      {
+        "hex": "#0A0B0B",
+        "family": "black",
+        "share": 3.59
+      },
+      {
+        "hex": "#353233",
+        "family": "black",
+        "share": 3.17
+      },
+      {
+        "hex": "#A49791",
+        "family": "gray",
+        "share": 2.65
+      },
+      {
+        "hex": "#C3C3C7",
+        "family": "white",
+        "share": 2.38
+      },
+      {
+        "hex": "#342D29",
+        "family": "brown",
+        "share": 1.88
+      },
+      {
+        "hex": "#7D7979",
+        "family": "gray",
+        "share": 0.46
+      }
+    ],
+    "similar": [
+      "aix-sponsa",
+      "sarcoramphus-papa",
+      "lamprotornis-superbus",
+      "cinnyricinclus-leucogaster"
+    ]
+  },
+  {
+    "id": "cardinalis-cardinalis",
+    "slug": "cardinalis-cardinalis",
+    "name": "Northern Cardinal",
+    "scientificName": "Cardinalis cardinalis",
+    "region": "Cardinals and Allies",
+    "imageUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/189434971/medium.jpg",
+    "colorFamilies": [
+      "brown",
+      "red",
+      "gray",
+      "orange",
+      "black",
+      "yellow"
+    ],
+    "preview": [
+      "#5B5141",
+      "#941503",
+      "#5F1203",
+      "#8A8374"
+    ],
+    "palette": [
+      {
+        "hex": "#5B5141",
+        "share": 14.32
+      },
+      {
+        "hex": "#941503",
+        "share": 10.41
+      },
+      {
+        "hex": "#5F1203",
+        "share": 9.56
+      },
+      {
+        "hex": "#8A8374",
+        "share": 8.83
+      },
+      {
+        "hex": "#86776C",
+        "share": 6.18
+      },
+      {
+        "hex": "#CD2A0E",
+        "share": 6.11
+      },
+      {
+        "hex": "#2E1207",
+        "share": 5.37
+      },
+      {
+        "hex": "#642911",
+        "share": 5.12
+      },
+      {
+        "hex": "#9C8F86",
+        "share": 4.05
+      },
+      {
+        "hex": "#050402",
+        "share": 3.16
+      },
+      {
+        "hex": "#756A65",
+        "share": 2.43
+      },
+      {
+        "hex": "#63210A",
+        "share": 2.28
+      },
+      {
+        "hex": "#E25E47",
+        "share": 1.73
+      },
+      {
+        "hex": "#D9AD19",
+        "share": 1.72
+      },
+      {
+        "hex": "#A6A09A",
+        "share": 1.44
+      },
+      {
+        "hex": "#C3B19C",
+        "share": 0.64
+      },
+      {
+        "hex": "#867062",
+        "share": 0.4
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#5B5141",
+        "family": "brown",
+        "share": 14.32
+      },
+      {
+        "hex": "#941503",
+        "family": "red",
+        "share": 10.41
+      },
+      {
+        "hex": "#5F1203",
+        "family": "red",
+        "share": 9.56
+      },
+      {
+        "hex": "#8A8374",
+        "family": "gray",
+        "share": 8.83
+      },
+      {
+        "hex": "#86776C",
+        "family": "brown",
+        "share": 6.18
+      },
+      {
+        "hex": "#CD2A0E",
+        "family": "red",
+        "share": 6.11
+      },
+      {
+        "hex": "#2E1207",
+        "family": "brown",
+        "share": 5.37
+      },
+      {
+        "hex": "#642911",
+        "family": "brown",
+        "share": 5.12
+      },
+      {
+        "hex": "#9C8F86",
+        "family": "orange",
+        "share": 4.05
+      },
+      {
+        "hex": "#050402",
+        "family": "black",
+        "share": 3.16
+      },
+      {
+        "hex": "#756A65",
+        "family": "gray",
+        "share": 2.43
+      },
+      {
+        "hex": "#63210A",
+        "family": "orange",
+        "share": 2.28
+      },
+      {
+        "hex": "#E25E47",
+        "family": "red",
+        "share": 1.73
+      },
+      {
+        "hex": "#D9AD19",
+        "family": "yellow",
+        "share": 1.72
+      },
+      {
+        "hex": "#A6A09A",
+        "family": "gray",
+        "share": 1.44
+      },
+      {
+        "hex": "#C3B19C",
+        "family": "orange",
+        "share": 0.64
+      },
+      {
+        "hex": "#867062",
+        "family": "orange",
+        "share": 0.4
+      }
+    ],
+    "similar": [
+      "piranga-olivacea",
+      "chrysolophus-pictus",
+      "sarcoramphus-papa",
+      "eclectus-roratus"
+    ]
+  },
+  {
+    "id": "spinus-tristis",
+    "slug": "spinus-tristis",
+    "name": "American Goldfinch",
+    "scientificName": "Spinus tristis",
+    "region": "Finches, Euphonias, and Allies",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Spinus%20tristis?size=medium",
+    "colorFamilies": [
+      "yellow",
+      "brown",
+      "black",
+      "orange"
+    ],
+    "preview": [
+      "#FEDD07",
+      "#AA8602",
+      "#7A6746",
+      "#070401"
+    ],
+    "palette": [
+      {
+        "hex": "#FEDD07",
+        "share": 29.04
+      },
+      {
+        "hex": "#AA8602",
+        "share": 13.25
+      },
+      {
+        "hex": "#7A6746",
+        "share": 12.75
+      },
+      {
+        "hex": "#070401",
+        "share": 11.57
+      },
+      {
+        "hex": "#D9B402",
+        "share": 5.57
+      },
+      {
+        "hex": "#7D5D01",
+        "share": 4.85
+      },
+      {
+        "hex": "#886902",
+        "share": 3.79
+      },
+      {
+        "hex": "#BDAF9D",
+        "share": 3.62
+      },
+      {
+        "hex": "#5E492C",
+        "share": 3.22
+      },
+      {
+        "hex": "#2E241E",
+        "share": 3.17
+      },
+      {
+        "hex": "#3D2804",
+        "share": 1.88
+      },
+      {
+        "hex": "#A79985",
+        "share": 1.4
+      },
+      {
+        "hex": "#B88902",
+        "share": 0.84
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#FEDD07",
+        "family": "yellow",
+        "share": 29.04
+      },
+      {
+        "hex": "#AA8602",
+        "family": "yellow",
+        "share": 13.25
+      },
+      {
+        "hex": "#7A6746",
+        "family": "brown",
+        "share": 12.75
+      },
+      {
+        "hex": "#070401",
+        "family": "black",
+        "share": 11.57
+      },
+      {
+        "hex": "#D9B402",
+        "family": "yellow",
+        "share": 5.57
+      },
+      {
+        "hex": "#7D5D01",
+        "family": "orange",
+        "share": 4.85
+      },
+      {
+        "hex": "#886902",
+        "family": "yellow",
+        "share": 3.79
+      },
+      {
+        "hex": "#BDAF9D",
+        "family": "orange",
+        "share": 3.62
+      },
+      {
+        "hex": "#5E492C",
+        "family": "brown",
+        "share": 3.22
+      },
+      {
+        "hex": "#2E241E",
+        "family": "brown",
+        "share": 3.17
+      },
+      {
+        "hex": "#3D2804",
+        "family": "orange",
+        "share": 1.88
+      },
+      {
+        "hex": "#A79985",
+        "family": "brown",
+        "share": 1.4
+      },
+      {
+        "hex": "#B88902",
+        "family": "orange",
+        "share": 0.84
+      }
+    ],
+    "similar": [
+      "cardinalis-cardinalis",
+      "chrysolophus-pictus",
+      "merops-apiaster",
+      "aix-galericulata"
+    ]
+  },
+  {
+    "id": "aix-sponsa",
+    "slug": "aix-sponsa",
+    "name": "Wood Duck",
+    "scientificName": "Aix sponsa",
+    "region": "Ducks, Geese, and Waterfowl",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Aix%20sponsa?size=medium",
+    "colorFamilies": [
+      "brown",
+      "black",
+      "blue",
+      "teal",
+      "gray",
+      "green",
+      "pink",
+      "red",
+      "yellow",
+      "white"
+    ],
+    "preview": [
+      "#64513E",
+      "#4D1E19",
+      "#09120E",
+      "#152026"
+    ],
+    "palette": [
+      {
+        "hex": "#64513E",
+        "share": 13.91
+      },
+      {
+        "hex": "#4D1E19",
+        "share": 10.68
+      },
+      {
+        "hex": "#09120E",
+        "share": 7.95
+      },
+      {
+        "hex": "#152026",
+        "share": 7.62
+      },
+      {
+        "hex": "#91816C",
+        "share": 6.61
+      },
+      {
+        "hex": "#704349",
+        "share": 6.09
+      },
+      {
+        "hex": "#1E2624",
+        "share": 5.86
+      },
+      {
+        "hex": "#676562",
+        "share": 4.51
+      },
+      {
+        "hex": "#403E3C",
+        "share": 3.44
+      },
+      {
+        "hex": "#1B1E17",
+        "share": 2.65
+      },
+      {
+        "hex": "#2E3823",
+        "share": 2.53
+      },
+      {
+        "hex": "#999CA5",
+        "share": 2.47
+      },
+      {
+        "hex": "#2D1E22",
+        "share": 2.02
+      },
+      {
+        "hex": "#535E68",
+        "share": 1.88
+      },
+      {
+        "hex": "#8A6662",
+        "share": 1.74
+      },
+      {
+        "hex": "#3A6C6B",
+        "share": 1.51
+      },
+      {
+        "hex": "#4F739B",
+        "share": 1.39
+      },
+      {
+        "hex": "#F2FAFE",
+        "share": 1.3
+      },
+      {
+        "hex": "#A4807D",
+        "share": 1.27
+      },
+      {
+        "hex": "#7C4A57",
+        "share": 1.11
+      },
+      {
+        "hex": "#774852",
+        "share": 1.08
+      },
+      {
+        "hex": "#1B4741",
+        "share": 1
+      },
+      {
+        "hex": "#28261B",
+        "share": 0.84
+      },
+      {
+        "hex": "#2C4149",
+        "share": 0.83
+      },
+      {
+        "hex": "#B5B4B9",
+        "share": 0.73
+      },
+      {
+        "hex": "#867E76",
+        "share": 0.62
+      },
+      {
+        "hex": "#DDB5B4",
+        "share": 0.5
+      },
+      {
+        "hex": "#1E0905",
+        "share": 0.42
+      },
+      {
+        "hex": "#4B4D53",
+        "share": 0.41
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#64513E",
+        "family": "brown",
+        "share": 13.91
+      },
+      {
+        "hex": "#4D1E19",
+        "family": "brown",
+        "share": 10.68
+      },
+      {
+        "hex": "#09120E",
+        "family": "black",
+        "share": 7.95
+      },
+      {
+        "hex": "#152026",
+        "family": "blue",
+        "share": 7.62
+      },
+      {
+        "hex": "#91816C",
+        "family": "brown",
+        "share": 6.61
+      },
+      {
+        "hex": "#704349",
+        "family": "brown",
+        "share": 6.09
+      },
+      {
+        "hex": "#1E2624",
+        "family": "teal",
+        "share": 5.86
+      },
+      {
+        "hex": "#676562",
+        "family": "gray",
+        "share": 4.51
+      },
+      {
+        "hex": "#403E3C",
+        "family": "black",
+        "share": 3.44
+      },
+      {
+        "hex": "#1B1E17",
+        "family": "green",
+        "share": 2.65
+      },
+      {
+        "hex": "#2E3823",
+        "family": "green",
+        "share": 2.53
+      },
+      {
+        "hex": "#999CA5",
+        "family": "gray",
+        "share": 2.47
+      },
+      {
+        "hex": "#2D1E22",
+        "family": "pink",
+        "share": 2.02
+      },
+      {
+        "hex": "#535E68",
+        "family": "blue",
+        "share": 1.88
+      },
+      {
+        "hex": "#8A6662",
+        "family": "red",
+        "share": 1.74
+      },
+      {
+        "hex": "#3A6C6B",
+        "family": "teal",
+        "share": 1.51
+      },
+      {
+        "hex": "#4F739B",
+        "family": "blue",
+        "share": 1.39
+      },
+      {
+        "hex": "#F2FAFE",
+        "family": "blue",
+        "share": 1.3
+      },
+      {
+        "hex": "#A4807D",
+        "family": "red",
+        "share": 1.27
+      },
+      {
+        "hex": "#7C4A57",
+        "family": "pink",
+        "share": 1.11
+      },
+      {
+        "hex": "#774852",
+        "family": "red",
+        "share": 1.08
+      },
+      {
+        "hex": "#1B4741",
+        "family": "teal",
+        "share": 1
+      },
+      {
+        "hex": "#28261B",
+        "family": "yellow",
+        "share": 0.84
+      },
+      {
+        "hex": "#2C4149",
+        "family": "teal",
+        "share": 0.83
+      },
+      {
+        "hex": "#B5B4B9",
+        "family": "white",
+        "share": 0.73
+      },
+      {
+        "hex": "#867E76",
+        "family": "gray",
+        "share": 0.62
+      },
+      {
+        "hex": "#DDB5B4",
+        "family": "red",
+        "share": 0.5
+      },
+      {
+        "hex": "#1E0905",
+        "family": "black",
+        "share": 0.42
+      },
+      {
+        "hex": "#4B4D53",
+        "family": "gray",
+        "share": 0.41
+      }
+    ],
+    "similar": [
+      "aix-galericulata",
+      "cyanocitta-cristata",
+      "eclectus-roratus",
+      "platycercus-elegans"
+    ]
+  },
+  {
+    "id": "trichoglossus-moluccanus",
+    "slug": "trichoglossus-moluccanus",
+    "name": "Rainbow Lorikeet",
+    "scientificName": "Trichoglossus moluccanus",
+    "region": "Old World Parrots",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Trichoglossus%20moluccanus?size=medium",
+    "colorFamilies": [
+      "blue",
+      "red",
+      "green",
+      "brown",
+      "orange",
+      "yellow",
+      "black",
+      "purple",
+      "gray",
+      "pink"
+    ],
+    "preview": [
+      "#383C5F",
+      "#F34D26",
+      "#577D1F",
+      "#71A624"
+    ],
+    "palette": [
+      {
+        "hex": "#383C5F",
+        "share": 10.68
+      },
+      {
+        "hex": "#F34D26",
+        "share": 9.98
+      },
+      {
+        "hex": "#577D1F",
+        "share": 8.32
+      },
+      {
+        "hex": "#71A624",
+        "share": 7.2
+      },
+      {
+        "hex": "#AF947E",
+        "share": 4.73
+      },
+      {
+        "hex": "#FD9A39",
+        "share": 4.49
+      },
+      {
+        "hex": "#736C97",
+        "share": 3.51
+      },
+      {
+        "hex": "#5B3A2C",
+        "share": 3.49
+      },
+      {
+        "hex": "#373E1C",
+        "share": 3.14
+      },
+      {
+        "hex": "#E2541C",
+        "share": 2.97
+      },
+      {
+        "hex": "#9BC952",
+        "share": 2.63
+      },
+      {
+        "hex": "#FEDB57",
+        "share": 2.37
+      },
+      {
+        "hex": "#252937",
+        "share": 2.35
+      },
+      {
+        "hex": "#FED152",
+        "share": 2.07
+      },
+      {
+        "hex": "#DFD6BF",
+        "share": 1.84
+      },
+      {
+        "hex": "#2B252C",
+        "share": 1.83
+      },
+      {
+        "hex": "#DAD1B3",
+        "share": 1.8
+      },
+      {
+        "hex": "#6A5747",
+        "share": 1.73
+      },
+      {
+        "hex": "#9690B9",
+        "share": 1.62
+      },
+      {
+        "hex": "#30260D",
+        "share": 1.62
+      },
+      {
+        "hex": "#CDD72F",
+        "share": 1.58
+      },
+      {
+        "hex": "#807895",
+        "share": 1.53
+      },
+      {
+        "hex": "#463B55",
+        "share": 1.29
+      },
+      {
+        "hex": "#6E732B",
+        "share": 1.13
+      },
+      {
+        "hex": "#534956",
+        "share": 1.11
+      },
+      {
+        "hex": "#5C3749",
+        "share": 0.91
+      },
+      {
+        "hex": "#A64646",
+        "share": 0.55
+      },
+      {
+        "hex": "#7A7283",
+        "share": 0.5
+      },
+      {
+        "hex": "#161D09",
+        "share": 0.49
+      },
+      {
+        "hex": "#FC695F",
+        "share": 0.48
+      },
+      {
+        "hex": "#A29AB4",
+        "share": 0.41
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#383C5F",
+        "family": "blue",
+        "share": 10.68
+      },
+      {
+        "hex": "#F34D26",
+        "family": "red",
+        "share": 9.98
+      },
+      {
+        "hex": "#577D1F",
+        "family": "green",
+        "share": 8.32
+      },
+      {
+        "hex": "#71A624",
+        "family": "green",
+        "share": 7.2
+      },
+      {
+        "hex": "#AF947E",
+        "family": "brown",
+        "share": 4.73
+      },
+      {
+        "hex": "#FD9A39",
+        "family": "orange",
+        "share": 4.49
+      },
+      {
+        "hex": "#736C97",
+        "family": "blue",
+        "share": 3.51
+      },
+      {
+        "hex": "#5B3A2C",
+        "family": "brown",
+        "share": 3.49
+      },
+      {
+        "hex": "#373E1C",
+        "family": "green",
+        "share": 3.14
+      },
+      {
+        "hex": "#E2541C",
+        "family": "orange",
+        "share": 2.97
+      },
+      {
+        "hex": "#9BC952",
+        "family": "green",
+        "share": 2.63
+      },
+      {
+        "hex": "#FEDB57",
+        "family": "yellow",
+        "share": 2.37
+      },
+      {
+        "hex": "#252937",
+        "family": "blue",
+        "share": 2.35
+      },
+      {
+        "hex": "#FED152",
+        "family": "orange",
+        "share": 2.07
+      },
+      {
+        "hex": "#DFD6BF",
+        "family": "orange",
+        "share": 1.84
+      },
+      {
+        "hex": "#2B252C",
+        "family": "black",
+        "share": 1.83
+      },
+      {
+        "hex": "#DAD1B3",
+        "family": "yellow",
+        "share": 1.8
+      },
+      {
+        "hex": "#6A5747",
+        "family": "brown",
+        "share": 1.73
+      },
+      {
+        "hex": "#9690B9",
+        "family": "blue",
+        "share": 1.62
+      },
+      {
+        "hex": "#30260D",
+        "family": "brown",
+        "share": 1.62
+      },
+      {
+        "hex": "#CDD72F",
+        "family": "yellow",
+        "share": 1.58
+      },
+      {
+        "hex": "#807895",
+        "family": "purple",
+        "share": 1.53
+      },
+      {
+        "hex": "#463B55",
+        "family": "purple",
+        "share": 1.29
+      },
+      {
+        "hex": "#6E732B",
+        "family": "yellow",
+        "share": 1.13
+      },
+      {
+        "hex": "#534956",
+        "family": "gray",
+        "share": 1.11
+      },
+      {
+        "hex": "#5C3749",
+        "family": "pink",
+        "share": 0.91
+      },
+      {
+        "hex": "#A64646",
+        "family": "red",
+        "share": 0.55
+      },
+      {
+        "hex": "#7A7283",
+        "family": "gray",
+        "share": 0.5
+      },
+      {
+        "hex": "#161D09",
+        "family": "black",
+        "share": 0.49
+      },
+      {
+        "hex": "#FC695F",
+        "family": "red",
+        "share": 0.48
+      },
+      {
+        "hex": "#A29AB4",
+        "family": "purple",
+        "share": 0.41
+      }
+    ],
+    "similar": [
+      "passerina-ciris",
+      "eclectus-roratus",
+      "piranga-olivacea",
+      "ramphastos-sulfuratus"
+    ]
+  },
+  {
+    "id": "aix-galericulata",
+    "slug": "aix-galericulata",
+    "name": "Mandarin Duck",
+    "scientificName": "Aix galericulata",
+    "region": "Ducks, Geese, and Waterfowl",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Aix%20galericulata?size=medium",
+    "colorFamilies": [
+      "orange",
+      "brown",
+      "white",
+      "blue",
+      "black",
+      "gray",
+      "pink",
+      "purple",
+      "teal",
+      "red"
+    ],
+    "preview": [
+      "#E7C1A3",
+      "#744925",
+      "#DBDBDD",
+      "#F6F0E6"
+    ],
+    "palette": [
+      {
+        "hex": "#E7C1A3",
+        "share": 13.44
+      },
+      {
+        "hex": "#744925",
+        "share": 10.84
+      },
+      {
+        "hex": "#DBDBDD",
+        "share": 7.14
+      },
+      {
+        "hex": "#F6F0E6",
+        "share": 6.35
+      },
+      {
+        "hex": "#9B6943",
+        "share": 6.08
+      },
+      {
+        "hex": "#CCA165",
+        "share": 5.61
+      },
+      {
+        "hex": "#CAA46C",
+        "share": 4.57
+      },
+      {
+        "hex": "#CF875F",
+        "share": 3.89
+      },
+      {
+        "hex": "#E6E5EA",
+        "share": 3.17
+      },
+      {
+        "hex": "#040404",
+        "share": 2.65
+      },
+      {
+        "hex": "#4D4E56",
+        "share": 2.38
+      },
+      {
+        "hex": "#121820",
+        "share": 2.12
+      },
+      {
+        "hex": "#8C7E78",
+        "share": 2.11
+      },
+      {
+        "hex": "#4D2C1D",
+        "share": 1.52
+      },
+      {
+        "hex": "#42263B",
+        "share": 1.33
+      },
+      {
+        "hex": "#49384F",
+        "share": 1.28
+      },
+      {
+        "hex": "#20576A",
+        "share": 1.04
+      },
+      {
+        "hex": "#B2A9A5",
+        "share": 1.03
+      },
+      {
+        "hex": "#454849",
+        "share": 0.96
+      },
+      {
+        "hex": "#F86D68",
+        "share": 0.95
+      },
+      {
+        "hex": "#3A3A48",
+        "share": 0.86
+      },
+      {
+        "hex": "#611A06",
+        "share": 0.81
+      },
+      {
+        "hex": "#A15B56",
+        "share": 0.71
+      },
+      {
+        "hex": "#1C445C",
+        "share": 0.53
+      },
+      {
+        "hex": "#342D2C",
+        "share": 0.47
+      },
+      {
+        "hex": "#504652",
+        "share": 0.46
+      },
+      {
+        "hex": "#6E6368",
+        "share": 0.43
+      },
+      {
+        "hex": "#EDE9E9",
+        "share": 0.43
+      },
+      {
+        "hex": "#C2B6B5",
+        "share": 0.39
+      },
+      {
+        "hex": "#0E2E33",
+        "share": 0.38
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#E7C1A3",
+        "family": "orange",
+        "share": 13.44
+      },
+      {
+        "hex": "#744925",
+        "family": "brown",
+        "share": 10.84
+      },
+      {
+        "hex": "#DBDBDD",
+        "family": "white",
+        "share": 7.14
+      },
+      {
+        "hex": "#F6F0E6",
+        "family": "orange",
+        "share": 6.35
+      },
+      {
+        "hex": "#9B6943",
+        "family": "brown",
+        "share": 6.08
+      },
+      {
+        "hex": "#CCA165",
+        "family": "brown",
+        "share": 5.61
+      },
+      {
+        "hex": "#CAA46C",
+        "family": "orange",
+        "share": 4.57
+      },
+      {
+        "hex": "#CF875F",
+        "family": "orange",
+        "share": 3.89
+      },
+      {
+        "hex": "#E6E5EA",
+        "family": "blue",
+        "share": 3.17
+      },
+      {
+        "hex": "#040404",
+        "family": "black",
+        "share": 2.65
+      },
+      {
+        "hex": "#4D4E56",
+        "family": "gray",
+        "share": 2.38
+      },
+      {
+        "hex": "#121820",
+        "family": "blue",
+        "share": 2.12
+      },
+      {
+        "hex": "#8C7E78",
+        "family": "gray",
+        "share": 2.11
+      },
+      {
+        "hex": "#4D2C1D",
+        "family": "brown",
+        "share": 1.52
+      },
+      {
+        "hex": "#42263B",
+        "family": "pink",
+        "share": 1.33
+      },
+      {
+        "hex": "#49384F",
+        "family": "purple",
+        "share": 1.28
+      },
+      {
+        "hex": "#20576A",
+        "family": "teal",
+        "share": 1.04
+      },
+      {
+        "hex": "#B2A9A5",
+        "family": "gray",
+        "share": 1.03
+      },
+      {
+        "hex": "#454849",
+        "family": "black",
+        "share": 0.96
+      },
+      {
+        "hex": "#F86D68",
+        "family": "red",
+        "share": 0.95
+      },
+      {
+        "hex": "#3A3A48",
+        "family": "blue",
+        "share": 0.86
+      },
+      {
+        "hex": "#611A06",
+        "family": "red",
+        "share": 0.81
+      },
+      {
+        "hex": "#A15B56",
+        "family": "red",
+        "share": 0.71
+      },
+      {
+        "hex": "#1C445C",
+        "family": "blue",
+        "share": 0.53
+      },
+      {
+        "hex": "#342D2C",
+        "family": "black",
+        "share": 0.47
+      },
+      {
+        "hex": "#504652",
+        "family": "black",
+        "share": 0.46
+      },
+      {
+        "hex": "#6E6368",
+        "family": "gray",
+        "share": 0.43
+      },
+      {
+        "hex": "#EDE9E9",
+        "family": "red",
+        "share": 0.43
+      },
+      {
+        "hex": "#C2B6B5",
+        "family": "white",
+        "share": 0.39
+      },
+      {
+        "hex": "#0E2E33",
+        "family": "teal",
+        "share": 0.38
+      }
+    ],
+    "similar": [
+      "aix-sponsa",
+      "sarcoramphus-papa",
+      "lamprotornis-superbus",
+      "eclectus-roratus"
+    ]
+  },
+  {
+    "id": "eclectus-roratus",
+    "slug": "eclectus-roratus",
+    "name": "Eclectus Parrot",
+    "scientificName": "Eclectus roratus",
+    "region": "Old World Parrots",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Eclectus%20roratus?size=medium",
+    "colorFamilies": [
+      "brown",
+      "red",
+      "pink",
+      "black",
+      "gray",
+      "yellow",
+      "white",
+      "green",
+      "orange",
+      "purple",
+      "teal",
+      "blue"
+    ],
+    "preview": [
+      "#7B292E",
+      "#650913",
+      "#3D2837",
+      "#461310"
+    ],
+    "palette": [
+      {
+        "hex": "#7B292E",
+        "share": 25.56
+      },
+      {
+        "hex": "#650913",
+        "share": 6.45
+      },
+      {
+        "hex": "#3D2837",
+        "share": 5.49
+      },
+      {
+        "hex": "#461310",
+        "share": 4.27
+      },
+      {
+        "hex": "#3B383B",
+        "share": 3.97
+      },
+      {
+        "hex": "#9F9F93",
+        "share": 3.57
+      },
+      {
+        "hex": "#2B281F",
+        "share": 3.22
+      },
+      {
+        "hex": "#5F5C5C",
+        "share": 2.92
+      },
+      {
+        "hex": "#674C58",
+        "share": 2.82
+      },
+      {
+        "hex": "#1F1211",
+        "share": 2.6
+      },
+      {
+        "hex": "#767858",
+        "share": 2.41
+      },
+      {
+        "hex": "#231C1E",
+        "share": 2.37
+      },
+      {
+        "hex": "#EFF0EE",
+        "share": 2.29
+      },
+      {
+        "hex": "#616943",
+        "share": 2.26
+      },
+      {
+        "hex": "#B3B681",
+        "share": 2.25
+      },
+      {
+        "hex": "#E9E6E1",
+        "share": 1.82
+      },
+      {
+        "hex": "#1B1717",
+        "share": 1.75
+      },
+      {
+        "hex": "#474A30",
+        "share": 1.45
+      },
+      {
+        "hex": "#898C71",
+        "share": 1.3
+      },
+      {
+        "hex": "#382E3B",
+        "share": 1.26
+      },
+      {
+        "hex": "#BAB7AA",
+        "share": 1.1
+      },
+      {
+        "hex": "#2F2D1F",
+        "share": 1.08
+      },
+      {
+        "hex": "#A90F1F",
+        "share": 1.01
+      },
+      {
+        "hex": "#735F74",
+        "share": 0.9
+      },
+      {
+        "hex": "#F93E3D",
+        "share": 0.89
+      },
+      {
+        "hex": "#F7FAF9",
+        "share": 0.79
+      },
+      {
+        "hex": "#B8B8B1",
+        "share": 0.73
+      },
+      {
+        "hex": "#67343D",
+        "share": 0.65
+      },
+      {
+        "hex": "#BAB5A7",
+        "share": 0.52
+      },
+      {
+        "hex": "#787976",
+        "share": 0.47
+      },
+      {
+        "hex": "#8F7893",
+        "share": 0.42
+      },
+      {
+        "hex": "#DD8A66",
+        "share": 0.36
+      },
+      {
+        "hex": "#15121F",
+        "share": 0.36
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#7B292E",
+        "family": "brown",
+        "share": 25.56
+      },
+      {
+        "hex": "#650913",
+        "family": "red",
+        "share": 6.45
+      },
+      {
+        "hex": "#3D2837",
+        "family": "pink",
+        "share": 5.49
+      },
+      {
+        "hex": "#461310",
+        "family": "brown",
+        "share": 4.27
+      },
+      {
+        "hex": "#3B383B",
+        "family": "black",
+        "share": 3.97
+      },
+      {
+        "hex": "#9F9F93",
+        "family": "gray",
+        "share": 3.57
+      },
+      {
+        "hex": "#2B281F",
+        "family": "brown",
+        "share": 3.22
+      },
+      {
+        "hex": "#5F5C5C",
+        "family": "gray",
+        "share": 2.92
+      },
+      {
+        "hex": "#674C58",
+        "family": "pink",
+        "share": 2.82
+      },
+      {
+        "hex": "#1F1211",
+        "family": "brown",
+        "share": 2.6
+      },
+      {
+        "hex": "#767858",
+        "family": "yellow",
+        "share": 2.41
+      },
+      {
+        "hex": "#231C1E",
+        "family": "pink",
+        "share": 2.37
+      },
+      {
+        "hex": "#EFF0EE",
+        "family": "white",
+        "share": 2.29
+      },
+      {
+        "hex": "#616943",
+        "family": "green",
+        "share": 2.26
+      },
+      {
+        "hex": "#B3B681",
+        "family": "yellow",
+        "share": 2.25
+      },
+      {
+        "hex": "#E9E6E1",
+        "family": "orange",
+        "share": 1.82
+      },
+      {
+        "hex": "#1B1717",
+        "family": "black",
+        "share": 1.75
+      },
+      {
+        "hex": "#474A30",
+        "family": "green",
+        "share": 1.45
+      },
+      {
+        "hex": "#898C71",
+        "family": "green",
+        "share": 1.3
+      },
+      {
+        "hex": "#382E3B",
+        "family": "purple",
+        "share": 1.26
+      },
+      {
+        "hex": "#BAB7AA",
+        "family": "yellow",
+        "share": 1.1
+      },
+      {
+        "hex": "#2F2D1F",
+        "family": "yellow",
+        "share": 1.08
+      },
+      {
+        "hex": "#A90F1F",
+        "family": "red",
+        "share": 1.01
+      },
+      {
+        "hex": "#735F74",
+        "family": "gray",
+        "share": 0.9
+      },
+      {
+        "hex": "#F93E3D",
+        "family": "red",
+        "share": 0.89
+      },
+      {
+        "hex": "#F7FAF9",
+        "family": "teal",
+        "share": 0.79
+      },
+      {
+        "hex": "#B8B8B1",
+        "family": "white",
+        "share": 0.73
+      },
+      {
+        "hex": "#67343D",
+        "family": "red",
+        "share": 0.65
+      },
+      {
+        "hex": "#BAB5A7",
+        "family": "orange",
+        "share": 0.52
+      },
+      {
+        "hex": "#787976",
+        "family": "gray",
+        "share": 0.47
+      },
+      {
+        "hex": "#8F7893",
+        "family": "pink",
+        "share": 0.42
+      },
+      {
+        "hex": "#DD8A66",
+        "family": "orange",
+        "share": 0.36
+      },
+      {
+        "hex": "#15121F",
+        "family": "blue",
+        "share": 0.36
+      }
+    ],
+    "similar": [
+      "piranga-olivacea",
+      "sarcoramphus-papa",
+      "platycercus-elegans",
+      "aix-sponsa"
+    ]
+  },
+  {
+    "id": "platycercus-elegans",
+    "slug": "platycercus-elegans",
+    "name": "Crimson Rosella",
+    "scientificName": "Platycercus elegans",
+    "region": "Old World Parrots",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Platycercus%20elegans?size=medium",
+    "colorFamilies": [
+      "red",
+      "blue",
+      "brown",
+      "green",
+      "black",
+      "gray",
+      "teal",
+      "pink",
+      "white",
+      "purple",
+      "yellow"
+    ],
+    "preview": [
+      "#9E0316",
+      "#304474",
+      "#8A141F",
+      "#3A432D"
+    ],
+    "palette": [
+      {
+        "hex": "#9E0316",
+        "share": 13.27
+      },
+      {
+        "hex": "#304474",
+        "share": 9.41
+      },
+      {
+        "hex": "#8A141F",
+        "share": 7.64
+      },
+      {
+        "hex": "#3A432D",
+        "share": 7.04
+      },
+      {
+        "hex": "#414E5C",
+        "share": 5.16
+      },
+      {
+        "hex": "#7FA7E6",
+        "share": 4.83
+      },
+      {
+        "hex": "#99A88B",
+        "share": 4.81
+      },
+      {
+        "hex": "#1C1F21",
+        "share": 4.8
+      },
+      {
+        "hex": "#141C20",
+        "share": 4.6
+      },
+      {
+        "hex": "#372422",
+        "share": 4.34
+      },
+      {
+        "hex": "#74856E",
+        "share": 3.58
+      },
+      {
+        "hex": "#172023",
+        "share": 2.9
+      },
+      {
+        "hex": "#6E0717",
+        "share": 2.85
+      },
+      {
+        "hex": "#6A4141",
+        "share": 1.76
+      },
+      {
+        "hex": "#5E2E3B",
+        "share": 1.4
+      },
+      {
+        "hex": "#ABB4A6",
+        "share": 1.26
+      },
+      {
+        "hex": "#541C23",
+        "share": 1.22
+      },
+      {
+        "hex": "#D30F28",
+        "share": 1.16
+      },
+      {
+        "hex": "#404B4E",
+        "share": 1.13
+      },
+      {
+        "hex": "#AD4C50",
+        "share": 1.11
+      },
+      {
+        "hex": "#636657",
+        "share": 0.99
+      },
+      {
+        "hex": "#4B5152",
+        "share": 0.9
+      },
+      {
+        "hex": "#415A61",
+        "share": 0.55
+      },
+      {
+        "hex": "#3B3231",
+        "share": 0.55
+      },
+      {
+        "hex": "#658080",
+        "share": 0.49
+      },
+      {
+        "hex": "#C1C4BB",
+        "share": 0.47
+      },
+      {
+        "hex": "#91A7B2",
+        "share": 0.43
+      },
+      {
+        "hex": "#4B3662",
+        "share": 0.42
+      },
+      {
+        "hex": "#627C73",
+        "share": 0.35
+      },
+      {
+        "hex": "#CCCBC0",
+        "share": 0.35
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#9E0316",
+        "family": "red",
+        "share": 13.27
+      },
+      {
+        "hex": "#304474",
+        "family": "blue",
+        "share": 9.41
+      },
+      {
+        "hex": "#8A141F",
+        "family": "brown",
+        "share": 7.64
+      },
+      {
+        "hex": "#3A432D",
+        "family": "green",
+        "share": 7.04
+      },
+      {
+        "hex": "#414E5C",
+        "family": "blue",
+        "share": 5.16
+      },
+      {
+        "hex": "#7FA7E6",
+        "family": "blue",
+        "share": 4.83
+      },
+      {
+        "hex": "#99A88B",
+        "family": "green",
+        "share": 4.81
+      },
+      {
+        "hex": "#1C1F21",
+        "family": "black",
+        "share": 4.8
+      },
+      {
+        "hex": "#141C20",
+        "family": "blue",
+        "share": 4.6
+      },
+      {
+        "hex": "#372422",
+        "family": "brown",
+        "share": 4.34
+      },
+      {
+        "hex": "#74856E",
+        "family": "gray",
+        "share": 3.58
+      },
+      {
+        "hex": "#172023",
+        "family": "teal",
+        "share": 2.9
+      },
+      {
+        "hex": "#6E0717",
+        "family": "red",
+        "share": 2.85
+      },
+      {
+        "hex": "#6A4141",
+        "family": "brown",
+        "share": 1.76
+      },
+      {
+        "hex": "#5E2E3B",
+        "family": "pink",
+        "share": 1.4
+      },
+      {
+        "hex": "#ABB4A6",
+        "family": "gray",
+        "share": 1.26
+      },
+      {
+        "hex": "#541C23",
+        "family": "brown",
+        "share": 1.22
+      },
+      {
+        "hex": "#D30F28",
+        "family": "red",
+        "share": 1.16
+      },
+      {
+        "hex": "#404B4E",
+        "family": "black",
+        "share": 1.13
+      },
+      {
+        "hex": "#AD4C50",
+        "family": "red",
+        "share": 1.11
+      },
+      {
+        "hex": "#636657",
+        "family": "gray",
+        "share": 0.99
+      },
+      {
+        "hex": "#4B5152",
+        "family": "gray",
+        "share": 0.9
+      },
+      {
+        "hex": "#415A61",
+        "family": "teal",
+        "share": 0.55
+      },
+      {
+        "hex": "#3B3231",
+        "family": "black",
+        "share": 0.55
+      },
+      {
+        "hex": "#658080",
+        "family": "teal",
+        "share": 0.49
+      },
+      {
+        "hex": "#C1C4BB",
+        "family": "white",
+        "share": 0.47
+      },
+      {
+        "hex": "#91A7B2",
+        "family": "teal",
+        "share": 0.43
+      },
+      {
+        "hex": "#4B3662",
+        "family": "purple",
+        "share": 0.42
+      },
+      {
+        "hex": "#627C73",
+        "family": "green",
+        "share": 0.35
+      },
+      {
+        "hex": "#CCCBC0",
+        "family": "yellow",
+        "share": 0.35
+      }
+    ],
+    "similar": [
+      "eclectus-roratus",
+      "aix-sponsa",
+      "pharomachrus-mocinno",
+      "piranga-olivacea"
+    ]
+  },
+  {
+    "id": "lamprotornis-superbus",
+    "slug": "lamprotornis-superbus",
+    "name": "Superb Starling",
+    "scientificName": "Lamprotornis superbus",
+    "region": "Starlings",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Lamprotornis%20superbus?size=medium",
+    "colorFamilies": [
+      "orange",
+      "blue",
+      "teal",
+      "black",
+      "gray",
+      "brown",
+      "white"
+    ],
+    "preview": [
+      "#943401",
+      "#174864",
+      "#1A4452",
+      "#0E0E0E"
+    ],
+    "palette": [
+      {
+        "hex": "#943401",
+        "share": 12.74
+      },
+      {
+        "hex": "#174864",
+        "share": 10.07
+      },
+      {
+        "hex": "#1A4452",
+        "share": 9.54
+      },
+      {
+        "hex": "#0E0E0E",
+        "share": 9.01
+      },
+      {
+        "hex": "#A99E9F",
+        "share": 6.43
+      },
+      {
+        "hex": "#524642",
+        "share": 5.78
+      },
+      {
+        "hex": "#0382C9",
+        "share": 5.36
+      },
+      {
+        "hex": "#807A80",
+        "share": 3.99
+      },
+      {
+        "hex": "#534947",
+        "share": 3.77
+      },
+      {
+        "hex": "#0594CF",
+        "share": 3.46
+      },
+      {
+        "hex": "#045D87",
+        "share": 3.07
+      },
+      {
+        "hex": "#326D6E",
+        "share": 2.62
+      },
+      {
+        "hex": "#373536",
+        "share": 2.53
+      },
+      {
+        "hex": "#BEBABE",
+        "share": 1.77
+      },
+      {
+        "hex": "#0A1325",
+        "share": 1.75
+      },
+      {
+        "hex": "#035EA3",
+        "share": 1.43
+      },
+      {
+        "hex": "#611D03",
+        "share": 1.16
+      },
+      {
+        "hex": "#954C17",
+        "share": 1.1
+      },
+      {
+        "hex": "#B65007",
+        "share": 1.09
+      },
+      {
+        "hex": "#BA6921",
+        "share": 0.97
+      },
+      {
+        "hex": "#DDCCBD",
+        "share": 0.93
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#943401",
+        "family": "orange",
+        "share": 12.74
+      },
+      {
+        "hex": "#174864",
+        "family": "blue",
+        "share": 10.07
+      },
+      {
+        "hex": "#1A4452",
+        "family": "teal",
+        "share": 9.54
+      },
+      {
+        "hex": "#0E0E0E",
+        "family": "black",
+        "share": 9.01
+      },
+      {
+        "hex": "#A99E9F",
+        "family": "gray",
+        "share": 6.43
+      },
+      {
+        "hex": "#524642",
+        "family": "brown",
+        "share": 5.78
+      },
+      {
+        "hex": "#0382C9",
+        "family": "blue",
+        "share": 5.36
+      },
+      {
+        "hex": "#807A80",
+        "family": "gray",
+        "share": 3.99
+      },
+      {
+        "hex": "#534947",
+        "family": "gray",
+        "share": 3.77
+      },
+      {
+        "hex": "#0594CF",
+        "family": "teal",
+        "share": 3.46
+      },
+      {
+        "hex": "#045D87",
+        "family": "teal",
+        "share": 3.07
+      },
+      {
+        "hex": "#326D6E",
+        "family": "teal",
+        "share": 2.62
+      },
+      {
+        "hex": "#373536",
+        "family": "black",
+        "share": 2.53
+      },
+      {
+        "hex": "#BEBABE",
+        "family": "white",
+        "share": 1.77
+      },
+      {
+        "hex": "#0A1325",
+        "family": "blue",
+        "share": 1.75
+      },
+      {
+        "hex": "#035EA3",
+        "family": "blue",
+        "share": 1.43
+      },
+      {
+        "hex": "#611D03",
+        "family": "orange",
+        "share": 1.16
+      },
+      {
+        "hex": "#954C17",
+        "family": "brown",
+        "share": 1.1
+      },
+      {
+        "hex": "#B65007",
+        "family": "orange",
+        "share": 1.09
+      },
+      {
+        "hex": "#BA6921",
+        "family": "brown",
+        "share": 0.97
+      },
+      {
+        "hex": "#DDCCBD",
+        "family": "orange",
+        "share": 0.93
+      }
+    ],
+    "similar": [
+      "aix-galericulata",
+      "cyanocitta-cristata",
+      "aix-sponsa",
+      "piranga-olivacea"
+    ]
+  },
+  {
+    "id": "cinnyricinclus-leucogaster",
+    "slug": "cinnyricinclus-leucogaster",
+    "name": "Violet-backed Starling",
+    "scientificName": "Cinnyricinclus leucogaster",
+    "region": "Starlings",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Cinnyricinclus%20leucogaster?size=medium",
+    "colorFamilies": [
+      "purple",
+      "white",
+      "pink",
+      "gray",
+      "black",
+      "orange",
+      "blue",
+      "brown",
+      "teal"
+    ],
+    "preview": [
+      "#37234B",
+      "#53388C",
+      "#CED1D1",
+      "#9F5DC1"
+    ],
+    "palette": [
+      {
+        "hex": "#37234B",
+        "share": 20.55
+      },
+      {
+        "hex": "#53388C",
+        "share": 14.29
+      },
+      {
+        "hex": "#CED1D1",
+        "share": 11.76
+      },
+      {
+        "hex": "#9F5DC1",
+        "share": 9.85
+      },
+      {
+        "hex": "#9C47A3",
+        "share": 8.24
+      },
+      {
+        "hex": "#ADA9A2",
+        "share": 4.6
+      },
+      {
+        "hex": "#4B1C53",
+        "share": 3.48
+      },
+      {
+        "hex": "#29142A",
+        "share": 3.08
+      },
+      {
+        "hex": "#0C0A08",
+        "share": 2.82
+      },
+      {
+        "hex": "#B5AB98",
+        "share": 2.56
+      },
+      {
+        "hex": "#515056",
+        "share": 2.49
+      },
+      {
+        "hex": "#EAECEE",
+        "share": 2.34
+      },
+      {
+        "hex": "#353431",
+        "share": 1.88
+      },
+      {
+        "hex": "#848289",
+        "share": 1.58
+      },
+      {
+        "hex": "#7A2C76",
+        "share": 1.25
+      },
+      {
+        "hex": "#FEFEFE",
+        "share": 1.18
+      },
+      {
+        "hex": "#8A429B",
+        "share": 0.82
+      },
+      {
+        "hex": "#1B0B1A",
+        "share": 0.6
+      },
+      {
+        "hex": "#292116",
+        "share": 0.57
+      },
+      {
+        "hex": "#6D657B",
+        "share": 0.54
+      },
+      {
+        "hex": "#F6F9F9",
+        "share": 0.48
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#37234B",
+        "family": "purple",
+        "share": 20.55
+      },
+      {
+        "hex": "#53388C",
+        "family": "purple",
+        "share": 14.29
+      },
+      {
+        "hex": "#CED1D1",
+        "family": "white",
+        "share": 11.76
+      },
+      {
+        "hex": "#9F5DC1",
+        "family": "purple",
+        "share": 9.85
+      },
+      {
+        "hex": "#9C47A3",
+        "family": "pink",
+        "share": 8.24
+      },
+      {
+        "hex": "#ADA9A2",
+        "family": "gray",
+        "share": 4.6
+      },
+      {
+        "hex": "#4B1C53",
+        "family": "pink",
+        "share": 3.48
+      },
+      {
+        "hex": "#29142A",
+        "family": "pink",
+        "share": 3.08
+      },
+      {
+        "hex": "#0C0A08",
+        "family": "black",
+        "share": 2.82
+      },
+      {
+        "hex": "#B5AB98",
+        "family": "orange",
+        "share": 2.56
+      },
+      {
+        "hex": "#515056",
+        "family": "gray",
+        "share": 2.49
+      },
+      {
+        "hex": "#EAECEE",
+        "family": "blue",
+        "share": 2.34
+      },
+      {
+        "hex": "#353431",
+        "family": "black",
+        "share": 1.88
+      },
+      {
+        "hex": "#848289",
+        "family": "gray",
+        "share": 1.58
+      },
+      {
+        "hex": "#7A2C76",
+        "family": "pink",
+        "share": 1.25
+      },
+      {
+        "hex": "#FEFEFE",
+        "family": "white",
+        "share": 1.18
+      },
+      {
+        "hex": "#8A429B",
+        "family": "purple",
+        "share": 0.82
+      },
+      {
+        "hex": "#1B0B1A",
+        "family": "black",
+        "share": 0.6
+      },
+      {
+        "hex": "#292116",
+        "family": "brown",
+        "share": 0.57
+      },
+      {
+        "hex": "#6D657B",
+        "family": "gray",
+        "share": 0.54
+      },
+      {
+        "hex": "#F6F9F9",
+        "family": "teal",
+        "share": 0.48
+      }
+    ],
+    "similar": [
+      "cyanocitta-cristata",
+      "eclectus-roratus",
+      "aix-galericulata",
+      "aix-sponsa"
+    ]
+  },
+  {
+    "id": "merops-apiaster",
+    "slug": "merops-apiaster",
+    "name": "European Bee-eater",
+    "scientificName": "Merops apiaster",
+    "region": "Bee-eaters",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Merops%20apiaster?size=medium",
+    "colorFamilies": [
+      "green",
+      "teal",
+      "brown",
+      "yellow",
+      "orange",
+      "black",
+      "gray"
+    ],
+    "preview": [
+      "#658B6D",
+      "#3C7A8A",
+      "#C29C68",
+      "#EBC945"
+    ],
+    "palette": [
+      {
+        "hex": "#658B6D",
+        "share": 8.28
+      },
+      {
+        "hex": "#3C7A8A",
+        "share": 7.85
+      },
+      {
+        "hex": "#C29C68",
+        "share": 7.76
+      },
+      {
+        "hex": "#EBC945",
+        "share": 7.28
+      },
+      {
+        "hex": "#291F1C",
+        "share": 7.27
+      },
+      {
+        "hex": "#8B4E17",
+        "share": 5.15
+      },
+      {
+        "hex": "#32494E",
+        "share": 5.12
+      },
+      {
+        "hex": "#A94418",
+        "share": 4.97
+      },
+      {
+        "hex": "#E19C0A",
+        "share": 4.11
+      },
+      {
+        "hex": "#576142",
+        "share": 3.06
+      },
+      {
+        "hex": "#52433A",
+        "share": 2.94
+      },
+      {
+        "hex": "#1D1F1E",
+        "share": 2.87
+      },
+      {
+        "hex": "#5F847E",
+        "share": 2.77
+      },
+      {
+        "hex": "#A46416",
+        "share": 1.63
+      },
+      {
+        "hex": "#EBDDA1",
+        "share": 1.63
+      },
+      {
+        "hex": "#758E80",
+        "share": 1.43
+      },
+      {
+        "hex": "#6F724E",
+        "share": 1.21
+      },
+      {
+        "hex": "#3D4240",
+        "share": 1.09
+      },
+      {
+        "hex": "#889151",
+        "share": 1.05
+      },
+      {
+        "hex": "#574F49",
+        "share": 1.04
+      },
+      {
+        "hex": "#C6A673",
+        "share": 1.03
+      },
+      {
+        "hex": "#7AA6A3",
+        "share": 0.98
+      },
+      {
+        "hex": "#2F4A3B",
+        "share": 0.91
+      },
+      {
+        "hex": "#968444",
+        "share": 0.76
+      },
+      {
+        "hex": "#81766B",
+        "share": 0.45
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#658B6D",
+        "family": "green",
+        "share": 8.28
+      },
+      {
+        "hex": "#3C7A8A",
+        "family": "teal",
+        "share": 7.85
+      },
+      {
+        "hex": "#C29C68",
+        "family": "brown",
+        "share": 7.76
+      },
+      {
+        "hex": "#EBC945",
+        "family": "yellow",
+        "share": 7.28
+      },
+      {
+        "hex": "#291F1C",
+        "family": "brown",
+        "share": 7.27
+      },
+      {
+        "hex": "#8B4E17",
+        "family": "brown",
+        "share": 5.15
+      },
+      {
+        "hex": "#32494E",
+        "family": "teal",
+        "share": 5.12
+      },
+      {
+        "hex": "#A94418",
+        "family": "orange",
+        "share": 4.97
+      },
+      {
+        "hex": "#E19C0A",
+        "family": "orange",
+        "share": 4.11
+      },
+      {
+        "hex": "#576142",
+        "family": "green",
+        "share": 3.06
+      },
+      {
+        "hex": "#52433A",
+        "family": "brown",
+        "share": 2.94
+      },
+      {
+        "hex": "#1D1F1E",
+        "family": "black",
+        "share": 2.87
+      },
+      {
+        "hex": "#5F847E",
+        "family": "teal",
+        "share": 2.77
+      },
+      {
+        "hex": "#A46416",
+        "family": "orange",
+        "share": 1.63
+      },
+      {
+        "hex": "#EBDDA1",
+        "family": "yellow",
+        "share": 1.63
+      },
+      {
+        "hex": "#758E80",
+        "family": "gray",
+        "share": 1.43
+      },
+      {
+        "hex": "#6F724E",
+        "family": "yellow",
+        "share": 1.21
+      },
+      {
+        "hex": "#3D4240",
+        "family": "black",
+        "share": 1.09
+      },
+      {
+        "hex": "#889151",
+        "family": "green",
+        "share": 1.05
+      },
+      {
+        "hex": "#574F49",
+        "family": "gray",
+        "share": 1.04
+      },
+      {
+        "hex": "#C6A673",
+        "family": "orange",
+        "share": 1.03
+      },
+      {
+        "hex": "#7AA6A3",
+        "family": "teal",
+        "share": 0.98
+      },
+      {
+        "hex": "#2F4A3B",
+        "family": "green",
+        "share": 0.91
+      },
+      {
+        "hex": "#968444",
+        "family": "yellow",
+        "share": 0.76
+      },
+      {
+        "hex": "#81766B",
+        "family": "gray",
+        "share": 0.45
+      }
+    ],
+    "similar": [
+      "ara-macao",
+      "coracias-caudatus",
+      "piranga-olivacea",
+      "platycercus-elegans"
+    ]
+  },
+  {
+    "id": "sarcoramphus-papa",
+    "slug": "sarcoramphus-papa",
+    "name": "King Vulture",
+    "scientificName": "Sarcoramphus papa",
+    "region": "New World Vultures",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Sarcoramphus%20papa?size=medium",
+    "colorFamilies": [
+      "gray",
+      "black",
+      "orange",
+      "brown",
+      "yellow",
+      "red",
+      "white",
+      "pink",
+      "purple"
+    ],
+    "preview": [
+      "#64575A",
+      "#483E3D",
+      "#FFF8F2",
+      "#100906"
+    ],
+    "palette": [
+      {
+        "hex": "#64575A",
+        "share": 18.78
+      },
+      {
+        "hex": "#483E3D",
+        "share": 17.16
+      },
+      {
+        "hex": "#FFF8F2",
+        "share": 13.6
+      },
+      {
+        "hex": "#100906",
+        "share": 9.98
+      },
+      {
+        "hex": "#2D2424",
+        "share": 9.24
+      },
+      {
+        "hex": "#FFFDF6",
+        "share": 6.86
+      },
+      {
+        "hex": "#85797C",
+        "share": 5.01
+      },
+      {
+        "hex": "#44452C",
+        "share": 3.77
+      },
+      {
+        "hex": "#584D3E",
+        "share": 1.98
+      },
+      {
+        "hex": "#FAF0EE",
+        "share": 1.92
+      },
+      {
+        "hex": "#9A95A0",
+        "share": 1.46
+      },
+      {
+        "hex": "#A41619",
+        "share": 1.39
+      },
+      {
+        "hex": "#DDD7DC",
+        "share": 1.22
+      },
+      {
+        "hex": "#E6DEE1",
+        "share": 1.19
+      },
+      {
+        "hex": "#B49580",
+        "share": 0.77
+      },
+      {
+        "hex": "#141218",
+        "share": 0.67
+      },
+      {
+        "hex": "#47160D",
+        "share": 0.56
+      },
+      {
+        "hex": "#86251C",
+        "share": 0.54
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#64575A",
+        "family": "gray",
+        "share": 18.78
+      },
+      {
+        "hex": "#483E3D",
+        "family": "black",
+        "share": 17.16
+      },
+      {
+        "hex": "#FFF8F2",
+        "family": "orange",
+        "share": 13.6
+      },
+      {
+        "hex": "#100906",
+        "family": "black",
+        "share": 9.98
+      },
+      {
+        "hex": "#2D2424",
+        "family": "brown",
+        "share": 9.24
+      },
+      {
+        "hex": "#FFFDF6",
+        "family": "yellow",
+        "share": 6.86
+      },
+      {
+        "hex": "#85797C",
+        "family": "gray",
+        "share": 5.01
+      },
+      {
+        "hex": "#44452C",
+        "family": "yellow",
+        "share": 3.77
+      },
+      {
+        "hex": "#584D3E",
+        "family": "brown",
+        "share": 1.98
+      },
+      {
+        "hex": "#FAF0EE",
+        "family": "red",
+        "share": 1.92
+      },
+      {
+        "hex": "#9A95A0",
+        "family": "gray",
+        "share": 1.46
+      },
+      {
+        "hex": "#A41619",
+        "family": "red",
+        "share": 1.39
+      },
+      {
+        "hex": "#DDD7DC",
+        "family": "white",
+        "share": 1.22
+      },
+      {
+        "hex": "#E6DEE1",
+        "family": "pink",
+        "share": 1.19
+      },
+      {
+        "hex": "#B49580",
+        "family": "orange",
+        "share": 0.77
+      },
+      {
+        "hex": "#141218",
+        "family": "purple",
+        "share": 0.67
+      },
+      {
+        "hex": "#47160D",
+        "family": "brown",
+        "share": 0.56
+      },
+      {
+        "hex": "#86251C",
+        "family": "brown",
+        "share": 0.54
+      }
+    ],
+    "similar": [
+      "eclectus-roratus",
+      "piranga-olivacea",
+      "cyanocitta-cristata",
+      "aix-galericulata"
+    ]
+  },
+  {
+    "id": "piranga-olivacea",
+    "slug": "piranga-olivacea",
+    "name": "Scarlet Tanager",
+    "scientificName": "Piranga olivacea",
+    "region": "Cardinals and Allies",
+    "imageUrl": "https://birdnet.cornell.edu/taxonomy/api/image/Piranga%20olivacea?size=medium",
+    "colorFamilies": [
+      "red",
+      "black",
+      "orange",
+      "yellow",
+      "gray",
+      "blue",
+      "brown",
+      "white"
+    ],
+    "preview": [
+      "#F0532D",
+      "#3F4047",
+      "#FD6835",
+      "#65633A"
+    ],
+    "palette": [
+      {
+        "hex": "#F0532D",
+        "share": 17.78
+      },
+      {
+        "hex": "#3F4047",
+        "share": 15.81
+      },
+      {
+        "hex": "#FD6835",
+        "share": 14.03
+      },
+      {
+        "hex": "#65633A",
+        "share": 7.78
+      },
+      {
+        "hex": "#4F4C4E",
+        "share": 5.75
+      },
+      {
+        "hex": "#912807",
+        "share": 4.06
+      },
+      {
+        "hex": "#282B32",
+        "share": 4.04
+      },
+      {
+        "hex": "#201E22",
+        "share": 3.7
+      },
+      {
+        "hex": "#494625",
+        "share": 3.32
+      },
+      {
+        "hex": "#181511",
+        "share": 2.53
+      },
+      {
+        "hex": "#862603",
+        "share": 2.49
+      },
+      {
+        "hex": "#6A6970",
+        "share": 1.68
+      },
+      {
+        "hex": "#413232",
+        "share": 1.64
+      },
+      {
+        "hex": "#602111",
+        "share": 1.19
+      },
+      {
+        "hex": "#BD4522",
+        "share": 1.15
+      },
+      {
+        "hex": "#878059",
+        "share": 0.98
+      },
+      {
+        "hex": "#580C02",
+        "share": 0.96
+      },
+      {
+        "hex": "#C53718",
+        "share": 0.95
+      },
+      {
+        "hex": "#C7B18D",
+        "share": 0.88
+      },
+      {
+        "hex": "#C7CAD1",
+        "share": 0.78
+      },
+      {
+        "hex": "#CD4618",
+        "share": 0.69
+      },
+      {
+        "hex": "#98949C",
+        "share": 0.66
+      },
+      {
+        "hex": "#2C2614",
+        "share": 0.51
+      },
+      {
+        "hex": "#635E52",
+        "share": 0.42
+      }
+    ],
+    "colors": [
+      {
+        "hex": "#F0532D",
+        "family": "red",
+        "share": 17.78
+      },
+      {
+        "hex": "#3F4047",
+        "family": "black",
+        "share": 15.81
+      },
+      {
+        "hex": "#FD6835",
+        "family": "orange",
+        "share": 14.03
+      },
+      {
+        "hex": "#65633A",
+        "family": "yellow",
+        "share": 7.78
+      },
+      {
+        "hex": "#4F4C4E",
+        "family": "gray",
+        "share": 5.75
+      },
+      {
+        "hex": "#912807",
+        "family": "red",
+        "share": 4.06
+      },
+      {
+        "hex": "#282B32",
+        "family": "blue",
+        "share": 4.04
+      },
+      {
+        "hex": "#201E22",
+        "family": "black",
+        "share": 3.7
+      },
+      {
+        "hex": "#494625",
+        "family": "yellow",
+        "share": 3.32
+      },
+      {
+        "hex": "#181511",
+        "family": "brown",
+        "share": 2.53
+      },
+      {
+        "hex": "#862603",
+        "family": "orange",
+        "share": 2.49
+      },
+      {
+        "hex": "#6A6970",
+        "family": "gray",
+        "share": 1.68
+      },
+      {
+        "hex": "#413232",
+        "family": "brown",
+        "share": 1.64
+      },
+      {
+        "hex": "#602111",
+        "family": "brown",
+        "share": 1.19
+      },
+      {
+        "hex": "#BD4522",
+        "family": "brown",
+        "share": 1.15
+      },
+      {
+        "hex": "#878059",
+        "family": "yellow",
+        "share": 0.98
+      },
+      {
+        "hex": "#580C02",
+        "family": "red",
+        "share": 0.96
+      },
+      {
+        "hex": "#C53718",
+        "family": "red",
+        "share": 0.95
+      },
+      {
+        "hex": "#C7B18D",
+        "family": "orange",
+        "share": 0.88
+      },
+      {
+        "hex": "#C7CAD1",
+        "family": "white",
+        "share": 0.78
+      },
+      {
+        "hex": "#CD4618",
+        "family": "orange",
+        "share": 0.69
+      },
+      {
+        "hex": "#98949C",
+        "family": "gray",
+        "share": 0.66
+      },
+      {
+        "hex": "#2C2614",
+        "family": "yellow",
+        "share": 0.51
+      },
+      {
+        "hex": "#635E52",
+        "family": "gray",
+        "share": 0.42
+      }
+    ],
+    "similar": [
+      "cardinalis-cardinalis",
+      "eclectus-roratus",
+      "sarcoramphus-papa",
+      "passerina-ciris"
+    ]
+  }
+]

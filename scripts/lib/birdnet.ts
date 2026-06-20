@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { parseCsv } from "./csv";
 
-const ROOT = path.join(process.cwd(), "data", "hbw");
+const ROOT = path.join(process.cwd(), "data", "birdnet");
 const CSV_PATH = path.join(ROOT, "birdnet-taxonomy.csv");
 const CACHE_PATH = path.join(ROOT, "birdnet-images.json");
 
@@ -86,3 +86,36 @@ export async function birdNetImageUrl(
 }
 
 export const BIRDNET_CSV_PATH = CSV_PATH;
+
+export type TaxonomySpecies = {
+  scientificName: string;
+  commonName: string;
+  region: string;
+};
+
+/** Load species list from BirdNET taxonomy CSV (no HBW). */
+export async function loadSpeciesFromBirdnetCsv(): Promise<TaxonomySpecies[]> {
+  if (!(await exists(CSV_PATH))) {
+    throw new Error(
+      `BirdNET taxonomy CSV not found at ${CSV_PATH}\n` +
+        `Run: npm run download:birdnet`,
+    );
+  }
+
+  const text = await readFile(CSV_PATH, "utf-8");
+  const rows = parseCsv(text);
+  const out: TaxonomySpecies[] = [];
+
+  for (const row of rows) {
+    const scientificName = (row.scientific_name ?? "").trim();
+    if (!scientificName) continue;
+    const commonName =
+      (row.common_name ?? row.primary_common_name ?? "").trim() ||
+      scientificName;
+    const region =
+      (row.family_common_name ?? row.family ?? row.order ?? "").trim();
+    out.push({ scientificName, commonName, region });
+  }
+
+  return out;
+}

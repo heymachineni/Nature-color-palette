@@ -37,21 +37,10 @@ firebase-service-account.json
 # ingest cache (large source images)
 /scripts/.cache/
 
-# HBW raw downloads (large; keep fixture for dev)
-/data/hbw/Data_S1.zip
-/data/hbw/doi_*/
-/data/hbw/extracted/
-/data/hbw/*.bin
-/data/hbw/page.html
-/data/hbw/zenodo.zip
-/data/hbw/photo-cache.json
-/data/hbw/birdnet-taxonomy.json
-/data/hbw/birdnet-taxonomy.csv
-/data/hbw/birdnet-taxonomy.zip
-/data/hbw/birdnet_taxonomy.json
-/data/hbw/plumage_scores.csv
-/data/hbw/birdnet-images.json
-/data/hbw/build.log
+# BirdNET + photo caches (downloaded at build time)
+/data/birdnet/birdnet-taxonomy.csv
+/data/birdnet/birdnet-images.json
+/data/photos/photo-cache.json
 
 # firebase local cache
 .firebase/

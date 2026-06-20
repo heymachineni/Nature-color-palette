@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { isBirdNetImageUrl } from "@/lib/photos/birdnet-placeholder";
 import { fetchInaturalistPhoto } from "@/lib/photos/inaturalist";
@@ -79,9 +78,13 @@ export function BirdPhoto({
     if (!scientificName || !isBirdNetImageUrl(src)) return;
 
     let cancelled = false;
-    void fetchInaturalistPhoto(scientificName, commonName).then((inat) => {
-      if (!cancelled && inat) inatFallback.current = inat;
-    });
+    void fetchInaturalistPhoto(scientificName, commonName)
+      .then((inat) => {
+        if (!cancelled && inat) inatFallback.current = inat;
+      })
+      .catch(() => {
+        /* network / CORS — keep BirdNET src */
+      });
 
     return () => {
       cancelled = true;
@@ -106,16 +109,19 @@ export function BirdPhoto({
       {!loaded && (
         <div aria-hidden className="absolute inset-0 bg-muted shimmer" />
       )}
-      <Image
+      {/* Native img — Next/Image can keep stale pixels when src changes on the same node. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        key={activeSrc}
         ref={imgRef}
         src={activeSrc}
         alt={alt}
-        fill
-        priority={priority}
-        sizes={v.sizes}
+        decoding="async"
+        fetchPriority={priority ? "high" : "auto"}
+        referrerPolicy="no-referrer"
         className={cn(
           v.img,
-          "absolute inset-0 transition-opacity duration-300",
+          "absolute inset-0 h-full w-full transition-opacity duration-300",
           loaded ? "opacity-100" : "opacity-0",
         )}
         onLoad={() => setLoaded(true)}

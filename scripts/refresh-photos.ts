@@ -1,14 +1,16 @@
 /**
- * Re-resolve bird photos (BirdNET → iNaturalist fallback) without rebuilding colors.
- * Run: npm run refresh-photos:hbw
+ * Re-resolve bird photos (BirdNET → iNaturalist fallback) without re-extracting colors.
+ * Run: npm run refresh-photos
  */
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { createPhotoResolver } from "./hbw/photos";
+import { createPhotoResolver } from "./lib/photos";
 import { writePublicBirdData } from "./lib/write-public-data";
+import { resolveImageUrl } from "./lib/image-overrides";
 import type { BirdRecord } from "./bird-record";
 
 const DATASET = path.join(process.cwd(), "prisma", "seed", "dataset.json");
+const SOURCE = "photo-extraction";
 
 async function main() {
   const { birds } = JSON.parse(await readFile(DATASET, "utf-8")) as {
@@ -36,7 +38,10 @@ async function main() {
     while (cursor < birds.length) {
       const i = cursor++;
       const b = birds[i];
-      const url = await photos.get(b.scientificName, b.name);
+      const url = resolveImageUrl(
+        b.slug,
+        await photos.get(b.scientificName, b.name),
+      );
       b.imageUrl = url;
 
       if (url.includes("birdnet.cornell.edu")) birdnet++;
@@ -62,7 +67,7 @@ async function main() {
     JSON.stringify(
       {
         version: 2,
-        source: "hbw-dryad",
+        source: SOURCE,
         generatedAt: new Date().toISOString(),
         birds,
       },

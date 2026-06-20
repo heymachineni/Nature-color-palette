@@ -75,7 +75,7 @@ https://birdpalette.web.app
 After updating palettes locally:
 
 ```bash
-npm run build:hbw              # rebuild dataset + index
+npm run build:birds              # rebuild dataset + index
 git add prisma/seed/dataset.json public/data/index.json
 git commit -m "Update bird palettes"
 git push origin main           # auto-deploys

@@ -28,7 +28,12 @@ async function inaturalistTaxonPhoto(
   url.searchParams.set("per_page", "5");
   url.searchParams.set("is_active", "true");
 
-  const resp = await fetch(url);
+  let resp: Response;
+  try {
+    resp = await fetch(url);
+  } catch {
+    return null;
+  }
   if (!resp.ok) return null;
 
   const data = (await resp.json()) as {

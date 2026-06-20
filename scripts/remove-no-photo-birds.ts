@@ -22,7 +22,7 @@ async function main() {
     JSON.stringify(
       {
         version: 2,
-        source: "hbw-dryad",
+        source: "photo-extraction",
         generatedAt: new Date().toISOString(),
         birds: kept,
       },

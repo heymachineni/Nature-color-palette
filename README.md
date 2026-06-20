@@ -10,11 +10,11 @@ Built for exploration and inspiration, not as a generic palette generator.
 
 ## What it is
 
-- **2,079 birds** today (growing toward the full HBW dataset of ~10,290 species)
+- **10,000+ birds** with palettes extracted from species photos
 - Each bird has a **proportional color bar**, named swatches, share percentages, and a **copy-ready palette**
 - **Search** by common name, scientific name, color family, or exact hex code
 - **Modal detail view** with Wikipedia summary, palette study, and an “In use” MUI dashboard preview
-- Photos from **BirdNET** and **iNaturalist**; color data from the **HBW Dryad** research dataset
+- Photos from **BirdNET** and **iNaturalist**; colors extracted from each photo at build time
 
 Not for commercial use. Educational and exploratory. See [/perch](https://birdpalette.web.app/perch) for the story and data credits.
 
@@ -23,15 +23,16 @@ Not for commercial use. Educational and exploratory. See [/perch](https://birdpa
 ## How it works
 
 ```
-HBW color proportions  →  build script  →  dataset.json + index.json
-BirdNET / iNaturalist  →  photo resolver  →  image URLs per species
-                              ↓
-                    Static Next.js export
-                              ↓
-                    Firebase Hosting (birdpalette.web.app)
+BirdNET / iNaturalist  →  photo resolver  →  image per species
+        ↓
+  bg removal + pixel scan  →  palette per photo
+        ↓
+  dataset.json + paginated public/data/
+        ↓
+  Static Next.js export  →  Firebase Hosting
 ```
 
-1. **Build time** — `npm run build:hbw` reads HBW illustration color data, resolves photos, computes similar palettes, and writes `prisma/seed/dataset.json` plus `public/data/index.json`.
+1. **Build time** — `npm run build:birds` fetches photos, removes backgrounds, extracts plumage colors, computes similar palettes, and writes `prisma/seed/dataset.json` plus `public/data/`.
 2. **Deploy time** — `npm run build:hosting` static-exports the site (home grid, ~2k bird pages, `/perch`, `/privacy`) into `out/`.
 3. **Runtime** — the live site is fully static. No backend, no accounts, no analytics. Bird photos and Wikipedia blurbs are fetched **from your browser** directly to BirdNET, iNaturalist, and Wikipedia when you open a bird.
 
@@ -41,7 +42,7 @@ BirdNET / iNaturalist  →  photo resolver  →  image URLs per species
 
 | Area | Detail |
 |------|--------|
-| **Data pipeline** | HBW Dryad ingest, BirdNET + iNaturalist photos, birds without photos excluded |
+| **Data pipeline** | Photo color extraction, BirdNET + iNaturalist photos, birds without photos excluded |
 | **Search** | Text + color-family tokens; exact hex match via picker or `#RRGGBB` |
 | **Bird detail** | Modal-first UX, draggable palette bar on mobile (haptic on Android; best-effort on iOS) |
 | **In use** | MUI dashboard preview themed with the bird’s palette |
@@ -71,7 +72,8 @@ Firestore in this repo is **optional** for local/dev seeding only (`npm run seed
 |---------|---------|
 | `npm run dev` | Local dev (dataset.json) |
 | `USE_JSON_DATA=true npm run dev` | Same data path as production |
-| `npm run build:hbw -- --limit 2100` | Rebuild bird dataset + search index |
+| `npm run build:birds -- --limit 50` | Rebuild bird dataset + search index (smoke test) |
+| `npm run build:birds` | Full photo-extraction rebuild (~10k birds, hours first run) |
 | `npm run build:hosting` | Static export to `out/` |
 | `npm run deploy:hosting` | Build + deploy to Firebase |
 
@@ -81,9 +83,8 @@ See [docs/DEPLOY.md](docs/DEPLOY.md) for CI and Firebase setup.
 
 ## Data sources
 
-- [HBW Dryad dataset](https://doi.org/10.5061/dryad.70rxwdc6s) — plumage color proportions
 - [BirdNET](https://birdnet.cornell.edu/) — species photos
-- [iNaturalist](https://www.inaturalist.org/) — species photos
+- [iNaturalist](https://www.inaturalist.org/) — species photos (fallback)
 - [Wikipedia](https://www.wikipedia.org/) — bird descriptions (client-side)
 
 ---

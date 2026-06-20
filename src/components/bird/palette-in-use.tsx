@@ -5,6 +5,12 @@ import { Moon, Sun } from "lucide-react";
 import { hexToRgb, rgbToHsl } from "@/lib/color/convert";
 import type { PlumageColorData } from "@/types/bird";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { MuiDashboard } from "./mui-dashboard";
 
 type Mode = "light" | "dark";
@@ -31,37 +37,48 @@ export function PaletteInUse({ colors }: { colors: PlumageColorData[] }) {
             In use
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            See your primary on the MUI dashboard template
+            See primary colors on the MUI dashboard template
           </p>
         </div>
 
-        <div
-          className="flex items-center rounded-full border border-border bg-background p-0.5"
-          role="group"
-          aria-label="Theme mode"
-        >
-          {(["light", "dark"] as const).map((m) => (
-            <button
-              key={m}
-              type="button"
-              onClick={() => setMode(m)}
-              aria-label={m === "light" ? "Light mode" : "Dark mode"}
-              aria-pressed={mode === m}
-              className={cn(
-                "flex size-8 items-center justify-center rounded-full transition-colors",
-                mode === m
-                  ? "bg-foreground text-background"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {m === "light" ? (
-                <Sun className="size-4" />
-              ) : (
-                <Moon className="size-4" />
-              )}
-            </button>
-          ))}
-        </div>
+        <TooltipProvider delayDuration={300}>
+          <div
+            className="flex items-center rounded-full border border-border bg-background p-0.5"
+            role="group"
+            aria-label="Theme mode"
+          >
+            {(["light", "dark"] as const).map((m) => {
+              const label = m === "light" ? "Light mode" : "Dark mode";
+              return (
+                <Tooltip key={m}>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={() => setMode(m)}
+                      aria-label={label}
+                      aria-pressed={mode === m}
+                      className={cn(
+                        "flex size-8 items-center justify-center rounded-full transition-colors",
+                        mode === m
+                          ? "bg-foreground text-background"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      {m === "light" ? (
+                        <Sun className="size-4" />
+                      ) : (
+                        <Moon className="size-4" />
+                      )}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="z-[100]">
+                    {label}
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </div>
+        </TooltipProvider>
       </div>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">

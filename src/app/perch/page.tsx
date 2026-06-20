@@ -11,10 +11,6 @@ export const metadata: Metadata = {
 
 const SOURCES = [
   {
-    name: "Handbook of the Birds of the World (HBW), Dryad dataset",
-    href: "https://doi.org/10.5061/dryad.70rxwdc6s",
-  },
-  {
     name: "BirdNET",
     href: "https://birdnet.cornell.edu/",
   },
@@ -69,10 +65,10 @@ export default function PerchPage() {
 
         <aside className="mt-8 rounded-[24px] border border-border/70 bg-[#f3f0ea] px-5 py-5 sm:rounded-[28px] sm:px-6">
           <p className="text-[15px] leading-relaxed text-muted-foreground">
-            Palettes are built from ornithological plumage data. Photos are
-            from the field. Birds change with season, sex, and age, so what
-            you see in the image may not line up with every swatch. That is
-            expected, not an error.
+            Palettes are extracted from each bird&apos;s photo — background
+            removed, then colors sampled from the plumage pixels. Photos are
+            from the field, so lighting, pose, and season can shift what you
+            see compared to a field-guide illustration. That is expected.
           </p>
         </aside>
 
