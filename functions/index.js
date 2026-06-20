@@ -14,6 +14,7 @@ exports.photoSample = onRequest(
   {
     region: "us-central1",
     cors: true,
+    invoker: "public",
     maxInstances: 10,
     memory: "256MiB",
   },
