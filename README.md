@@ -2,7 +2,7 @@
 
 **Live:** [birdpalette.web.app](https://birdpalette.web.app)
 
-Bird Palette is a visual catalog of real bird plumage colors. Every species is a color combination pulled from nature: browse birds, search by name or exact hex, open a palette, copy swatches or CSS, and preview how those colors feel on UI.
+Bird Palette is a visual catalog of real bird plumage colors. Every species is a color combination pulled from nature: browse birds, search by name or exact hex, open a palette, and copy swatches.
 
 Built for exploration and inspiration, not as a generic palette generator.
 
@@ -13,7 +13,7 @@ Built for exploration and inspiration, not as a generic palette generator.
 - **10,000+ birds** with palettes extracted from species photos
 - Each bird has a **proportional color bar**, named swatches, share percentages, and a **copy-ready palette**
 - **Search** by common name, scientific name, color family, or exact hex code
-- **Modal detail view** with Wikipedia summary, palette study, and an “In use” MUI dashboard preview
+- **Modal detail view** with Wikipedia summary, palette study, hover-to-sample on the photo, and related birds
 - Photos from **BirdNET** and **iNaturalist**; colors extracted from each photo at build time
 
 Not for commercial use. Educational and exploratory. See [/perch](https://birdpalette.web.app/perch) for the story and data credits.
@@ -33,8 +33,8 @@ BirdNET / iNaturalist  →  photo resolver  →  image per species
 ```
 
 1. **Build time** — `npm run build:birds` fetches photos, removes backgrounds, extracts plumage colors, computes similar palettes, and writes `prisma/seed/dataset.json` plus `public/data/`.
-2. **Deploy time** — `npm run build:hosting` static-exports the site (home grid, ~2k bird pages, `/perch`, `/privacy`) into `out/`.
-3. **Runtime** — the live site is fully static. No backend, no accounts, no analytics. Bird photos and Wikipedia blurbs are fetched **from your browser** directly to BirdNET, iNaturalist, and Wikipedia when you open a bird.
+2. **Deploy time** — `npm run build:hosting` static-exports the site (home grid, `/perch`, `/privacy`, `/terms`, 404) into `out/`. Bird detail opens in a modal — there are no per-slug HTML pages.
+3. **Runtime** — the live site is mostly static. Bird photos, Wikipedia blurbs, and photo pixel sampling use your browser plus a small Cloud Function proxy (`/api/photo-sample`) for canvas reads.
 
 ---
 
@@ -44,23 +44,22 @@ BirdNET / iNaturalist  →  photo resolver  →  image per species
 |------|--------|
 | **Data pipeline** | Photo color extraction, BirdNET + iNaturalist photos, birds without photos excluded |
 | **Search** | Text + color-family tokens; exact hex match via picker or `#RRGGBB` |
-| **Bird detail** | Modal-first UX, draggable palette bar on mobile (haptic on Android; best-effort on iOS) |
-| **In use** | MUI dashboard preview themed with the bird’s palette |
-| **Info pages** | `/perch` (about), `/privacy` |
+| **Bird detail** | Modal-first UX, draggable palette bar on mobile (haptic on Android; best-effort on iOS), hover/hold photo to sample pixels |
+| **Info pages** | `/perch` (about), `/privacy`, `/terms` |
 | **Hosting** | GitHub Actions → Firebase (`birdpalette` project) |
 
 ---
 
-## Scaling to ~10,290 birds
+## Scaling to ~10,000 birds
 
 **Current approach (static JSON, not Firestore in production):**
 
 | | Pros | Cons |
 |---|------|------|
-| **Static `index.json` + export** (what we use now) | Fast after load, works offline on CDN, no server cost, matches privacy policy | Home page embeds the full search index at build time (~4 MB today; ~20 MB at 10k birds). First visit download grows; build/deploy time increases (~10k static HTML pages) |
-| **Firestore at runtime** | Could paginate and load birds on demand; smaller initial payload | Needs Firebase reads (cost + latency), client SDK, network on every browse, conflicts with “we collect nothing” unless carefully scoped; more moving parts |
+| **Paginated pages + search index** (what we use now) | Fast grid after first page, works on CDN, no server cost, matches privacy policy | Search index is ~18 MB on first filter; build/deploy time grows with dataset |
+| **Firestore at runtime** | Could paginate and load birds on demand; smaller initial payload | Needs Firebase reads (cost + latency), client SDK, network on every browse; more moving parts |
 
-**Recommendation:** stay on static JSON for the public site. If 10k feels slow, split the index (e.g. lightweight list + fetch full palette on modal open) before moving to Firestore.
+**Recommendation:** stay on static JSON for the public site. If search feels slow, slim the search index (lighter fields) before moving to Firestore.
 
 Firestore in this repo is **optional** for local/dev seeding only (`npm run seed:firestore`). Production hosting uses `USE_JSON_DATA=true`.
 

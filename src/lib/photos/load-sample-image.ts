@@ -70,7 +70,7 @@ export async function loadSampleProbe(url: string): Promise<HTMLImageElement | n
   return loadImageElement(url, crossOrigin);
 }
 
-const RETRY_DELAYS_MS = [0, 1000, 2500];
+const RETRY_DELAYS_MS = [0, 800, 2000, 4000];
 
 /** Retry probe loads — covers slow dev proxy compile and cold Cloud Functions. */
 export async function loadSampleProbeWithRetry(

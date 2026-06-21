@@ -1,4 +1,4 @@
-import type { BirdIndexEntry, BirdSummary, DataManifest } from "@/types/bird";
+import type { BirdIndexEntry, BirdSummary } from "@/types/bird";
 import { hasBirdImage } from "@/lib/photos/placeholder";
 
 export function entriesToSummaries(entries: BirdIndexEntry[]): BirdSummary[] {
@@ -18,12 +18,6 @@ export function entriesToSummaries(entries: BirdIndexEntry[]): BirdSummary[] {
     colors: e.colors ?? [],
     similar: (e.similar ?? []).filter((s) => slugs.has(s)),
   }));
-}
-
-export async function fetchManifest(): Promise<DataManifest> {
-  const res = await fetch("/data/manifest.json");
-  if (!res.ok) throw new Error("Failed to load manifest");
-  return res.json() as Promise<DataManifest>;
 }
 
 export async function fetchBirdPage(page: number): Promise<BirdSummary[]> {

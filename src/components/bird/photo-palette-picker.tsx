@@ -340,11 +340,7 @@ export function PhotoPalettePicker({
         <p className="mt-2 px-1 text-[11px] leading-snug text-muted-foreground">
           Preparing color sampling…
         </p>
-      ) : (
-        <p className="mt-2 px-1 text-[11px] leading-snug text-muted-foreground">
-          Color sampling unavailable — refresh and try again.
-        </p>
-      )}
+      ) : null}
     </div>
   );
 }

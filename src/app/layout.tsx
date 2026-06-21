@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ToastProvider } from "@/components/ui/toast";
 import { SiteHeader } from "@/components/layout/site-header";
 import "./globals.css";
@@ -57,12 +56,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
       <body className="min-h-screen antialiased">
-        <AppRouterCacheProvider options={{ key: "mui" }}>
-          <ToastProvider>
-            <SiteHeader />
-            <main>{children}</main>
-          </ToastProvider>
-        </AppRouterCacheProvider>
+        <ToastProvider>
+          <SiteHeader />
+          <main>{children}</main>
+        </ToastProvider>
       </body>
     </html>
   );

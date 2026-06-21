@@ -3,7 +3,6 @@
 import type { BirdSummary } from "@/types/bird";
 import { BirdAbout } from "@/components/bird/bird-about";
 import { PaletteStudy } from "@/components/bird/palette-study";
-import { PaletteInUse } from "@/components/bird/palette-in-use";
 import { BirdThumbnail } from "@/components/home/bird-thumbnail";
 import { PhotoPalettePicker } from "@/components/bird/photo-palette-picker";
 
@@ -44,8 +43,6 @@ export function BirdDetailContent({
       </header>
 
       <PaletteStudy colors={bird.colors} />
-
-      <PaletteInUse colors={bird.colors} />
 
       {related.length > 0 && (
         <section className="mt-12 sm:mt-16">

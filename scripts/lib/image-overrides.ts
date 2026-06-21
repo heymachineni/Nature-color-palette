@@ -2,6 +2,7 @@
  * Curated iNaturalist photos when BirdNET serves a placeholder or poor image.
  */
 export const IMAGE_OVERRIDES: Record<string, string> = {
+  "ducula-bakeri": "/birds/ducula-bakeri.png",
   "pavo-cristatus":
     "https://inaturalist-open-data.s3.amazonaws.com/photos/165318600/medium.jpg",
   "cardinalis-cardinalis":

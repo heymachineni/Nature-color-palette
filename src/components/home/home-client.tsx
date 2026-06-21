@@ -14,6 +14,7 @@ import { fetchBirdPage, fetchSearchIndex } from "@/lib/data/client-birds";
 import { birdSlugFromPath } from "@/lib/bird-url";
 import { HomeSearch } from "./home-search";
 import { HomeEmptyState } from "./home-empty-state";
+import { HomeSearchFailureState } from "./home-search-failure-state";
 import { BirdThumbnail } from "./bird-thumbnail";
 import { BirdDetailModal } from "@/components/bird/bird-detail-modal";
 
@@ -39,6 +40,7 @@ export function HomeClient({
   const [loadingPage, setLoadingPage] = useState(false);
   const [searchIndex, setSearchIndex] = useState<BirdSummary[] | null>(null);
   const [searchIndexLoading, setSearchIndexLoading] = useState(false);
+  const [searchIndexFailed, setSearchIndexFailed] = useState(false);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
   const prevFilters = useRef({ query, pickedColor });
@@ -65,8 +67,13 @@ export function HomeClient({
   useEffect(() => {
     if (!isFiltering || searchIndex !== null || searchIndexLoading) return;
     setSearchIndexLoading(true);
+    setSearchIndexFailed(false);
     fetchSearchIndex()
-      .then(setSearchIndex)
+      .then((index) => {
+        setSearchIndex(index);
+        setSearchIndexFailed(false);
+      })
+      .catch(() => setSearchIndexFailed(true))
       .finally(() => setSearchIndexLoading(false));
   }, [isFiltering, searchIndex, searchIndexLoading]);
 
@@ -309,14 +316,35 @@ export function HomeClient({
     return () => observer.disconnect();
   }, [hasMore, visible.length]);
 
+  const retrySearchIndex = useCallback(() => {
+    setSearchIndex(null);
+    setSearchIndexFailed(false);
+    setSearchIndexLoading(true);
+    fetchSearchIndex()
+      .then((index) => {
+        setSearchIndex(index);
+        setSearchIndexFailed(false);
+      })
+      .catch(() => setSearchIndexFailed(true))
+      .finally(() => setSearchIndexLoading(false));
+  }, []);
+
   const reset = () => {
     setQuery("");
     setPickedColor(null);
+    setSearchIndexFailed(false);
   };
 
+  const showSearchFailure =
+    searchIndexFailed && isFiltering && !searchIndexLoading && !searchIndex;
   const showEmpty =
-    !searchIndexLoading && results.length === 0 && (isFiltering || !loadingPage);
-  const showGrid = results.length > 0 || searchIndexLoading || loadingPage;
+    !searchIndexFailed &&
+    !searchIndexLoading &&
+    results.length === 0 &&
+    (isFiltering || !loadingPage);
+  const showGrid =
+    !showSearchFailure &&
+    (results.length > 0 || searchIndexLoading || loadingPage);
 
   return (
     <div className="container pb-32 pt-8 sm:pt-10">
@@ -340,28 +368,17 @@ export function HomeClient({
             </div>
             {hasMore && <div ref={sentinelRef} className="h-px w-full" />}
           </>
+        ) : showSearchFailure ? (
+          <HomeSearchFailureState onRetry={retrySearchIndex} />
         ) : showEmpty ? (
-          searchIndex ? (
-            <HomeEmptyState
-              pickedColor={pickedColor}
-              query={query}
-              birds={searchIndex}
-              onPickColor={setPickedColor}
-              onQueryChange={setQuery}
-              onReset={reset}
-            />
-          ) : (
-            <div className="flex flex-col items-center gap-5 py-24 text-center">
-              <p className="font-serif text-lg text-foreground">No birds found</p>
-              <button
-                type="button"
-                onClick={reset}
-                className="rounded-full border border-border bg-background px-5 py-2 text-sm text-foreground transition-colors hover:bg-muted"
-              >
-                Show all birds
-              </button>
-            </div>
-          )
+          <HomeEmptyState
+            pickedColor={pickedColor}
+            query={query}
+            birds={searchIndex ?? []}
+            onPickColor={setPickedColor}
+            onQueryChange={setQuery}
+            onReset={reset}
+          />
         ) : null}
       </section>
 

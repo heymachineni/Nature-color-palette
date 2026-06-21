@@ -33,5 +33,5 @@ export function isSameOriginSampleUrl(sampleSrc: string): boolean {
 export function sampleProbeUrls(src: string): string[] {
   const proxied = sampleImageUrl(src);
   if (proxied === src) return [src];
-  return [proxied];
+  return [proxied, src];
 }
