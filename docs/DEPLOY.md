@@ -10,7 +10,7 @@ Every push to `main` builds a static site and deploys to Firebase Hosting via Gi
 
 The workflow needs your **birdpalette** service account JSON as a GitHub secret.
 
-1. Open [GitHub → Nature-color-palette → Settings → Secrets and variables → Actions](https://github.com/heymachineni/Nature-color-palette/settings/secrets/actions)
+1. Open [GitHub → bird-palette → Settings → Secrets and variables → Actions](https://github.com/heymachineni/bird-palette/settings/secrets/actions)
 2. Click **New repository secret**
 3. Name: `FIREBASE_SERVICE_ACCOUNT_NATURE_COLORPALETTE` (same secret name as before)
 4. Value: paste the **entire contents** of the **birdpalette** service account JSON from  
