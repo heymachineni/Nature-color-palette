@@ -188,6 +188,28 @@ const COLOR_MODES: ColorMode[] = [
   },
 ];
 
+const STATS = [
+  {
+    value: "10,000+",
+    label: "species in the catalog",
+  },
+  {
+    value: "~24",
+    label: "primary colors scanned per bird",
+  },
+  {
+    value: "3",
+    label: "ways to search or copy color",
+    detail: "Palette bar · search · photo sample",
+  },
+] as const;
+
+const STACK = [
+  { name: "ChatGPT", note: "Ideas & copy" },
+  { name: "Cursor", note: "Build & ship" },
+  { name: "A brain", note: "Taste & decisions" },
+] as const;
+
 const PRODUCT_SHOTS = [
   {
     src: "/casestudy/homepage-top.png",
@@ -223,6 +245,24 @@ export function CaseStudyPage() {
           Nature already balances contrast and hue. This project makes those
           combinations easy to browse, filter, and copy.
         </p>
+
+        <dl className="mt-8 grid divide-y divide-border rounded-2xl border border-border/80 bg-muted/25 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {STATS.map((stat) => (
+            <div key={stat.label} className="px-4 py-5 text-center sm:px-3">
+              <dt className="font-serif text-2xl tracking-tight text-foreground tabular-nums">
+                {stat.value}
+              </dt>
+              <dd className="mt-1.5 text-xs leading-snug text-muted-foreground">
+                {stat.label}
+              </dd>
+              {"detail" in stat && stat.detail ? (
+                <dd className="mt-1 font-mono text-[10px] tracking-wide text-muted-foreground/70">
+                  {stat.detail}
+                </dd>
+              ) : null}
+            </div>
+          ))}
+        </dl>
       </header>
 
       <section className="mt-12">
@@ -388,7 +428,25 @@ export function CaseStudyPage() {
           The harder win was the pipeline: turning messy nature photography
           into consistent, copy-ready color data at scale.
         </p>
-        <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
+
+        <h3 className="mt-8 font-serif text-lg tracking-tight text-foreground">
+          Stack
+        </h3>
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {STACK.map((tool) => (
+            <li
+              key={tool.name}
+              className="rounded-full border border-border bg-muted/40 px-3.5 py-1.5"
+            >
+              <span className="text-sm text-foreground">{tool.name}</span>
+              <span className="ml-1.5 text-xs text-muted-foreground">
+                · {tool.note}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-8 text-[15px] leading-relaxed text-muted-foreground">
           Questions or feedback:{" "}
           <InfoEmailLink email="heymachineni@gmail.com" />
         </p>
