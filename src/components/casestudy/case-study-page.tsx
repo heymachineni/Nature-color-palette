@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  Crosshair,
   Droplets,
   Grid3x3,
+  Layers,
   Pipette,
   Search,
   type LucideIcon,
@@ -124,16 +126,67 @@ const PIPELINE = [
   },
 ] as const;
 
-const SAMPLING = [
+function PaletteBarPreview() {
+  return (
+    <div
+      className="mt-5 flex h-2.5 overflow-hidden rounded-full ring-1 ring-inset ring-black/[0.06]"
+      aria-hidden
+    >
+      <span className="bg-[#3d5a3e]" style={{ width: "36%" }} />
+      <span className="bg-[#c9a24d]" style={{ width: "26%" }} />
+      <span className="bg-[#8b5e3c]" style={{ width: "22%" }} />
+      <span className="bg-[#e8e2d6]" style={{ width: "16%" }} />
+    </div>
+  );
+}
+
+function SamplerPreview() {
+  return (
+    <div
+      className="relative mt-5 aspect-[5/2] overflow-hidden rounded-xl bg-[linear-gradient(135deg,#4a6741_0%,#8b6914_55%,#2c3e50_100%)] ring-1 ring-inset ring-black/[0.06]"
+      aria-hidden
+    >
+      <span className="absolute inset-0 bg-black/[0.08]" />
+      <span className="absolute left-[58%] top-[42%] h-px w-full -translate-y-1/2 bg-white/35" />
+      <span className="absolute left-[58%] top-[42%] h-full w-px -translate-x-1/2 bg-white/35" />
+      <span className="absolute left-[58%] top-[42%] size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white/90 bg-[#8b6914] shadow-sm" />
+      <span className="absolute bottom-2 right-2 rounded-md bg-black/45 px-1.5 py-0.5 font-mono text-[10px] text-white/90">
+        #8B6914
+      </span>
+    </div>
+  );
+}
+
+type ColorMode = {
+  title: string;
+  when: string;
+  body: string;
+  icon: LucideIcon;
+  wash: string;
+  iconColor: string;
+  preview: "palette" | "sampler";
+};
+
+const COLOR_MODES: ColorMode[] = [
   {
     title: "Build-time extraction",
-    body: "This is how each card gets its palette bar. The photo is processed once before deploy. You see the summary: the main plumage colors and how much of the bird each one takes up.",
+    when: "Before deploy",
+    body: "Each photo is scanned once. The palette bar on every card is the summary: main plumage hues and the share each one takes up.",
+    icon: Layers,
+    wash: "bg-[hsl(46,72%,93%)]",
+    iconColor: "text-[hsl(34,52%,40%)]",
+    preview: "palette",
   },
   {
     title: "Live photo sampling",
-    body: "On a bird detail page you can pick any exact spot. Move over the photo and the app maps your cursor to the matching pixel in the image, reads its RGB, and shows the hex. Tap or click to copy. Useful when you want a specific feather shade, not just the averaged swatch.",
+    when: "In the browser",
+    body: "Hover any spot on the bird photo. The app reads that exact pixel and shows the hex. Click to copy a specific feather shade.",
+    icon: Crosshair,
+    wash: "bg-[hsl(208,38%,92%)]",
+    iconColor: "text-[hsl(210,36%,38%)]",
+    preview: "sampler",
   },
-] as const;
+];
 
 const PRODUCT_SHOTS = [
   {
@@ -251,11 +304,51 @@ export function CaseStudyPage() {
       <section className="mt-12">
         <SectionTitle>How it works</SectionTitle>
         <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-          Most of the work happens before the site loads. Color is read from
-          photos in two different ways: a full scan at build time, and a
-          single-pixel picker in the browser.
+          Color is read from photos in two ways. One powers every card in the
+          grid. The other lets you pick a single pixel on demand.
         </p>
-        <ol className="relative mt-8 space-y-0">
+
+        <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+          {COLOR_MODES.map((mode) => {
+            const Icon = mode.icon;
+            return (
+              <li
+                key={mode.title}
+                className={`flex flex-col rounded-2xl p-4 ring-1 ring-inset ring-black/[0.05] ${mode.wash}`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <span
+                    className={`inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-background/70 ${mode.iconColor}`}
+                  >
+                    <Icon className="size-4" strokeWidth={1.75} aria-hidden />
+                  </span>
+                  <span className="pt-1 font-mono text-[10px] uppercase tracking-wider text-foreground/45">
+                    {mode.when}
+                  </span>
+                </div>
+                <h3 className="mt-3 font-serif text-[15px] leading-snug tracking-tight text-foreground">
+                  {mode.title}
+                </h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground/75">
+                  {mode.body}
+                </p>
+                {mode.preview === "palette" ? (
+                  <PaletteBarPreview />
+                ) : (
+                  <SamplerPreview />
+                )}
+              </li>
+            );
+          })}
+        </ul>
+
+        <h3 className="mt-12 font-serif text-lg tracking-tight text-foreground">
+          The build pipeline
+        </h3>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          How each palette bar is made before the site ships.
+        </p>
+        <ol className="relative mt-6 space-y-0">
           {PIPELINE.map((item, i) => (
             <li key={item.step} className="relative flex gap-4 pb-8 last:pb-0">
               {i < PIPELINE.length - 1 && (
@@ -276,21 +369,6 @@ export function CaseStudyPage() {
             </li>
           ))}
         </ol>
-        <div className="mt-10 space-y-4">
-          {SAMPLING.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-xl border border-border/80 bg-background px-4 py-3.5"
-            >
-              <h3 className="font-serif text-[15px] tracking-tight text-foreground">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {item.body}
-              </p>
-            </div>
-          ))}
-        </div>
       </section>
 
       <section className="mt-12">
