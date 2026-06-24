@@ -108,6 +108,11 @@ export function HomeEmptyState({
     onQueryChange(family);
   };
 
+  const tryShade = (hex: string) => {
+    onQueryChange("");
+    onPickColor(hex);
+  };
+
   return (
     <div className="mx-auto flex w-full max-w-md flex-col items-center gap-6 pt-6 pb-20 text-center sm:pt-8">
       {pickedColor && (
@@ -154,7 +159,7 @@ export function HomeEmptyState({
                 hex={item.hex}
                 label={item.hex}
                 count={item.birdCount}
-                onClick={() => onPickColor(item.hex)}
+                onClick={() => tryShade(item.hex)}
               />
             ))}
           </div>
