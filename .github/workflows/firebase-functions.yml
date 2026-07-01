@@ -38,5 +38,6 @@ jobs:
           node -e "require('fs').writeFileSync(process.argv[1], process.env.FIREBASE_SERVICE_ACCOUNT)" "$SA_FILE"
           node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$SA_FILE"
           export GOOGLE_APPLICATION_CREDENTIALS="$SA_FILE"
+          unset VSCODE_CWD
           bash scripts/prepare-functions.sh
           npx firebase deploy --only functions:photoSample,functions:birdSound --project birdpalette --non-interactive
