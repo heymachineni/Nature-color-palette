@@ -62,6 +62,33 @@ function AudioWaveIcon({
   );
 }
 
+function PauseIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      className={cn("size-[18px]", className)}
+      aria-hidden
+    >
+      <rect x="5.5" y="4.5" width="3" height="11" rx="1" className="fill-current" />
+      <rect x="11.5" y="4.5" width="3" height="11" rx="1" className="fill-current" />
+    </svg>
+  );
+}
+
+function LoadingRing({ className }: { className?: string }) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "pointer-events-none absolute inset-0 rounded-full border-2 border-foreground/10 border-t-foreground/55",
+        "motion-safe:animate-spin",
+        className,
+      )}
+    />
+  );
+}
+
 export function BirdSoundButton({
   scientificName,
   className,
@@ -72,6 +99,8 @@ export function BirdSoundButton({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [state, setState] = useState<BirdSoundState>({ status: "idle" });
   const [playing, setPlaying] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [buffering, setBuffering] = useState(false);
   const [coarsePointer, setCoarsePointer] = useState(false);
 
   useEffect(() => {
@@ -86,6 +115,8 @@ export function BirdSoundButton({
     let cancelled = false;
     setState({ status: "loading" });
     setPlaying(false);
+    setPaused(false);
+    setBuffering(false);
     audioRef.current?.pause();
 
     void fetchBirdSound(scientificName)
@@ -105,6 +136,8 @@ export function BirdSoundButton({
       cancelled = true;
       audioRef.current?.pause();
       setPlaying(false);
+      setPaused(false);
+      setBuffering(false);
     };
   }, [scientificName]);
 
@@ -117,58 +150,92 @@ export function BirdSoundButton({
     if (playing) {
       audio.pause();
       setPlaying(false);
+      setPaused(true);
+      setBuffering(false);
       return;
     }
 
     if (coarsePointer) paletteHaptic("tick");
+    setPaused(false);
+    setBuffering(true);
 
     void audio.play().then(
-      () => setPlaying(true),
-      () => setPlaying(false),
+      () => {
+        setPlaying(true);
+        setBuffering(false);
+      },
+      () => {
+        setPlaying(false);
+        setBuffering(false);
+      },
     );
   }, [coarsePointer, playing, state]);
 
-  const onAudioEnded = useCallback(() => setPlaying(false), []);
+  const onAudioEnded = useCallback(() => {
+    setPlaying(false);
+    setPaused(false);
+    setBuffering(false);
+  }, []);
+
+  const onAudioPlaying = useCallback(() => setBuffering(false), []);
+
+  const onAudioWaiting = useCallback(() => {
+    const audio = audioRef.current;
+    if (audio && !audio.paused) setBuffering(true);
+  }, []);
 
   const showUnavailableToast = useCallback(() => {
     if (coarsePointer) paletteHaptic("tick");
     pushToast(<span>{UNAVAILABLE_COPY}</span>, UNAVAILABLE_TOAST_MS);
   }, [coarsePointer]);
 
-  const loading = state.status === "loading" || state.status === "idle";
+  const fetchLoading = state.status === "loading" || state.status === "idle";
   const unavailable =
     state.status === "unavailable" || state.status === "error";
   const ready = state.status === "ready";
+  const showRing = fetchLoading || buffering;
+
+  const ariaLabel = (() => {
+    if (ready) {
+      if (buffering) return `Loading ${state.sound.soundType}`;
+      if (playing) return `Pause ${state.sound.soundType}`;
+      if (paused) return `Resume ${state.sound.soundType}`;
+      return `Play ${state.sound.soundType}`;
+    }
+    if (fetchLoading) return "Checking for bird sound";
+    return "Bird sound unavailable";
+  })();
 
   const button = (
-    <button
-      type="button"
-      aria-label={
-        ready
-          ? playing
-            ? `Pause ${state.sound.soundType}`
-            : `Play ${state.sound.soundType}`
-          : "Bird sound unavailable"
-      }
-      disabled={!ready && !(unavailable && coarsePointer)}
-      onClick={
-        unavailable && coarsePointer ? showUnavailableToast : togglePlay
-      }
-      className={cn(
-        "inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-muted/70 transition-[color,transform,background-color] duration-300 ease-out",
-        ready &&
-          "text-muted-foreground hover:bg-muted hover:text-foreground active:scale-95",
-        playing && "text-foreground",
-        unavailable &&
-          (coarsePointer
-            ? "cursor-pointer text-muted-foreground/40 active:scale-95"
-            : "cursor-default text-muted-foreground/40"),
-        loading && "cursor-default text-muted-foreground/35",
-        className,
-      )}
-    >
-      <AudioWaveIcon playing={playing && ready} />
-    </button>
+    <span className={cn("relative inline-flex size-9 shrink-0", className)}>
+      {showRing ? <LoadingRing /> : null}
+      <button
+        type="button"
+        aria-label={ariaLabel}
+        disabled={!ready && !(unavailable && coarsePointer)}
+        onClick={
+          unavailable && coarsePointer ? showUnavailableToast : togglePlay
+        }
+        className={cn(
+          "relative inline-flex size-9 items-center justify-center rounded-full transition-[color,transform,background-color,opacity] duration-300 ease-out",
+          ready &&
+            !playing &&
+            "bg-muted/70 text-foreground hover:text-foreground/55 active:scale-95",
+          unavailable &&
+            (coarsePointer
+              ? "cursor-pointer bg-muted/70 text-muted-foreground/40 active:scale-95"
+              : "cursor-default bg-muted/70 text-muted-foreground/40"),
+          fetchLoading &&
+            "cursor-default bg-muted/70 text-foreground/35",
+        )}
+      >
+        {ready && paused && !playing && !buffering ? (
+          <PauseIcon />
+        ) : (
+          <AudioWaveIcon playing={ready && playing && !buffering} />
+        )}
+      </button>
+    </span>
   );
 
   return (
@@ -194,6 +261,8 @@ export function BirdSoundButton({
           src={state.sound.audioUrl}
           preload="none"
           onEnded={onAudioEnded}
+          onPlaying={onAudioPlaying}
+          onWaiting={onAudioWaiting}
           className="hidden"
         />
       ) : null}

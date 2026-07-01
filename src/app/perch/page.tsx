@@ -69,9 +69,10 @@ export default function PerchPage() {
             from the image.
           </p>
           <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-            You can also listen to raw field recordings when they exist. Tap the
-            wave icon beside the bird&apos;s name. Not every species has made it
-            onto mic yet.
+            Bird calls come from raw field recordings when they exist. Real
+            microphones in the wild, so you might catch wind, rustle, distant
+            forest noise, or other birds in the background. Not every species
+            has made it onto mic yet.
           </p>
           <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
             If you have questions, suggestions, or just want to talk, feel free
