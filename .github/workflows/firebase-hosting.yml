@@ -60,6 +60,4 @@ jobs:
           export GOOGLE_APPLICATION_CREDENTIALS="$SA_FILE"
           unset VSCODE_CWD
           bash scripts/prepare-functions.sh
-          node -e "require('./functions/index.js'); console.log('functions entry ok')"
-          npx firebase deploy --only functions:photoSample,functions:birdSound --project birdpalette --non-interactive
-          npx firebase deploy --only hosting --project birdpalette --non-interactive
+          npx firebase deploy --only functions:photoSample,functions:birdSound,hosting --project birdpalette --non-interactive
